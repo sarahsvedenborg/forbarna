@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="20px" height="70px" viewBox="0 0 20 70" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>HourHand</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M1.72306613e-13,10.2123175 C1.72306613e-13,10.2123175 6.62034541,3.41060513e-13 9.08095202,3.41060513e-13 C11.7266774,3.41060513e-13 20,10.3893239 20,10.3893239 L13.3892989,70 L6.6731936,69.9405603 L1.72306613e-13,10.2123175 Z" id="HourHand" fill="#A067B4"></path>
+    </g>
+</svg>

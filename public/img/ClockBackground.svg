@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="328px" height="328px" viewBox="0 0 328 328" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>ClockBackground</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <radialGradient cx="51.612258%" cy="50%" fx="51.612258%" fy="50%" r="51.6505112%" gradientTransform="translate(0.516123,0.500000),rotate(90.000000),scale(1.000000,1.021764),translate(-0.516123,-0.500000)" id="radialGradient-1">
+            <stop stop-color="#126093" offset="0%"></stop>
+            <stop stop-color="#376FAA" offset="88.7631008%"></stop>
+            <stop stop-color="#042750" offset="100%"></stop>
+        </radialGradient>
+        <radialGradient cx="50.0991862%" cy="49.691358%" fx="50.0991862%" fy="49.691358%" r="53.5529996%" gradientTransform="translate(0.500992,0.496914),rotate(90.000000),scale(1.000000,0.989757),translate(-0.500992,-0.496914)" id="radialGradient-2">
+            <stop stop-color="#3DA9EB" offset="0%"></stop>
+            <stop stop-color="#1C70D1" offset="100%"></stop>
+        </radialGradient>
+        <circle id="path-3" cx="162" cy="162" r="135"></circle>
+        <filter x="-5.6%" y="-5.6%" width="111.1%" height="111.1%" filterUnits="objectBoundingBox" id="filter-4">
+            <feGaussianBlur stdDeviation="9" in="SourceAlpha" result="shadowBlurInner1"></feGaussianBlur>
+            <feOffset dx="-9" dy="-9" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0.273198503   0 0 0 0 0.423572986   0 0 0 0 0.598905187  0 0 0 1 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="ClockBackground" transform="translate(2.000000, 2.000000)">
+            <g id="RainbowClock">
+                <g id="Clock">
+                    <circle id="Oval-2" stroke="url(#radialGradient-2)" stroke-width="3" fill="url(#radialGradient-1)" cx="162" cy="162" r="162"></circle>
+                    <g id="Oval-2">
+                        <use fill="#F7FAFB" fill-rule="evenodd" xlink:href="#path-3"></use>
+                        <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-3"></use>
+                        <use stroke="#7EAFE9" stroke-width="3" xlink:href="#path-3"></use>
+                    </g>
+                </g>
+                <g id="Numbers" transform="translate(35.000000, 25.000000)" font-weight="bold" font-family="AmericanTypewriter-CondensedBold, American Typewriter" letter-spacing="3.38333344" font-size="42" font-style="condensed">
+                    <text id="1" fill="#B300AB">
+                        <tspan x="181" y="54">1</tspan>
+                    </text>
+                    <text id="2" fill="#8200CF">
+                        <tspan x="219" y="95">2</tspan>
+                    </text>
+                    <text id="3" fill="#3B00FF">
+                        <tspan x="234" y="144">3</tspan>
+                    </text>
+                    <text id="4" fill="#0084E2">
+                        <tspan x="220" y="202">4</tspan>
+                    </text>
+                    <text id="5" fill="#00EC1C">
+                        <tspan x="182" y="246">5</tspan>
+                    </text>
+                    <text id="6" fill="#BEFF00">
+                        <tspan x="117" y="261">6</tspan>
+                    </text>
+                    <text id="9" fill="#FF9F00">
+                        <tspan x="0" y="146">9</tspan>
+                    </text>
+                    <text id="8" fill="#FEEC00">
+                        <tspan x="15" y="202">8</tspan>
+                    </text>
+                    <text id="7" fill="#F2FF00">
+                        <tspan x="57" y="246">7</tspan>
+                    </text>
+                    <text id="10" fill="#FF5100">
+                        <tspan x="12" y="95">10</tspan>
+                    </text>
+                    <text id="11" fill="#FF0000">
+                        <tspan x="50" y="54">11</tspan>
+                    </text>
+                    <text id="12" fill="#FE006D">
+                        <tspan x="105" y="39">12</tspan>
+                    </text>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

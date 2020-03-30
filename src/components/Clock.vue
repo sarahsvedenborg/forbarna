@@ -1,46 +1,70 @@
 <template>
-  <div class="clock">
+  <div
+    class="clock"
+    :style="{
+        width: clockSize + 'px',
+        height: clockSize + 'px'
+    }"
+  >
     <div
-      class="hourHand hand"
-      v-bind:style="{ 
-        transform: 'rotate(' + hourRotation + 'deg)'
-        }"
-    />
-    <div
-      class="minuteHand hand"
-      v-bind:style="{ 
-        transform: 'rotate(' + minuteRotation + 'deg)'
-        }"
-      v-on:drag="dragMinute"
-      v-on:dragstart="dragStartM"
-      draggable
-    />
-    <div class="clockCenter" v-on:click="rotate">
-      <Hour
-        v-for="n in 12"
-        v-bind:key="n"
-        v-bind:style="{transform: 'translate(' + hourNumberPosX(n) + 'px , ' + hourNumberPosY(n) +   'px )'}"
-        v-bind:number="n"
-        class="hour"
-      />
+      ref="hourHandRef"
+      class="hand"
+      :style="[
+      hourHand, 
+      { 
+        transform: `translate(-50%, 0) rotate(${hourRotation}deg)`
+      }]"
+    >
+      <img src="/img/HourHand.svg" />
     </div>
+    <div
+      ref="minuteHandRef"
+      class="hand"
+      :style="[ 
+      minuteHand, 
+      { 
+        transform: `translate(-50%, 0) rotate(${minuteRotation}deg)`
+      }]"
+      @drag="dragMinute"
+      @dragstart="dragStartM"
+      @dragend="playSound"
+      draggable
+    >
+      <img src="/img/MinuteHand.svg" />
+    </div>
+    <div class="clockCenter" />
   </div>
 </template>
 
+
 <script>
-import Hour from "./Hour.vue";
 const blankImage = new Image();
+
+const timeTag = (h, m) => {
+  return `${String(h).padStart(2, "0")}${String(m).padStart(2, "0")}`;
+};
+
+const audioMap = {};
+for (let h = 0; h < 12; h++) {
+  for (let m = 0; m < 60; m += 5) {
+    let tag = timeTag(h, m);
+    audioMap[tag] = new Audio(`/audio/${tag}.mp3`);
+  }
+}
 
 export default {
   name: "Clock",
   props: {
-    deg: {
+    clockSize: {
       type: Number,
-      default: 0
+      default: 500
     }
   },
-  components: {
-    Hour
+  data() {
+    return {
+      minutes: 0,
+      hours: 0
+    };
   },
   computed: {
     minuteRotation() {
@@ -48,15 +72,27 @@ export default {
     },
     hourRotation() {
       return ((this.hours + this.minutes / 60.0) * 360) / 12;
+    },
+    minuteHand() {
+      let h = (this.clockSize / 2) * 0.8;
+      let t = this.clockSize / 2 - h;
+
+      return {
+        height: h + "px",
+        top: t + "px",
+        left: this.clockSize / 2 + "px"
+      };
+    },
+    hourHand() {
+      let h = (this.clockSize / 2) * 0.4;
+      let t = this.clockSize / 2 - h;
+
+      return {
+        height: h + "px",
+        top: t + "px",
+        left: this.clockSize / 2 + "px"
+      };
     }
-  },
-  data() {
-    return {
-      minutes: 0,
-      dt: 0,
-      hours: 0,
-      clockWidth: 500
-    };
   },
   methods: {
     rotate() {
@@ -68,37 +104,46 @@ export default {
     },
     hourNumberPosX(i) {
       return (
-        (this.clockWidth / 2 - 30) *
+        (this.clockSize / 2 - 30) *
         Math.cos((2 * Math.PI * i) / 12 - Math.PI / 2)
       );
     },
-
     hourNumberPosY(i) {
       return (
-        (this.clockWidth / 2 - 30) *
+        (this.clockSize / 2 - 30) *
         Math.sin((2 * Math.PI * i) / 12 - Math.PI / 2)
       );
     },
     dragMinute(event) {
       event.preventDefault();
+      event.dataTransfer.setDragImage(blankImage, 0, 0);
       if (event.x == 0 && event.y == 0) return;
       var x = event.layerX;
-      var y = event.layerY - this.clockWidth / 2;
+      var y = event.layerY - this.clockSize / 2;
       let angle = Math.atan2(y, x) + 2.5 * Math.PI;
 
       let newMinutes = Math.floor((angle / (2 * Math.PI)) * 60) % 60;
       newMinutes = Math.round(newMinutes / 5.0) * 5;
+      newMinutes %= 60;
 
       if (this.minutes <= 15 && newMinutes >= 45) {
-        this.hours--;
+        this.hours = (this.hours + 11) % 12;
       } else if (this.minutes >= 45 && newMinutes <= 15) {
-        this.hours++;
+        this.hours = (this.hours + 1) % 12;
       }
 
       this.minutes = newMinutes;
     },
     dragStartM(dragEvent) {
       dragEvent.dataTransfer.setDragImage(blankImage, 0, 0);
+    },
+    playSound: async function() {
+      let tag = timeTag(this.hours, this.minutes);
+      let soundToPlay = audioMap[tag];
+      while (soundToPlay.readyState != HTMLMediaElement.HAVE_ENOUGH_DATA) {
+        await new Promise(r => setTimeout(r, 10));
+      }
+      audioMap[tag].play();
     }
   }
 };
@@ -106,44 +151,36 @@ export default {
 
 <style scoped>
 .clock {
-  border-radius: 50%;
-  background-color: white;
-  border: 5px solid black;
-  width: 500px;
-  height: 500px;
+  background-image: url("/img/ClockBackground.svg");
+  background-size: 100%;
+
+  object-fit: cover;
   margin: 0 auto;
   position: relative;
 }
 
 .clockCenter {
+  position: absolute;
+  left: 50%;
+  top: 50%;
   border-radius: 50%;
-  background-color: black;
-  border: 5px solid black;
-  width: 50px;
-  height: 50px;
-  transform: translate(225px, 225px);
-  transform-origin: center center;
+  background-color: #4A4A4A;
+  border: 5px solid #4A4A4A;
+  width: 5%;
+  height: 5%;
+  transform: translate(-50%, -50%);
 }
 
 .hand {
-  width: 10px;
-  border-radius: 10px;
-  background-color: lightblue;
   transform-origin: bottom center;
   position: absolute;
   cursor: pointer;
 }
 
-.minuteHand {
-  height: 230px;
-  top: 25px;
-  left: 250px;
-}
-
-.hourHand {
-  height: 115px;
-  top: 145px;
-  left: 250px;
+.hand > img {
+  height: 100%;
+  width: auto;
+  pointer-events: none;
 }
 
 .hour {
