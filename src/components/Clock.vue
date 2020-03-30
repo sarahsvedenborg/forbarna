@@ -25,6 +25,9 @@
       { 
         transform: `translate(-50%, 0) rotate(${minuteRotation}deg)`
       }]"
+      @touchstart="dragStartM"
+      @touchmove="dragMinute"
+      @touchend="playSound"
       @drag="dragMinute"
       @dragstart="dragStartM"
       @dragend="playSound"
