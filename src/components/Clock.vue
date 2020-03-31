@@ -6,6 +6,9 @@
         width: clockSize + 'px',
         height: clockSize + 'px'
     }"
+    @touchmove="touchDragMinute"
+    @touchstart="dragStartM"
+    @touchend="playSound"
     >
       <div
         ref="hourHandRef"
@@ -26,9 +29,7 @@
       { 
         transform: `translate(-50%, 0) rotate(${minuteRotation}deg)`
       }]"
-        @touchstart="dragStartM"
-        @touchmove="touchDragMinute"
-        @touchend="playSound"
+        
         @dragstart="dragStartM"
         @drag="dragMinute"
         @dragend="playSound"
