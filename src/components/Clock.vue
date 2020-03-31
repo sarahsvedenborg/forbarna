@@ -27,7 +27,7 @@
         transform: `translate(-50%, 0) rotate(${minuteRotation}deg)`
       }]"
         @touchstart="dragStartM"
-        @touchmove="dragMinute"
+        @touchmove="touchDragMinute"
         @touchend="playSound"
         @dragstart="dragStartM"
         @drag="dragMinute"
@@ -122,7 +122,6 @@ export default {
       );
     },
     dragMinute(event) {
-        this.touch = JSON.stringify(event);
       event.preventDefault();
       event.dataTransfer.setDragImage(blankImage, 0, 0);
       if (event.x == 0 && event.y == 0) return;
