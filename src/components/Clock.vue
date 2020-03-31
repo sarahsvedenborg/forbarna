@@ -1,41 +1,44 @@
 <template>
-  <div
-    class="clock"
-    :style="{
+  <div>
+    <div
+      class="clock"
+      :style="{
         width: clockSize + 'px',
         height: clockSize + 'px'
     }"
-  >
-    <div
-      ref="hourHandRef"
-      class="hand"
-      :style="[
+    >
+      <div
+        ref="hourHandRef"
+        class="hand"
+        :style="[
       hourHand, 
       { 
         transform: `translate(-50%, 0) rotate(${hourRotation}deg)`
       }]"
-    >
-      <img src="/img/HourHand.svg" />
-    </div>
-    <div
-      ref="minuteHandRef"
-      class="hand"
-      :style="[ 
+      >
+        <img src="/img/HourHand.svg" />
+      </div>
+      <div
+        ref="minuteHandRef"
+        class="hand"
+        :style="[ 
       minuteHand, 
       { 
         transform: `translate(-50%, 0) rotate(${minuteRotation}deg)`
       }]"
-      @touchstart="dragStartM"
-      @touchmove="dragMinute"
-      @touchend="playSound"
-      @drag="dragMinute"
-      @dragstart="dragStartM"
-      @dragend="playSound"
-      draggable
-    >
-      <img src="/img/MinuteHand.svg" />
+        @touchstart="dragStartM"
+        @touchmove="dragMinute"
+        @touchend="playSound"
+        @dragstart="dragStartM"
+        @drag="dragMinute"
+        @dragend="playSound"
+        draggable
+      >
+        <img src="/img/MinuteHand.svg" />
+      </div>
+      <div class="clockCenter" />
     </div>
-    <div class="clockCenter" />
+    <div style="position: fixed; top: 0; left: 0;">{{ touch }}</div>
   </div>
 </template>
 
@@ -66,7 +69,8 @@ export default {
   data() {
     return {
       minutes: 0,
-      hours: 0
+      hours: 0,
+      touch: ""
     };
   },
   computed: {
@@ -118,11 +122,16 @@ export default {
       );
     },
     dragMinute(event) {
+        this.touch = JSON.stringify(event);
       event.preventDefault();
       event.dataTransfer.setDragImage(blankImage, 0, 0);
       if (event.x == 0 && event.y == 0) return;
-      var x = event.layerX;
-      var y = event.layerY - this.clockSize / 2;
+      this.updateMinute(event.layerX, event.layerY - this.clockSize / 2);
+    },
+    touchDragMinute(touchEvent) {
+        this.touch = JSON.stringify(touchEvent.touches)
+    },
+    updateMinute(x, y) {
       let angle = Math.atan2(y, x) + 2.5 * Math.PI;
 
       let newMinutes = Math.floor((angle / (2 * Math.PI)) * 60) % 60;
@@ -167,8 +176,8 @@ export default {
   left: 50%;
   top: 50%;
   border-radius: 50%;
-  background-color: #4A4A4A;
-  border: 5px solid #4A4A4A;
+  background-color: #4a4a4a;
+  border: 5px solid #4a4a4a;
   width: 5%;
   height: 5%;
   transform: translate(-50%, -50%);
