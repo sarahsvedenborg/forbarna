@@ -134,6 +134,8 @@ export default {
           + `(${touchEvent.touches[0].layerX}, ${touchEvent.touches[0].layerY})`
           + `(${touchEvent.touches[0].clientX}, ${touchEvent.touches[0].clientY})`
           + `(${touchEvent.touches[0].x}, ${touchEvent.touches[0].y})`
+
+          updateMinute(touchEvent.clientX - this.clockSize/2, touchEvent.clientY - this.clockSize/2)
     },
     updateMinute(x, y) {
       let angle = Math.atan2(y, x) + 2.5 * Math.PI;
