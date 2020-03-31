@@ -6,9 +6,9 @@
         width: clockSize + 'px',
         height: clockSize + 'px'
     }"
-    @touchmove.prevent="touchDragMinute"
-    @touchstart="dragStartM"
-    @touchend="playSound"
+      @touchmove.prevent="touchDragMinute"
+      @touchstart="dragStartM"
+      @touchend="playSound"
     >
       <div
         ref="hourHandRef"
@@ -29,7 +29,6 @@
       { 
         transform: `translate(-50%, 0) rotate(${minuteRotation}deg)`
       }]"
-        
         @dragstart="dragStartM"
         @drag="dragMinute"
         @dragend="playSound"
@@ -129,15 +128,11 @@ export default {
       this.updateMinute(event.layerX, event.layerY - this.clockSize / 2);
     },
     touchDragMinute(touchEvent) {
-        this.touch = JSON.stringify(touchEvent)
-        + JSON.stringify(touchEvent.touches[0])
-          + `(${touchEvent.touches[0].layerX}, ${touchEvent.touches[0].layerY})`
-          + `(${touchEvent.touches[0].clientX}, ${touchEvent.touches[0].clientY})`
-          + `(${touchEvent.touches[0].x}, ${touchEvent.touches[0].y})`
-
-          this.updateMinute(touchEvent.clientX - this.clockSize/2, touchEvent.clientY - this.clockSize/2)
+        const touch = touchEvent.touches[0]
+        this.updateMinute(touch.clientX - this.clockSize/2, touch.clientY - this.clockSize/2)
     },
     updateMinute(x, y) {
+      this.touch = `Update(${x}, ${y})`
       let angle = Math.atan2(y, x) + 2.5 * Math.PI;
 
       let newMinutes = Math.floor((angle / (2 * Math.PI)) * 60) % 60;
@@ -201,8 +196,9 @@ export default {
   pointer-events: none;
 }
 
-html, body {
-  overflow:hidden;
+html,
+body {
+  overflow: hidden;
 }
 
 .hour {
