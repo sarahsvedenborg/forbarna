@@ -11,7 +11,7 @@
       @touchend="playSound"
     >
     <div>
-          <Hour v-for="i in 12" :key="i" :number="romans[i-1]" :clockSize="clockSize" :style="hourNumberPosStyle(i)"/>
+          <Hour v-for="i in 12" :key="i" :number="i.toString()" :clockSize="clockSize" :style="hourNumberPosStyle(i)"/>
       </div>
       <div
         ref="hourHandRef"
