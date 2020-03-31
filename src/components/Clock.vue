@@ -167,7 +167,7 @@ export default {
     dragStartM(dragEvent) {
       dragEvent.dataTransfer.setDragImage(blankImage, 0, 0);
     },
-    playSound: async function() {
+    playSound: function() {
       let tag = timeTag(this.hours, this.minutes);
       let soundToPlay = audioMap[tag];
       while (soundToPlay.readyState != HTMLMediaElement.HAVE_ENOUGH_DATA) {
