@@ -10,8 +10,14 @@
       @touchmove.prevent="touchDragMinute"
       @touchend="playSound"
     >
-    <div>
-          <Hour v-for="i in 12" :key="i" :number="i.toString()" :clockSize="clockSize" :style="hourNumberPosStyle(i)"/>
+      <div>
+        <Hour
+          v-for="i in 12"
+          :key="i"
+          :number="i.toString()"
+          :clockSize="clockSize"
+          :style="hourNumberPosStyle(i)"
+        />
       </div>
       <div
         ref="hourHandRef"
@@ -39,15 +45,14 @@
       >
         <img src="/img/MinuteHand.svg" />
       </div>
-      <div class="clockCenter"/>
-      
+      <div class="clockCenter" />
     </div>
   </div>
 </template>
 
 
 <script>
-import Hour from "./Hour.vue"
+import Hour from "./Hour.vue";
 
 const blankImage = new Image();
 
@@ -63,38 +68,6 @@ for (let h = 0; h < 12; h++) {
   }
 }
 
-(function() {
-	window.AudioContext = window.AudioContext || window.webkitAudioContext;
-	if (window.AudioContext) {
-		window.audioContext = new window.AudioContext();
-	}
-	var fixAudioContext = function (e) {
-		if (window.audioContext) {
-			// Create empty buffer
-			var buffer = window.audioContext.createBuffer(1, 1, 22050);
-			var source = window.audioContext.createBufferSource();
-			source.buffer = buffer;
-			// Connect to output (speakers)
-			source.connect(window.audioContext.destination);
-			// Play sound
-			if (source.start) {
-				source.start(0);
-			} else if (source.play) {
-				source.play(0);
-			} else if (source.noteOn) {
-				source.noteOn(0);
-			}
-		}
-		// Remove events
-		this.$refs.clock.removeEventListener('touchstart', fixAudioContext);
-		this.$refs.clock.removeEventListener('touchend', fixAudioContext);
-	};
-	// iOS 6-8
-	this.$refs.clock.addEventListener('touchstart', fixAudioContext);
-	// iOS 9
-	this.$refs.clock.addEventListener('touchend', fixAudioContext);
-})();
-
 export default {
   name: "Clock",
   props: {
@@ -107,11 +80,24 @@ export default {
     return {
       minutes: 0,
       hours: 0,
-      romans: ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"]
+      romans: [
+        "I",
+        "II",
+        "III",
+        "IV",
+        "V",
+        "VI",
+        "VII",
+        "VIII",
+        "IX",
+        "X",
+        "XI",
+        "XII"
+      ]
     };
   },
   components: {
-      Hour
+    Hour
   },
   computed: {
     minuteRotation() {
@@ -141,6 +127,40 @@ export default {
       };
     }
   },
+  mounted() {
+    // Fix iOS Audio Context by Blake Kus https://gist.github.com/kus/3f01d60569eeadefe3a1
+    // MIT license
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (window.AudioContext) {
+      window.audioContext = new window.AudioContext();
+    }
+    var fixAudioContext = function(e) {
+      if (window.audioContext) {
+        e.clientX;
+        // Create empty buffer
+        var buffer = window.audioContext.createBuffer(1, 1, 22050);
+        var source = window.audioContext.createBufferSource();
+        source.buffer = buffer;
+        // Connect to output (speakers)
+        source.connect(window.audioContext.destination);
+        // Play sound
+        if (source.start) {
+          source.start(0);
+        } else if (source.play) {
+          source.play(0);
+        } else if (source.noteOn) {
+          source.noteOn(0);
+        }
+      }
+      // Remove events
+      this.$refs.clock.removeEventListener("touchstart", fixAudioContext);
+      this.$refs.clock.removeEventListener("touchend", fixAudioContext);
+    };
+    // iOS 6-8
+    this.$refs.clock.addEventListener("touchstart", fixAudioContext);
+    // iOS 9
+    this.$refs.clock.addEventListener("touchend", fixAudioContext);
+  },
   methods: {
     rotate() {
       this.minutes += 5;
@@ -150,13 +170,13 @@ export default {
       this.minutes %= 60;
     },
     hourNumberPosStyle(i) {
-        const r = 0.75*(this.clockSize / 2 - 30)
-        const theta = (2 * Math.PI * i) / 12 - Math.PI / 2
+      const r = 0.75 * (this.clockSize / 2 - 30);
+      const theta = (2 * Math.PI * i) / 12 - Math.PI / 2;
       return {
-          position: "absolute",
-          left: this.clockSize/2 + r * Math.cos(theta) + "px",
-          top: this.clockSize/2 + r * Math.sin(theta) + "px"
-      }
+        position: "absolute",
+        left: this.clockSize / 2 + r * Math.cos(theta) + "px",
+        top: this.clockSize / 2 + r * Math.sin(theta) + "px"
+      };
     },
     hourNumberPosY(i) {
       return (
@@ -165,21 +185,27 @@ export default {
       );
     },
     toClockCoord(handle) {
-        console.log(this.$refs.clock.style)
-        return {
-            x: handle.clientX - this.clockSize/2 - this.$refs.clock.getBoundingClientRect().left,
-            y: handle.clientY - this.clockSize/2 - this.$refs.clock.getBoundingClientRect().top,
-        }
+      console.log(this.$refs.clock.style);
+      return {
+        x:
+          handle.clientX -
+          this.clockSize / 2 -
+          this.$refs.clock.getBoundingClientRect().left,
+        y:
+          handle.clientY -
+          this.clockSize / 2 -
+          this.$refs.clock.getBoundingClientRect().top
+      };
     },
     dragMinute(event) {
       event.preventDefault();
       event.dataTransfer.setDragImage(blankImage, 0, 0);
       if (event.x == 0 && event.y == 0) return;
-      this.updateMinute(this.toClockCoord(event))
+      this.updateMinute(this.toClockCoord(event));
     },
     touchDragMinute(touchEvent) {
-        const touch = touchEvent.touches[0]
-        this.updateMinute(this.toClockCoord(touch))
+      const touch = touchEvent.touches[0];
+      this.updateMinute(this.toClockCoord(touch));
     },
     updateMinute(coords) {
       let angle = Math.atan2(coords.y, coords.x) + 2.5 * Math.PI;
@@ -202,10 +228,11 @@ export default {
     playSound: function() {
       let tag = timeTag(this.hours, this.minutes);
       let soundToPlay = audioMap[tag];
-      while (soundToPlay.readyState != HTMLMediaElement.HAVE_ENOUGH_DATA) {
-        await new Promise(r => setTimeout(r, 10));
+      if (soundToPlay.readyState != HTMLMediaElement.HAVE_ENOUGH_DATA) {
+        setTimeout(() => audioMap[tag].play(), 10);
+      } else {
+        audioMap[tag].play();
       }
-      audioMap[tag].play();
     }
   }
 };
