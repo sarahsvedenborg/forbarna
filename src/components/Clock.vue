@@ -129,6 +129,7 @@ export default {
     },
     touchDragMinute(touchEvent) {
         this.touch = JSON.stringify(touchEvent.touches[0])
+        + JSON.stringify(touchEvent.touches[0])
           + `(${touchEvent.touches[0].layerX}, ${touchEvent.touches[0].layerY})`
     },
     updateMinute(x, y) {
