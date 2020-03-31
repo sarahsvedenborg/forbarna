@@ -6,7 +6,7 @@
         width: clockSize + 'px',
         height: clockSize + 'px'
     }"
-    @touchmove="touchDragMinute"
+    @touchmove.prevent="touchDragMinute"
     @touchstart="dragStartM"
     @touchend="playSound"
     >
@@ -199,6 +199,10 @@ export default {
   height: 100%;
   width: auto;
   pointer-events: none;
+}
+
+html, body {
+  overflow:hidden;
 }
 
 .hour {
