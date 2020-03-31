@@ -56,18 +56,6 @@ import Hour from "./Hour.vue";
 
 const blankImage = new Image();
 
-const timeTag = (h, m) => {
-  return `${String(h).padStart(2, "0")}${String(m).padStart(2, "0")}`;
-};
-
-const audioMap = {};
-for (let h = 0; h < 12; h++) {
-  for (let m = 0; m < 60; m += 5) {
-    let tag = timeTag(h, m);
-    audioMap[tag] = new Audio(`/audio/${tag}.mp3`);
-  }
-}
-
 export default {
   name: "Clock",
   props: {
@@ -160,6 +148,16 @@ export default {
     this.$refs.clock.addEventListener("touchstart", fixAudioContext);
     // iOS 9
     this.$refs.clock.addEventListener("touchend", fixAudioContext);
+
+    const audioMap = {};
+    for (let h = 0; h < 12; h++) {
+      for (let m = 0; m < 60; m += 5) {
+        let tag = this.timeTag(h, m);
+        audioMap[tag] = new Audio(`/audio/${tag}.mp3`);
+      }
+    }
+
+    this.audioMap = audioMap
   },
   methods: {
     rotate() {
@@ -185,7 +183,6 @@ export default {
       );
     },
     toClockCoord(handle) {
-      console.log(this.$refs.clock.style);
       return {
         x:
           handle.clientX -
@@ -226,13 +223,16 @@ export default {
       dragEvent.dataTransfer.setDragImage(blankImage, 0, 0);
     },
     playSound: function() {
-      let tag = timeTag(this.hours, this.minutes);
-      let soundToPlay = audioMap[tag];
+      let tag = this.timeTag(this.hours, this.minutes);
+      let soundToPlay = this.audioMap[tag];
       if (soundToPlay.readyState != HTMLMediaElement.HAVE_ENOUGH_DATA) {
-        setTimeout(() => audioMap[tag].play(), 10);
+        setTimeout(() => soundToPlay.play(), 10);
       } else {
-        audioMap[tag].play();
+        soundToPlay.play();
       }
+    },
+    timeTag(h, m) {
+      return `${String(h).padStart(2, "0")}${String(m).padStart(2, "0")}`;
     }
   }
 };
