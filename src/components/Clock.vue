@@ -1,15 +1,18 @@
 <template>
   <div>
     <div
+      ref="clock"
       class="clock"
       :style="{
         width: clockSize + 'px',
         height: clockSize + 'px'
     }"
       @touchmove.prevent="touchDragMinute"
-      @touchstart="dragStartM"
       @touchend="playSound"
     >
+    <div>
+          <Hour v-for="i in 12" :key="i" :number="romans[i-1]" :clockSize="clockSize" :style="hourNumberPosStyle(i)"/>
+      </div>
       <div
         ref="hourHandRef"
         class="hand"
@@ -36,14 +39,16 @@
       >
         <img src="/img/MinuteHand.svg" />
       </div>
-      <div class="clockCenter" />
+      <div class="clockCenter"/>
+      
     </div>
-    <div style="position: fixed; top: 0; left: 0;">{{ touch }}</div>
   </div>
 </template>
 
 
 <script>
+import Hour from "./Hour.vue"
+
 const blankImage = new Image();
 
 const timeTag = (h, m) => {
@@ -70,8 +75,11 @@ export default {
     return {
       minutes: 0,
       hours: 0,
-      touch: ""
+      romans: ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"]
     };
+  },
+  components: {
+      Hour
   },
   computed: {
     minuteRotation() {
@@ -81,7 +89,7 @@ export default {
       return ((this.hours + this.minutes / 60.0) * 360) / 12;
     },
     minuteHand() {
-      let h = (this.clockSize / 2) * 0.8;
+      let h = (this.clockSize / 2) * 0.7;
       let t = this.clockSize / 2 - h;
 
       return {
@@ -109,11 +117,14 @@ export default {
       }
       this.minutes %= 60;
     },
-    hourNumberPosX(i) {
-      return (
-        (this.clockSize / 2 - 30) *
-        Math.cos((2 * Math.PI * i) / 12 - Math.PI / 2)
-      );
+    hourNumberPosStyle(i) {
+        const r = 0.75*(this.clockSize / 2 - 30)
+        const theta = (2 * Math.PI * i) / 12 - Math.PI / 2
+      return {
+          position: "absolute",
+          left: this.clockSize/2 + r * Math.cos(theta) + "px",
+          top: this.clockSize/2 + r * Math.sin(theta) + "px"
+      }
     },
     hourNumberPosY(i) {
       return (
@@ -121,19 +132,25 @@ export default {
         Math.sin((2 * Math.PI * i) / 12 - Math.PI / 2)
       );
     },
+    toClockCoord(handle) {
+        console.log(this.$refs.clock.style)
+        return {
+            x: handle.clientX - this.clockSize/2 - this.$refs.clock.getBoundingClientRect().left,
+            y: handle.clientY - this.clockSize/2 - this.$refs.clock.getBoundingClientRect().top,
+        }
+    },
     dragMinute(event) {
       event.preventDefault();
       event.dataTransfer.setDragImage(blankImage, 0, 0);
       if (event.x == 0 && event.y == 0) return;
-      this.updateMinute(event.layerX, event.layerY - this.clockSize / 2);
+      this.updateMinute(this.toClockCoord(event))
     },
     touchDragMinute(touchEvent) {
         const touch = touchEvent.touches[0]
-        this.updateMinute(touch.clientX - this.clockSize/2, touch.clientY - this.clockSize/2)
+        this.updateMinute(this.toClockCoord(touch))
     },
-    updateMinute(x, y) {
-      this.touch = `Update(${x}, ${y})`
-      let angle = Math.atan2(y, x) + 2.5 * Math.PI;
+    updateMinute(coords) {
+      let angle = Math.atan2(coords.y, coords.x) + 2.5 * Math.PI;
 
       let newMinutes = Math.floor((angle / (2 * Math.PI)) * 60) % 60;
       newMinutes = Math.round(newMinutes / 5.0) * 5;

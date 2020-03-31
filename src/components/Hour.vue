@@ -1,5 +1,5 @@
 <template>
-  <div v-bind:style="{color: '#' + color}">{{number}}</div>
+  <div :style="hourStyle">{{number}}</div>
 </template>
 
 <script>
@@ -21,13 +21,21 @@ export default {
   name: "Hour",
   props: {
     number: {
-      type: Number,
-      default: 1
+      type: String,
+      default: "1"
+    },
+    clockSize: {
+        type: Number,
+        default: 50 
     }
+
   },
   computed: {
-    color() {
-      return colours[this.number - 1];
+    hourStyle() {
+      return {
+          color: "#" + colours[this.number - 1],
+          fontSize: 0.12*this.clockSize + "px"
+      }
     }
   }
 };
@@ -36,8 +44,8 @@ export default {
 <style scoped>
 @import url("https://fonts.googleapis.com/css?family=Itim&display=swap");
 div {
-  font-size: 55px;
   font-weight: bold;
   font-family: "Itim", cursive;
+  transform: translate(-50%, -50%)
 }
 </style>

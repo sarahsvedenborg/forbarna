@@ -32,44 +32,6 @@
                         <use stroke="#7EAFE9" stroke-width="3" xlink:href="#path-3"></use>
                     </g>
                 </g>
-                <g id="Numbers" transform="translate(35.000000, 25.000000)" font-weight="bold" font-family="AmericanTypewriter-CondensedBold, American Typewriter" letter-spacing="3.38333344" font-size="42" font-style="condensed">
-                    <text id="1" fill="#B300AB">
-                        <tspan x="181" y="54">1</tspan>
-                    </text>
-                    <text id="2" fill="#8200CF">
-                        <tspan x="219" y="95">2</tspan>
-                    </text>
-                    <text id="3" fill="#3B00FF">
-                        <tspan x="234" y="144">3</tspan>
-                    </text>
-                    <text id="4" fill="#0084E2">
-                        <tspan x="220" y="202">4</tspan>
-                    </text>
-                    <text id="5" fill="#00EC1C">
-                        <tspan x="182" y="246">5</tspan>
-                    </text>
-                    <text id="6" fill="#BEFF00">
-                        <tspan x="117" y="261">6</tspan>
-                    </text>
-                    <text id="9" fill="#FF9F00">
-                        <tspan x="0" y="146">9</tspan>
-                    </text>
-                    <text id="8" fill="#FEEC00">
-                        <tspan x="15" y="202">8</tspan>
-                    </text>
-                    <text id="7" fill="#F2FF00">
-                        <tspan x="57" y="246">7</tspan>
-                    </text>
-                    <text id="10" fill="#FF5100">
-                        <tspan x="12" y="95">10</tspan>
-                    </text>
-                    <text id="11" fill="#FF0000">
-                        <tspan x="50" y="54">11</tspan>
-                    </text>
-                    <text id="12" fill="#FE006D">
-                        <tspan x="105" y="39">12</tspan>
-                    </text>
-                </g>
             </g>
         </g>
     </g>
