@@ -132,6 +132,8 @@ export default {
         this.touch = JSON.stringify(touchEvent)
         + JSON.stringify(touchEvent.touches[0])
           + `(${touchEvent.touches[0].layerX}, ${touchEvent.touches[0].layerY})`
+          + `(${touchEvent.touches[0].clientX}, ${touchEvent.touches[0].clientY})`
+          + `(${touchEvent.touches[0].x}, ${touchEvent.touches[0].y})`
     },
     updateMinute(x, y) {
       let angle = Math.atan2(y, x) + 2.5 * Math.PI;
