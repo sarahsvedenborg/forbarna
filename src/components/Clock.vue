@@ -129,7 +129,7 @@ export default {
       this.updateMinute(event.layerX, event.layerY - this.clockSize / 2);
     },
     touchDragMinute(touchEvent) {
-        this.touch = JSON.stringify(touchEvent.touches)
+        this.touch = JSON.stringify(touchEvent.touches[0])
     },
     updateMinute(x, y) {
       let angle = Math.atan2(y, x) + 2.5 * Math.PI;
