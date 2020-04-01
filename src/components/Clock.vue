@@ -8,6 +8,7 @@
         height: clockSize + 'px'
     }"
       @touchstart="warmupAudio"
+      @mousedown="warmupAudio"
       @touchmove.prevent="touchDragMinute"
       @touchend="playSound"
     >
@@ -69,8 +70,8 @@ export default {
     return {
       minutes: 0,
       hours: 0,
-      audioMap: null,
-      audioPlayer: new Audio(),
+      audioMap: {},
+      audioPlayer: null,
       romans: [
         "I",
         "II",
@@ -183,20 +184,17 @@ export default {
     },
     playSound: function() {
       let tag = this.timeTag(this.hours, this.minutes);
-      this.audioMap[tag].play()
+      let audio = this.audioMap[tag]
+      if (!audio) {
+          audio = this.audioPlayer
+          audio.src = `/audio/${tag}.mp3`;
+          this.audioMap[tag] = audio
+      }
+      audio.play()
     },
     warmupAudio() {
-        this.audioMap = {};
-        for (let h = 0; h < 12; h++) {
-            for (let m = 0; m < 60; m += 5) {
-                let tag = this.timeTag(h, m);
-                const audio = new Audio();
-                audio.play()
-                audio.src = `/audio/${tag}.mp3`
-                this.audioMap[tag] = audio;
-        }   
-        
-    }
+        this.audioPlayer = new Audio()
+        this.audioPlayer.play();
     },
     timeTag(h, m) {
       return `${String(h).padStart(2, "0")}${String(m).padStart(2, "0")}`;
