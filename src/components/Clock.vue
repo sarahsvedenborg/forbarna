@@ -184,17 +184,20 @@ export default {
     },
     playSound: function() {
       let tag = this.timeTag(this.hours, this.minutes);
-      let audio = this.audioMap[tag]
+      let audio = this.audioMap[tag];
       if (!audio) {
-          audio = this.audioPlayer
-          audio.src = `/audio/${tag}.mp3`;
-          this.audioMap[tag] = audio
+        audio = this.audioPlayer;
+        this.audioPlayer = null;
+        audio.src = `/audio/${tag}.mp3`;
+        this.audioMap[tag] = audio;
       }
-      audio.play()
+      audio.play();
     },
     warmupAudio() {
-        this.audioPlayer = new Audio()
+      if (this.audioPlayer == null) {
+        this.audioPlayer = new Audio();
         this.audioPlayer.play();
+      }
     },
     timeTag(h, m) {
       return `${String(h).padStart(2, "0")}${String(m).padStart(2, "0")}`;
