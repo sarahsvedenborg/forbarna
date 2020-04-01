@@ -69,7 +69,7 @@ export default {
     return {
       minutes: 0,
       hours: 0,
-      audioMap: {},
+      audioMap: null,
       audioPlayer: new Audio(),
       romans: [
         "I",
@@ -117,17 +117,6 @@ export default {
         left: this.clockSize / 2 + "px"
       };
     }
-  },
-  mounted() {
-    const audioMap = {};
-    for (let h = 0; h < 12; h++) {
-      for (let m = 0; m < 60; m += 5) {
-        let tag = this.timeTag(h, m);
-        audioMap[tag] = new Audio(`/audio/${tag}.mp3`);
-      }
-    }
-
-    this.audioMap = audioMap
   },
   methods: {
     rotate() {
@@ -197,9 +186,17 @@ export default {
       this.audioMap[tag].play()
     },
     warmupAudio() {
-        if (!this.audioPlayer.src) {
-            this.audioPlayer.play()
-        }
+        this.audioMap = {};
+        for (let h = 0; h < 12; h++) {
+            for (let m = 0; m < 60; m += 5) {
+                let tag = this.timeTag(h, m);
+                const audio = new Audio();
+                audio.play()
+                audio.src = `/audio/${tag}.mp3`
+                this.audioMap[tag] = audio;
+        }   
+        
+    }
     },
     timeTag(h, m) {
       return `${String(h).padStart(2, "0")}${String(m).padStart(2, "0")}`;
