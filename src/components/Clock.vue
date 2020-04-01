@@ -194,8 +194,7 @@ export default {
     },
     playSound: function() {
       let tag = this.timeTag(this.hours, this.minutes);
-      this.audioPlayer.src = this.audioMap[tag].src;
-      this.audioPlayer.play()
+      this.audioMap[tag].play()
     },
     warmupAudio() {
         if (!this.audioPlayer.src) {
