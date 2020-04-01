@@ -7,6 +7,7 @@
         width: clockSize + 'px',
         height: clockSize + 'px'
     }"
+      @touchstart="warmupAudio"
       @touchmove.prevent="touchDragMinute"
       @touchend="playSound"
     >
@@ -68,6 +69,8 @@ export default {
     return {
       minutes: 0,
       hours: 0,
+      audioMap: {},
+      audioPlayer: new Audio(),
       romans: [
         "I",
         "II",
@@ -116,39 +119,6 @@ export default {
     }
   },
   mounted() {
-    // Fix iOS Audio Context by Blake Kus https://gist.github.com/kus/3f01d60569eeadefe3a1
-    // MIT license
-    window.AudioContext = window.AudioContext || window.webkitAudioContext;
-    if (window.AudioContext) {
-      window.audioContext = new window.AudioContext();
-    }
-    var fixAudioContext = function(e) {
-      if (window.audioContext) {
-        e.clientX;
-        // Create empty buffer
-        var buffer = window.audioContext.createBuffer(1, 1, 22050);
-        var source = window.audioContext.createBufferSource();
-        source.buffer = buffer;
-        // Connect to output (speakers)
-        source.connect(window.audioContext.destination);
-        // Play sound
-        if (source.start) {
-          source.start(0);
-        } else if (source.play) {
-          source.play(0);
-        } else if (source.noteOn) {
-          source.noteOn(0);
-        }
-      }
-      // Remove events
-      this.$refs.clock.removeEventListener("touchstart", fixAudioContext);
-      this.$refs.clock.removeEventListener("touchend", fixAudioContext);
-    };
-    // iOS 6-8
-    this.$refs.clock.addEventListener("touchstart", fixAudioContext);
-    // iOS 9
-    this.$refs.clock.addEventListener("touchend", fixAudioContext);
-
     const audioMap = {};
     for (let h = 0; h < 12; h++) {
       for (let m = 0; m < 60; m += 5) {
@@ -224,12 +194,13 @@ export default {
     },
     playSound: function() {
       let tag = this.timeTag(this.hours, this.minutes);
-      let soundToPlay = this.audioMap[tag];
-      if (soundToPlay.readyState != HTMLMediaElement.HAVE_ENOUGH_DATA) {
-        setTimeout(() => soundToPlay.play(), 10);
-      } else {
-        soundToPlay.play();
-      }
+      this.audioPlayer.src = this.audioMap[tag].src;
+      this.audioPlayer.play()
+    },
+    warmupAudio() {
+        if (!this.audioPlayer.src) {
+            this.audioPlayer.play()
+        }
     },
     timeTag(h, m) {
       return `${String(h).padStart(2, "0")}${String(m).padStart(2, "0")}`;
