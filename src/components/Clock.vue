@@ -83,21 +83,7 @@
         hours: this.startTime.getHours() % 12,
         audioMap: {},
         audioPlayer: null,
-        mousePos: {clientX: 0, clientY: 0},
-        romans: [
-          "I",
-          "II",
-          "III",
-          "IV",
-          "V",
-          "VI",
-          "VII",
-          "VIII",
-          "IX",
-          "X",
-          "XI",
-          "XII"
-        ]
+        mousePos: {clientX: 0, clientY: 0}
       };
     },
     components: {
