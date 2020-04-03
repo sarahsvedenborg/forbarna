@@ -12,7 +12,7 @@
         @touchstart="warmupAudio"
         @mousedown="warmupAudio"
         @touchmove.prevent="touchDragMinute"
-        @touchend="playSound"
+        @touchend="commitTime"
         @dragover="updateMousePosition"
     >
       <div>
@@ -45,7 +45,7 @@
       }]"
           @dragstart="dragStartM"
           @drag="dragMinute"
-          @dragend="playSound"
+          @dragend="commitTime"
           draggable="true"
       >
         <img alt="" src="/img/MinuteHand.svg"/>
@@ -68,13 +68,18 @@
       playSounds: {
         type: Boolean,
         default: true
+      },
+      startTime : {
+        type: Date,
+        default: new Date(1, 1, 1, 0, 0, 0, 0)
       }
+
     },
     data() {
       return {
         clockSize: 500,
-        minutes: 0,
-        hours: 0,
+        minutes: this.startTime.getMinutes(),
+        hours: this.startTime.getHours(),
         audioMap: {},
         audioPlayer: null,
         mousePos: {clientX: 0, clientY: 0},
@@ -127,12 +132,12 @@
     },
     mounted() {
       this.updateClockSize();
-      new ResizeSensor(this.$refs.clockWrapper, this.updateClockSize)
+      new ResizeSensor(this.$refs.clockWrapper, this.updateClockSize);
+
     },
     methods: {
       updateClockSize() {
         const clockRect = this.$refs.clockWrapper.getBoundingClientRect();
-        console.log(clockRect)
         this.clockSize = Math.min(clockRect.width, clockRect.height);
       },
       hourNumberPosStyle(i) {
@@ -189,8 +194,6 @@
         }
 
         this.minutes = newMinutes;
-
-        this.$emit("clockChanged", {minutes: this.minutes, hours: this.hours})
       },
       dragStartM(dragEvent) {
         dragEvent.dataTransfer.setDragImage(blankImage, 0, 0);
@@ -201,7 +204,8 @@
           clientY: event.clientY
         }
       },
-      playSound: function () {
+      commitTime: function () {
+        this.$emit("clock-changed", {hours: this.hours, minutes: this.minutes})
         if (this.playSounds) {
           let tag = this.timeTag(this.hours, this.minutes);
           let audio = this.audioMap[tag];
@@ -260,11 +264,6 @@
     width: auto;
     pointer-events: none;
     user-select: none;
-  }
-
-  html,
-  body {
-    overflow: hidden;
   }
 
 </style>

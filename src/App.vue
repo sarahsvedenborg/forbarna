@@ -4,7 +4,11 @@
     <Clock :style="{
       width: clockSize + 'px',
       height: clockSize + 'px'
-    }"/>
+    }"
+           :play-sounds="false"
+           :start-time="new Date()"
+           @clock-changed="clockChanged"
+    />
   </div>
 </template>
 
@@ -25,8 +29,11 @@
       this.updateClockSize()
     },
     methods: {
+      clockChanged(ev) {
+        console.log(ev)
+      },
       updateClockSize() {
-        this.clockSize = Math.min(window.innerWidth, window.innerHeight*0.9)
+        this.clockSize = Math.min(window.innerWidth, window.innerHeight * 0.9)
       }
     },
     mounted() {
