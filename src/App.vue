@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-    <Clock :clockSize="750"/>
+    <Clock :clockSize="clockSize"/>
   </div>
 </template>
 
@@ -12,6 +12,25 @@
     name: "App",
     components: {
       Clock
+    },
+    data() {
+      return {
+        clockSize: 500
+      }
+    },
+    created() {
+      this.updateClockSize()
+    },
+    methods: {
+      updateClockSize() {
+        this.clockSize = Math.min(window.innerWidth, window.innerHeight*0.9)
+      }
+    },
+    mounted() {
+      const vm = this;
+      window.addEventListener("resize", () => {
+        vm.updateClockSize();
+      })
     }
   };
 </script>

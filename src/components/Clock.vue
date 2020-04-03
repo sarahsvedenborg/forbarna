@@ -65,6 +65,10 @@
       clockSize: {
         type: Number,
         default: 500
+      },
+      playSounds: {
+        type: Boolean,
+        default: true
       }
     },
     data() {
@@ -176,6 +180,8 @@
         }
 
         this.minutes = newMinutes;
+
+        this.$emit("clockChanged", {minutes: this.minutes, hours: this.hours})
       },
       dragStartM(dragEvent) {
         dragEvent.dataTransfer.setDragImage(blankImage, 0, 0);
@@ -187,15 +193,17 @@
         }
       },
       playSound: function () {
-        let tag = this.timeTag(this.hours, this.minutes);
-        let audio = this.audioMap[tag];
-        if (!audio) {
-          audio = this.audioPlayer;
-          this.audioPlayer = null;
-          audio.src = `/audio/${tag}.mp3`;
-          this.audioMap[tag] = audio;
+        if (this.playSounds) {
+          let tag = this.timeTag(this.hours, this.minutes);
+          let audio = this.audioMap[tag];
+          if (!audio) {
+            audio = this.audioPlayer;
+            this.audioPlayer = null;
+            audio.src = `/audio/${tag}.mp3`;
+            this.audioMap[tag] = audio;
+          }
+          audio.play();
         }
-        audio.play();
       },
       warmupAudio() {
         if (this.audioPlayer == null) {
