@@ -117,7 +117,7 @@
         return {
           height: h + "px",
           top: t + "px",
-          left: this.clockSize / 2 + "px"
+          left: this.clockSize / 2 + "px",
         };
       }
     },
@@ -147,11 +147,16 @@
         event.preventDefault();
         event.dataTransfer.setDragImage(blankImage, 0, 0);
 
+        let clientCoords = event;
         if (event.x === 0 && event.y === 0) {
-          event = this.mouseClientPos
+          if (this.mousePos) {
+            clientCoords = this.mousePos
+          } else {
+            return;
+          }
         }
 
-        this.updateMinute(this.toClockCoord(event));
+        this.updateMinute(this.toClockCoord(clientCoords));
       },
       touchDragMinute(touchEvent) {
         const touch = touchEvent.touches[0];
@@ -176,7 +181,7 @@
         dragEvent.dataTransfer.setDragImage(blankImage, 0, 0);
       },
       updateMousePosition(event) {
-        this.mouseClientPos = {
+        this.mousePos = {
           clientX: event.clientX,
           clientY: event.clientY
         }
@@ -237,6 +242,7 @@
     height: 100%;
     width: auto;
     pointer-events: none;
+    user-select: none;
   }
 
   html,
