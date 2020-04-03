@@ -5,7 +5,6 @@
       width: clockSize + 'px',
       height: clockSize + 'px'
     }"
-           :play-sounds="false"
            :start-time="new Date()"
            @clock-changed="clockChanged"
     />

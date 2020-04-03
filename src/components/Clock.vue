@@ -69,7 +69,7 @@
         type: Boolean,
         default: true
       },
-      startTime : {
+      startTime: {
         type: Date,
         default: new Date(1, 1, 1, 0, 0, 0, 0)
       }
