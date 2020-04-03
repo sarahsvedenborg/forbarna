@@ -14,6 +14,7 @@
         @touchmove.prevent="touchDragMinute"
         @touchend="commitTime"
         @dragover="updateMousePosition"
+        @click="commitTime"
     >
       <div>
         <Hour
@@ -78,8 +79,8 @@
     data() {
       return {
         clockSize: 500,
-        minutes: this.startTime.getMinutes(),
-        hours: this.startTime.getHours(),
+        minutes: this.startTime.getMinutes() % 60,
+        hours: this.startTime.getHours() % 12,
         audioMap: {},
         audioPlayer: null,
         mousePos: {clientX: 0, clientY: 0},
@@ -206,15 +207,21 @@
       },
       commitTime: function () {
         this.$emit("clock-changed", {hours: this.hours, minutes: this.minutes})
-        if (this.playSounds) {
+        if (this.playSounds && (this.minutes % 5) === 0) {
           let tag = this.timeTag(this.hours, this.minutes);
           let audio = this.audioMap[tag];
           if (!audio) {
-            audio = this.audioPlayer;
-            this.audioPlayer = null;
+            if (this.audioPlayer) {
+              audio = this.audioPlayer;
+              this.audioPlayer = null;
+            }
+            else {
+              audio = new Audio()
+            }
             audio.src = `/audio/${tag}.mp3`;
             this.audioMap[tag] = audio;
           }
+          console.log(audio.src)
           audio.play();
         }
       },
