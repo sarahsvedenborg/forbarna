@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <div ref="clockWrapper"
+       id="clockwrapper"
+  >
     <div
         ref="clock"
         class="clock"
@@ -56,16 +58,13 @@
 
 <script>
   import Hour from "./Hour.vue";
+  import ResizeSensor from "css-element-queries/src/ResizeSensor";
 
   const blankImage = new Image();
 
   export default {
     name: "Clock",
     props: {
-      clockSize: {
-        type: Number,
-        default: 500
-      },
       playSounds: {
         type: Boolean,
         default: true
@@ -73,6 +72,7 @@
     },
     data() {
       return {
+        clockSize: 500,
         minutes: 0,
         hours: 0,
         audioMap: {},
@@ -125,7 +125,16 @@
         };
       }
     },
+    mounted() {
+      this.updateClockSize();
+      new ResizeSensor(this.$refs.clockWrapper, this.updateClockSize)
+    },
     methods: {
+      updateClockSize() {
+        const clockRect = this.$refs.clockWrapper.getBoundingClientRect();
+        console.log(clockRect)
+        this.clockSize = Math.min(clockRect.width, clockRect.height);
+      },
       hourNumberPosStyle(i) {
         const r = 0.75 * (this.clockSize / 2 - 30);
         const theta = (2 * Math.PI * i) / 12 - Math.PI / 2;

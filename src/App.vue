@@ -1,7 +1,10 @@
 <template>
   <div id="app">
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-    <Clock :clockSize="clockSize"/>
+    <Clock :style="{
+      width: clockSize + 'px',
+      height: clockSize + 'px'
+    }"/>
   </div>
 </template>
 
