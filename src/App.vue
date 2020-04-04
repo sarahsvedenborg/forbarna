@@ -1,24 +1,13 @@
 <template>
   <div id="app">
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-    <Clock :style="{
-      width: clockSize + 'px',
-      height: clockSize + 'px'
-    }"
-           :start-time="new Date()"
-           @clock-changed="clockChanged"
-    />
+    <router-view/>
   </div>
 </template>
 
 <script>
-  import Clock from "./components/Clock.vue";
-
   export default {
     name: "App",
-    components: {
-      Clock
-    },
+    components: {},
     data() {
       return {
         clockSize: 500

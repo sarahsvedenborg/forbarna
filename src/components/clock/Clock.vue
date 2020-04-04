@@ -192,7 +192,7 @@
         }
       },
       commitTime: function () {
-        this.$emit("clock-changed", {hours: this.hours, minutes: this.minutes})
+        this.$emit("clock-changed", {h: this.hours, m: this.minutes})
         if (this.playSounds && (this.minutes % 5) === 0) {
           let tag = this.timeTag(this.hours, this.minutes);
           let audio = this.audioMap[tag];
