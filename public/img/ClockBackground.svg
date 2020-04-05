@@ -1,37 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="328px" height="328px" viewBox="0 0 328 328" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="350px" height="350px" viewBox="0 0 350 350" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
     <title>ClockBackground</title>
     <desc>Created with Sketch.</desc>
     <defs>
-        <radialGradient cx="51.612258%" cy="50%" fx="51.612258%" fy="50%" r="51.6505112%" gradientTransform="translate(0.516123,0.500000),rotate(90.000000),scale(1.000000,1.021764),translate(-0.516123,-0.500000)" id="radialGradient-1">
-            <stop stop-color="#126093" offset="0%"></stop>
-            <stop stop-color="#376FAA" offset="88.7631008%"></stop>
-            <stop stop-color="#042750" offset="100%"></stop>
-        </radialGradient>
-        <radialGradient cx="50.0991862%" cy="49.691358%" fx="50.0991862%" fy="49.691358%" r="53.5529996%" gradientTransform="translate(0.500992,0.496914),rotate(90.000000),scale(1.000000,0.989757),translate(-0.500992,-0.496914)" id="radialGradient-2">
-            <stop stop-color="#3DA9EB" offset="0%"></stop>
-            <stop stop-color="#1C70D1" offset="100%"></stop>
-        </radialGradient>
+        <filter x="-4.3%" y="-4.3%" width="109.9%" height="109.9%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="2" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <linearGradient x1="16.0783179%" y1="14.8919753%" x2="87.2673129%" y2="82.5484664%" id="linearGradient-2">
+            <stop stop-color="#558ACA" offset="0%"></stop>
+            <stop stop-color="#3066A7" offset="56.5086933%"></stop>
+            <stop stop-color="#0B4D9B" offset="100%"></stop>
+        </linearGradient>
         <circle id="path-3" cx="162" cy="162" r="135"></circle>
-        <filter x="-5.6%" y="-5.6%" width="111.1%" height="111.1%" filterUnits="objectBoundingBox" id="filter-4">
-            <feGaussianBlur stdDeviation="9" in="SourceAlpha" result="shadowBlurInner1"></feGaussianBlur>
-            <feOffset dx="-9" dy="-9" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
+        <filter x="-2.8%" y="-2.8%" width="105.6%" height="105.6%" filterUnits="objectBoundingBox" id="filter-4">
+            <feGaussianBlur stdDeviation="5" in="SourceAlpha" result="shadowBlurInner1"></feGaussianBlur>
+            <feOffset dx="2" dy="2" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
             <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
-            <feColorMatrix values="0 0 0 0 0.273198503   0 0 0 0 0.423572986   0 0 0 0 0.598905187  0 0 0 1 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+            <feColorMatrix values="0 0 0 0 0.497214137   0 0 0 0 0.578110393   0 0 0 0 0.672433036  0 0 0 1 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
         </filter>
     </defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="ClockBackground" transform="translate(2.000000, 2.000000)">
-            <g id="RainbowClock">
-                <g id="Clock">
-                    <circle id="Oval-2" stroke="url(#radialGradient-2)" stroke-width="3" fill="url(#radialGradient-1)" cx="162" cy="162" r="162"></circle>
-                    <g id="Oval-2">
-                        <use fill="#F7FAFB" fill-rule="evenodd" xlink:href="#path-3"></use>
-                        <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-3"></use>
-                        <use stroke="#7EAFE9" stroke-width="3" xlink:href="#path-3"></use>
+        <g id="ClockBackground">
+            <g filter="url(#filter-1)" transform="translate(13.000000, 13.000000)">
+                <g id="RainbowClock">
+                    <g id="Clock">
+                        <circle id="Oval-2" fill="url(#linearGradient-2)" cx="162" cy="162" r="162"></circle>
+                        <g id="Oval-2">
+                            <use fill="#F7FAFB" fill-rule="evenodd" xlink:href="#path-3"></use>
+                            <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-3"></use>
+                            <use stroke="#7EAFE9" stroke-width="3" xlink:href="#path-3"></use>
+                        </g>
                     </g>
                 </g>
+                <path d="M68.9499058,45.6793896 C96.8705188,46.6334457 115.906483,38.4190473 120.930965,39.7444971 C125.955447,41.0699469 101.798265,51.2961235 69.5859402,50.7214879 C37.3736153,50.1468522 17.8103296,41.8869396 18.2409152,39.7444971 C18.6715008,37.6020546 41.0292929,44.7253335 68.9499058,45.6793896 Z" id="Rectangle-23" fill="#FFFFFF" opacity="0.200000003" transform="translate(69.913952, 45.044802) rotate(140.000000) translate(-69.913952, -45.044802) "></path>
             </g>
         </g>
     </g>

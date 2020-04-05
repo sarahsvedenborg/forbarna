@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="200px" height="200px" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>VolumeOn</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="VolumeOn">
+            <path d="M27,74 L53.372549,74 L53.372549,127 L27,127 C24.2385763,127 22,124.761424 22,122 L22,79 C22,76.2385763 24.2385763,74 27,74 L27,74 Z M53.372549,74 L94.079123,44.7011151 L94.079123,44.7011151 C96.3203703,43.0879593 99.4449814,43.597128 101.058137,45.8383753 C101.67052,46.6891935 102,47.7109657 102,48.7592523 L102,152.240748 C102,155.002171 99.7614237,157.240748 97,157.240748 C95.9517134,157.240748 94.9299412,156.911268 94.079123,156.298885 L53.372549,127 L53.372549,74 Z" id="Combined-Shape" fill="#000000"></path>
+            <path d="M149,50 C157,66.6666667 161,83.3333333 161,100 C161,116.666667 157,133.333333 149,150" id="Line" stroke="#000000" stroke-width="5" stroke-linecap="round"></path>
+            <path d="M131,58 C137,72.1666667 140,86.3333333 140,100.5 C140,114.666667 137,128.833333 131,143" id="Line" stroke="#000000" stroke-width="5" stroke-linecap="round"></path>
+            <path d="M113,65 C117,76.6666667 119,88.3333333 119,100 C119,111.666667 117,123.333333 113,135" id="Line" stroke="#000000" stroke-width="5" stroke-linecap="round"></path>
+        </g>
+    </g>
+</svg>
