@@ -60,6 +60,9 @@
 <script>
   import Hour from "./Hour.vue";
   import ResizeSensor from "css-element-queries/src/ResizeSensor";
+  import AudioWrapper from "./AudioWrapper";
+
+
 
   const blankImage = new Image();
 
@@ -121,6 +124,15 @@
       this.updateClockSize();
       new ResizeSensor(this.$refs.clockWrapper, this.updateClockSize);
 
+      let srcs = {};
+      for (let h = 0; h < 12; h++) {
+        for (let m = 0; m < 60; m += 5) {
+          const tag = this.timeTag(h, m);
+          srcs[tag] = `/audio/${tag}.mp3`;
+        }
+      }
+
+      this.audioWrapper = new AudioWrapper(srcs);
     },
     methods: {
       updateClockSize() {
@@ -195,27 +207,11 @@
         this.$emit("clock-changed", {h: this.hours, m: this.minutes})
         if (this.playSounds && (this.minutes % 5) === 0) {
           let tag = this.timeTag(this.hours, this.minutes);
-          let audio = this.audioMap[tag];
-          if (!audio) {
-            if (this.audioPlayer) {
-              audio = this.audioPlayer;
-              this.audioPlayer = null;
-            }
-            else {
-              audio = new Audio()
-            }
-            audio.src = `/audio/${tag}.mp3`;
-            this.audioMap[tag] = audio;
-          }
-          console.log(audio.src)
-          audio.play();
+          this.audioWrapper.play(tag);
         }
       },
       warmupAudio() {
-        if (this.audioPlayer == null) {
-          this.audioPlayer = new Audio();
-          this.audioPlayer.play();
-        }
+        this.audioWrapper.prepareContext();
       },
       timeTag(h, m) {
         return `${String(h).padStart(2, "0")}${String(m).padStart(2, "0")}`;
