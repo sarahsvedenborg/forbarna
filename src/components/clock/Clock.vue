@@ -100,7 +100,7 @@
         return ((this.hours + this.minutes / 60.0) * 360) / 12;
       },
       minuteHand() {
-        let h = (this.clockSize / 2) * 0.7;
+        let h = (this.clockSize / 2) * 0.64;
         let t = this.clockSize / 2 - h;
 
         return {
@@ -140,7 +140,7 @@
         this.clockSize = Math.min(clockRect.width, clockRect.height);
       },
       hourNumberPosStyle(i) {
-        const r = 0.75 * (this.clockSize / 2 - 30);
+        const r = 0.72 * (this.clockSize / 2 - 30);
         const theta = (2 * Math.PI * i) / 12 - Math.PI / 2;
         return {
           position: "absolute",
