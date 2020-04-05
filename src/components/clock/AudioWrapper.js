@@ -38,8 +38,10 @@ export class AudioWrapper {
   }
 
   prepareContext() {
+    var AudioContext = window.AudioContext // Default
+    || window.webkitAudioContext
     if (this.audioContext == null) {
-      this.audioContext = new AudioContext();
+      this.audioContext = new AudioContext;
     }
   }
 
