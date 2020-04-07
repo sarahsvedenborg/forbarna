@@ -13,7 +13,9 @@ export class ClockSounds {
 
   play(time) {
     const src = this.toSrc(time);
+    console.log("ClockSounds.play", time)
     defaultCache.play(src);
+    console.log("ClockSounds.play", src)
   }
 
   /**

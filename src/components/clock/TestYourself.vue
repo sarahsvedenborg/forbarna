@@ -14,7 +14,7 @@
 
 <script>
   import Clock from "./Clock";
-  import AudioWrapper from "./AudioWrapper";
+  import {clockSounds} from "./ClockSounds";
 
   const minuteStr = [
       "",
@@ -48,17 +48,6 @@
   export default {
     name: "TestYourself",
     components: {Clock},
-    mounted() {
-      let srcs = {};
-      for (let h = 0; h < 12; h++) {
-        for (let m = 0; m < 60; m += 5) {
-          const tag = this.timeTag(h, m);
-          srcs[tag] = `/audio/${tag}.mp3`;
-        }
-      }
-
-      this.audioWrapper = new AudioWrapper(srcs);
-    },
     data() {
       return {
         timeToFind: this.randomTime(),
@@ -87,13 +76,8 @@
       clockString(time) {
         return minuteStr[time.m/5] + " " + ( time.m > 15 ? hourStr[(time.h + 1) % 12] : hourStr[time.h])
       },
-      timeTag(h, m) {
-        return `${String(h).padStart(2, "0")}${String(m).padStart(2, "0")}`;
-      },
       playHint() {
-        const tag = this.timeTag(this.timeToFind.h, this.timeToFind.m);
-        this.audioWrapper.prepareContext();
-        this.audioWrapper.play(tag);
+        clockSounds.play(this.timeToFind);
       }
 
     }
