@@ -9,8 +9,6 @@
         width: clockSize + 'px',
         height: clockSize + 'px'
     }"
-        @touchstart="warmupAudio"
-        @mousedown="warmupAudio"
         @touchmove.prevent="touchDragMinute"
         @touchend="commitTime"
         @dragover="updateMousePosition"
@@ -60,9 +58,7 @@
 <script>
   import Hour from "./Hour.vue";
   import ResizeSensor from "css-element-queries/src/ResizeSensor";
-  import AudioWrapper from "./AudioWrapper";
-
-
+  import {clockSounds} from "./ClockSounds";
 
   const blankImage = new Image();
 
@@ -82,8 +78,10 @@
     data() {
       return {
         clockSize: 500,
-        minutes: this.startTime.getMinutes() % 60,
-        hours: this.startTime.getHours() % 12,
+        time: {
+          m: this.startTime.getMinutes() % 60,
+          h: this.startTime.getHours() % 12,
+        },
         audioMap: {},
         audioPlayer: null,
         mousePos: {clientX: 0, clientY: 0}
@@ -94,10 +92,10 @@
     },
     computed: {
       minuteRotation() {
-        return (this.minutes * 360) / 60;
+        return (this.time.m * 360) / 60;
       },
       hourRotation() {
-        return ((this.hours + this.minutes / 60.0) * 360) / 12;
+        return ((this.time.h + this.time.m / 60.0) * 360) / 12;
       },
       minuteHand() {
         let h = (this.clockSize / 2) * 0.64;
@@ -123,17 +121,7 @@
     mounted() {
       this.updateClockSize();
       new ResizeSensor(this.$refs.clockWrapper, this.updateClockSize);
-
-      let srcs = {};
-      for (let h = 0; h < 12; h++) {
-        for (let m = 0; m < 60; m += 5) {
-          const tag = this.timeTag(h, m);
-          srcs[tag] = `/audio/${tag}.mp3`;
-        }
-      }
-
-      this.audioWrapper = new AudioWrapper(srcs);
-    },
+  },
     methods: {
       updateClockSize() {
         const clockRect = this.$refs.clockWrapper.getBoundingClientRect();
@@ -186,13 +174,20 @@
         newMinutes = Math.round(newMinutes / 5.0) * 5;
         newMinutes %= 60;
 
-        if (this.minutes <= 15 && newMinutes >= 45) {
-          this.hours = (this.hours + 11) % 12;
-        } else if (this.minutes >= 45 && newMinutes <= 15) {
-          this.hours = (this.hours + 1) % 12;
+        if (this.time.m <= 15 && newMinutes >= 45) {
+          this.time.h = (this.time.h + 11) % 12;
+        } else if (this.time.m >= 45 && newMinutes <= 15) {
+          this.time.h = (this.time.h + 1) % 12;
         }
 
-        this.minutes = newMinutes;
+        if (this.time.m !== newMinutes) {
+          clockSounds.preloadProximity({
+            h: this.time.h,
+            m: newMinutes
+          })
+        }
+
+        this.time.m = newMinutes;
       },
       dragStartM(dragEvent) {
         dragEvent.dataTransfer.setDragImage(blankImage, 0, 0);
@@ -204,18 +199,11 @@
         }
       },
       commitTime: function () {
-        this.$emit("clock-changed", {h: this.hours, m: this.minutes})
-        if (this.playSounds && (this.minutes % 5) === 0) {
-          let tag = this.timeTag(this.hours, this.minutes);
-          this.audioWrapper.play(tag);
+        this.$emit("clock-changed", {h: this.time.h, m: this.time.m})
+        if (this.playSounds && (this.time.m % 5) === 0) {
+          clockSounds.play(this.time);
         }
       },
-      warmupAudio() {
-        this.audioWrapper.prepareContext();
-      },
-      timeTag(h, m) {
-        return `${String(h).padStart(2, "0")}${String(m).padStart(2, "0")}`;
-      }
     }
   };
 </script>
