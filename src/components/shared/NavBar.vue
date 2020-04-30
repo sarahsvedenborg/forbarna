@@ -1,6 +1,6 @@
 <template>
     <div class="navBar">
-        <router-link to="/"><img src="/img/ForBarnaLogo.png"></router-link>
+        <router-link to="/"><img src="/img/ForBarnaShort.svg"></router-link>
         <router-link to="/admin">Admin</router-link>
     </div>
 </template>

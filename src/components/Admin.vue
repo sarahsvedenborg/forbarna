@@ -1,81 +1,90 @@
 <template>
   <div>
     <h2>Lag nytt sett med kort til memory-spillet</h2>
-    <form class="newDeckForm">
-      <label for="deckName">Navn på nytt sett</label>
-      <input id="deckName" type="text" v-model="name" />
-      <label for="deckName">Skal kortene i et par være like eller forskjellige?</label>
-      <input type="radio" v-model="type" value="identical" />Like
-      <input type="radio" v-model="type" value="different" />Forskjellige
-      <label for="deckName">Antall kort i et "par"?</label>
-      <input id="deckName" type="number" v-model="cardNum" />
+    <h3>Steg 1: Informasjon om settet</h3>
+    <form class="newDeckForm" v-if="!necessaryInformation || editing">
+      <div class="inputElement">
+        <label for="deckName">Navn på nytt sett</label>
+        <br />
+        <input id="deckName" type="text" v-model="name" />
+      </div>
+      <div class="inputElement">
+        <label>Skal kortene i et par være like eller forskjellige?</label>
+        <br />
+        <input type="radio" v-model="type" value="identical" />Like
+        <input type="radio" v-model="type" value="different" />Forskjellige
+      </div>
+      <div class="inputElement">
+        <label for="cardsInPair">Antall kort i et "par"?</label>
+        <br />
+        <input id="cardsInPair" type="number" min="2" max="3" v-model="cardsInPair" />
+      </div>
     </form>
+    <!--       <button class="proceedButton" /><br> -->
+
+    <div class="basicInfoSummary" v-else>
+      <span>Edit</span>
+      <strong>{{ name }}</strong> har
+      <strong>{{ type == 'identical' ? 'identiske' : 'forskjellige'}}</strong> par med
+      <strong>{{ cardsInPair }}</strong> kort i hvert "par"
+    </div>
+    <h3>Steg 2: Fyll inn kortverdiene i settet</h3>
     <div class="cardValuesTable" v-if="true">
-      <h3>Fyll inn kortverdiene i settet: {{ name }}</h3>
+      <!--    <h3>Fyll inn kortverdiene i settet {{ name }}</h3> -->
       <table>
-        <tr>
-          <td class="rowHeading">Par 1</td>
-          <td>
-            <input placeholder="Verdi på kort 1" />
-          </td>
-          <td>
-            <input type="text" placeholder="Verdi på kort 2" />
-          </td>
-        </tr>
-        <tr>
-          <td class="rowHeading">Par 2</td>
-          <td>
-            <input placeholder="Verdi på kort 1" />
-          </td>
-          <td>
-            <input type="text" placeholder="Verdi på kort 2" />
+        <tr v-for="i in numPairs" :key="i">
+          <td class="rowHeading">Par {{ i }}</td>
+          <td v-for="j in Number(cardsInPair)" :key="j+'a'">
+            <input :placeholder="'Verdi på kort ' + j" v-model="cards[i-1][j-1]" type="text" />
           </td>
         </tr>
       </table>
     </div>
-    <!--   
-           <form class="cardValues" v-if="true">   
-        <div class="column">
-       <h3>Kort 1 i {{ name }}</h3>
-        <input id="c1a" type="text" />
-        <input id="c2a" type="text" />
-      </div>
-      <div>
-        <h3>Kort 2 i {{ name }}</h3>
-        <input id="c1a" type="text" />
-        <input id="c2a" type="text" />
-      </div> 
-    </form>-->
-    <button @click="saveCards" v-if="necessaryInformation">Lagre kort</button>
-    <p>Settets navn: {{ name }}</p>
-    <p>Par i settet er: {{ type }}</p>
-    <p>Hvert "par" i settet besår av: {{ cardNum }} kort</p>
+    <button class="confirmButton" @click="saveCards" v-if="necessaryInformation">Lagre kort</button>
+    <div>
+      ---for testing---
+      <p>Settets navn: {{ name }}</p>
+      <p>Par i settet er: {{ type }}</p>
+      <p>Hvert "par" i settet besår av: {{ cardsInPair }} kort</p>
+      <table>
+        <tr v-for="(row, i) in cards" :key="i">
+          <td v-for="(cell, j) in cards[i]" :key="j">{{ cards[i][j] }}</td>
+        </tr>
+      </table>
+    </div>
   </div>
 </template>
 
 <script>
+import { addSet } from "./memo/sets.js";
 export default {
   data() {
     return {
       name: "",
       type: "",
-      cardNum: 2
+      cardsInPair: 2,
+      cards: new Array(10).fill(0).map(() => new Array(2).fill("")), //Shold use numPairs and cardsInPair instead. Or put this is computed, but that does not work to attacj v-model to.
+      numPairs: 3,
     };
   },
   computed: {
     necessaryInformation() {
-      return this.name != "" && this.type != "" && this.cardNum != 0;
+      return this.name != "" && this.type != "" && this.cardsInPair != 0;
     }
+    /* cards() {
+        return new Array(this.numPairs).fill(0).map(() => new Array(this.cardsInPair).fill(""))
+    } */
   },
   methods: {
     saveCards(e) {
       e.preventDefault;
-      return {
+       addSet({
         type: this.type,
         name: this.name,
-        values: []
-      };
-    }
+        cardsInPair: this.cardsInPair,
+        values: this.cards
+      }); 
+    },
   }
 };
 </script>
@@ -84,10 +93,50 @@ export default {
 .newDeckForm {
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 70%;
   justify-content: center;
   margin: 0 auto;
 }
+
+.inputElement {
+  margin: 1em;
+}
+
+.proceedButton {
+  width: 30px;
+  height: 30px;
+  /*  border-radius: 50%; */
+  border: 0px;
+  padding: 20px;
+  background-color: white;
+  color: yellow;
+  background-image: url("/img/ArrowIcon.svg");
+  background-size: cover;
+}
+
+.proceedButton img {
+  height: inherit;
+}
+
+.basicInfoSummary {
+  position: relative;
+  border: 2px solid #29b6f6;
+  width: 80%;
+  padding: 1em;
+  border-radius: 10px;
+  margin: 30px auto;
+  /*    animation-name: fadeIn;
+  animation-duration: 2s; */
+}
+
+.basicInfoSummary span {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
 .cardValues {
   display: flex;
   flex-direction: row;
@@ -95,11 +144,11 @@ export default {
 }
 
 .cardValuesTable {
-  margin-top: 5em;
+  margin-top: 2em;
 }
 
 .cardValuesTable table {
-    margin: 0 auto;
+  margin: 0 auto;
 }
 
 .cardValues div {
@@ -111,12 +160,13 @@ input {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   font-size: 15px;
   padding: 5px 10px;
+  margin: 10px;
   border-radius: 10px;
   /* box-shadow: none; */
   border: 1px solid gray;
 }
 
-button {
+.confirmButton {
   background-color: #29b6f6;
   border-radius: 15px;
   padding: 0.75em;
@@ -130,4 +180,9 @@ button {
 .rowHeading {
   font-weight: bold;
 }
+
+/* @keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1;}
+} */
 </style>
