@@ -2,7 +2,7 @@
   <div>
     <h2>Lag nytt sett med kort til memory-spillet</h2>
     <h3>Steg 1: Informasjon om settet</h3>
-    <form class="newDeckForm" v-if="!necessaryInformation || editing">
+    <form class="newDeckForm" v-if="!necessaryInformation">
       <div class="inputElement">
         <label for="deckName">Navn på nytt sett</label>
         <br />
@@ -22,12 +22,12 @@
     </form>
     <!--       <button class="proceedButton" /><br> -->
 
-    <div class="basicInfoSummary" v-else>
+ <!--    <div class="basicInfoSummary" v-else>
       <span>Edit</span>
       <strong>{{ name }}</strong> har
       <strong>{{ type == 'identical' ? 'identiske' : 'forskjellige'}}</strong> par med
       <strong>{{ cardsInPair }}</strong> kort i hvert "par"
-    </div>
+    </div> -->
     <h3>Steg 2: Fyll inn kortverdiene i settet</h3>
     <div class="cardValuesTable" v-if="true">
       <!--    <h3>Fyll inn kortverdiene i settet {{ name }}</h3> -->

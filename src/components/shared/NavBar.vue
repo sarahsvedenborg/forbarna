@@ -20,6 +20,12 @@ export default {
     align-items: center;
 }
 
+.navBar a {
+    padding: 20px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
 .navBar img {
     height: 2em;
 }
