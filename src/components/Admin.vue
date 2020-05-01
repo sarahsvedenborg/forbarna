@@ -11,8 +11,8 @@
       <div class="inputElement">
         <label>Skal kortene i et par være like eller forskjellige?</label>
         <br />
-        <input type="radio" v-model="type" value="identical" />Like
-        <input type="radio" v-model="type" value="different" />Forskjellige
+        <input type="radio" v-model="type" :value="typeEnums.IDENTICAL" />Like
+        <input type="radio" v-model="type" :value="typeEnums.DIFFERENT" />Forskjellige
       </div>
       <div class="inputElement">
         <label for="cardsInPair">Antall kort i et "par"?</label>
@@ -57,14 +57,16 @@
 
 <script>
 import { addSet } from "./memo/sets.js";
+import { SetTypeEnum } from "../common/enums.js";
 export default {
   data() {
     return {
       name: "",
       type: "",
-      cardsInPair: 2,
-      cards: new Array(10).fill(0).map(() => new Array(2).fill("")), //Shold use numPairs and cardsInPair instead. Or put this is computed, but that does not work to attacj v-model to.
+      cardsInPair: 2, // denne må settes til å være 1 hvis identical er valgt
+      cards: new Array(3).fill(0).map(() => new Array(2).fill("")), //Shold use numPairs and cardsInPair instead. Or put this is computed, but that does not work to attacj v-model to.
       numPairs: 3,
+      typeEnums: SetTypeEnum
     };
   },
   computed: {
