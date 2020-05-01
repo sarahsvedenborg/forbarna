@@ -8,13 +8,7 @@
     <div v-else>
       <p>Par funnet: {{ pairsFoundCounter }}</p>
       <div class="boardWrapper">
-        <Card
-          v-for="(card, i) in cards"
-          :key="i"
-          :card="card"
-          :pairFound="pairFound"
-          :pairCheck="pairCheck"
-        ></Card>
+        <Card v-for="(card, i) in cards" :key="i" :card="card" :pairCheck="pairCheck"></Card>
       </div>
       <button @click="shuffleTest">Shuffle</button>
     </div>
@@ -75,8 +69,9 @@ export default {
       setNames: getSetNames(),
       selectedSet: null,
       cards: null,
+      cardsInPair: null,
       pairsFoundCounter: 0,
-      visibleCards: []
+      faceUpCards: []
     };
   },
   methods: {
@@ -92,20 +87,21 @@ export default {
           break;
         }
       }
+      this.cardsInPair = currentSet.cardsInPair
       let buildCards = [];
       let pairCounter = 0;
       switch (currentSet.type) {
         case "different":
           //refactor traversal
           for (let i = 0; i < currentSet.values.length; i++) {
+              if (i % this.cardsInPair == 0) pairCounter++;
             buildCards.push(
               new CardClass(
                 currentSet.values[i],
                 pairCounter,
-                pairCounter % 2 == 0 ? pairCounter + "a" : pairCounter + "b"
+                pairCounter + ":" + i 
               )
             );
-            if (i % 2 != 0) pairCounter++;
           }
           shuffle(buildCards);
           this.cards = buildCards;
@@ -122,26 +118,23 @@ export default {
       }
     },
     pairCheck(card) {
-      card.isFaceUp = !card.isFaceUp;
-      if (card.isFaceUp && this.visibleCards.length == 0) {
-        this.visibleCards.push(card);
-      } else if (card.isFaceUp && this.visibleCards.length == 1) {
-        this.visibleCards.push(card);
-        if (this.visibleCards[0].isEqualTo(card)) {
+      if (this.faceUpCards.length == this.cardsInPair) {
+        this.closeVisibleCards();
+      }
+      this.faceUpCards.push(card);
+      if (this.faceUpCards.length == this.cardsInPair) {
+          for(let i = 0; i < this.faceUpCards.length - 1; i++ ){
+              if (!this.faceUpCards[i].isEqualTo(card)) {
+                  return
+              }
+          }
           this.pairFound();
-        }
-      } else {
-        for (let i = 0; i < this.visibleCards.length; i++) {
-          this.visibleCards[i].isFaceUp = false;
-        }
-        this.visibleCards = [];
-        this.visibleCards.push(card);
       }
     },
     pairFound() {
-      for (let i = 0; i < this.visibleCards.length; i++) {
+      for (let i = 0; i < this.faceUpCards.length; i++) {
         for (let j = 0; j < this.cards.length; j++) {
-          if (this.visibleCards[i].isEqualTo(this.cards[j])) {
+          if (this.faceUpCards[i].isEqualTo(this.cards[j])) {
             const vueInstance = this;
             setTimeout(() => {
               vueInstance.cards[j].isFound = true;
@@ -150,17 +143,12 @@ export default {
         }
       }
       this.pairsFoundCounter++;
-      this.visibleCards = [];
+      this.faceUpCards = [];
       this.checkWin();
     },
     checkWin() {
-      if (this.pairsFoundCounter * 2 == this.cards.length) {
+      if (this.pairsFoundCounter * this.cardsInPair == this.cards.length) {
         setTimeout(() => {
-          //HVA ER BEST SYNTAX?
-          /*const reset = confirm("Gratulerer! Du har vunnet! Spille igjen?");
-          if (reset) {
-            this.reset();
-          }*/
           if (confirm("Gratulerer! Du har vunnet! Spille igjen?")) {
             this.reset();
           }
@@ -186,6 +174,12 @@ export default {
         arrayCopy.unshift(arrayCopy.splice([randomIndex], 1));
         currentIndex++;
       }*/
+    },
+    closeVisibleCards() {
+      for (let i = 0; i < this.faceUpCards.length; i++) {
+        this.faceUpCards[i].isFaceUp = false;
+      }
+      this.faceUpCards = [];
     }
   }
 };
@@ -200,12 +194,11 @@ export default {
 }
 
 button {
-    margin: 5px;
-    border-radius: 17px;
-    padding: 10px 5px;
-    width: 100px;
-    text-transform: uppercase;
-    border: 1px solid black;
-
+  margin: 5px;
+  border-radius: 17px;
+  padding: 10px 5px;
+  width: 100px;
+  text-transform: uppercase;
+  border: 1px solid black;
 }
 </style>

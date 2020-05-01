@@ -8,27 +8,18 @@
 export default {
   name: "card",
   props: {
-    flippedProp: {
-      type: Boolean
-    },
-    valueProp: {
-      type: String
-    },
     card: {
-        type: Object
-    },
-    pairFound: {
-        type: Function
+      type: Object
     },
     pairCheck: {
-        type: Function
+      type: Function
     }
   },
   data() {
-      return {
-          flipped: this.card.isFaceUp,
-          value: this.card.value
-      }
+    return {
+      flipped: this.card.isFaceUp,
+      value: this.card.value
+    };
   },
   methods: {
     faceUp() {
@@ -42,9 +33,10 @@ export default {
       };
     },
     flip() {
-      //this.flipped = !this.flipped;
-      this.pairCheck(this.card)
-      //this.pairFound()
+      if (!this.card.isFaceUp) {
+        this.card.isFaceUp = true;
+        this.pairCheck(this.card);
+      }
     }
   }
 };
@@ -68,6 +60,6 @@ export default {
   background-color: red;
 }
 .found {
-    visibility: hidden;
+  visibility: hidden;
 }
 </style>
