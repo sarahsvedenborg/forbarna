@@ -18,6 +18,12 @@ export const sets = {
         name: 'Tiervenner',
         cardsInPair: 2,
         values: [1, 9, 2, 8, 3, 7 , 6, 4, 5, 5]
+    },
+    3: {
+        type: 'different',
+        name: 'Farg3r',
+        cardsInPair: 3,
+        values: ["red", "rød", "rouge", "white", "hvit", "blanc" , "grønn", "green", "vert"]
     }
 }
 
