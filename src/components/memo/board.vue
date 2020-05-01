@@ -10,7 +10,7 @@
       <div class="boardWrapper">
         <Card v-for="(card, i) in cards" :key="i" :card="card" :pairCheck="pairCheck"></Card>
       </div>
-      <button @click="shuffleTest">Shuffle</button>
+      <!-- <button @click="shuffleTest">Shuffle</button> -->
     </div>
   </div>
 </template>
@@ -151,6 +151,9 @@ export default {
         setTimeout(() => {
           if (confirm("Gratulerer! Du har vunnet! Spille igjen?")) {
             this.reset();
+          }
+          else {
+              this.$router.push("/")
           }
         }, 300);
       }
