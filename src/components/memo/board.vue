@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>Finn parene!</h2>
-    <div v-if="cards == null">
+    <div class="menu" v-if="cards == null">
       <p>Hva slags par vil du finne?</p>
       <button v-for="name in setNames" :key="name" @click="selectSet(name)">{{ name }}</button>
     </div>
@@ -93,8 +93,16 @@ export default {
       switch (currentSet.type) {
         case SetTypeEnum.DIFFERENT:
           //refactor traversal
-          for (let pairIndex = 0; pairIndex < currentSet.values.length; pairIndex++) {
-            for (let cardIndex = 0; cardIndex < currentSet.values[pairIndex].length; cardIndex++) {
+          for (
+            let pairIndex = 0;
+            pairIndex < currentSet.values.length;
+            pairIndex++
+          ) {
+            for (
+              let cardIndex = 0;
+              cardIndex < currentSet.values[pairIndex].length;
+              cardIndex++
+            ) {
               buildCards.push(
                 new CardClass(
                   currentSet.values[pairIndex][cardIndex],
@@ -113,7 +121,7 @@ export default {
           break;
       }
       shuffle(buildCards);
-          this.cards = buildCards;
+      this.cards = buildCards;
     },
     pairCheck(card) {
       if (this.faceUpCards.length == this.cardsInPair) {
@@ -186,6 +194,10 @@ export default {
 </script>
 
 <style scoped>
+.menu {
+  font-size: larger;
+}
+
 .boardWrapper {
   display: flex;
   flex-direction: row;
@@ -193,12 +205,15 @@ export default {
   justify-content: center;
 }
 
-button {
+.menu button {
+  font-size: small;
   margin: 5px;
   border-radius: 17px;
   padding: 10px 5px;
   width: 100px;
   text-transform: uppercase;
   border: 1px solid black;
+  background-color: white;
+  cursor: pointer;
 }
 </style>

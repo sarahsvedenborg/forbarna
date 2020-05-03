@@ -22,7 +22,7 @@ export default {
 
 .navBar a {
     padding: 20px;
-    font-size: 14px;
+    font-size: larger;
     font-weight: 500;
 }
 

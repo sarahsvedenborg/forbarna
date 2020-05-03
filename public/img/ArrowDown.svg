@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="50px" height="50px" viewBox="0 0 50 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>ArrowDown</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round">
+        <g id="ArrowDown" stroke="#29B6F6" stroke-width="5">
+            <g id="Group" transform="translate(24.500000, 25.000000) rotate(90.000000) translate(-24.500000, -25.000000) translate(6.500000, 9.500000)">
+                <path d="M0.5,15.5 L35.5,15.5" id="Line"></path>
+                <path d="M22.5,30.5 L35,16" id="Line"></path>
+                <path d="M22.5,0.5 L35.3259747,15.0959063" id="Line"></path>
+            </g>
+        </g>
+    </g>
+</svg>

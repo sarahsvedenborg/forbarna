@@ -31,7 +31,7 @@ export default {
 .background {
   width: 100%;
   background-color: #29b6f6;
-  height: 50vh;
+  height: 40vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -43,9 +43,19 @@ h1 {
 }
 .logoImage {
   position: absolute;
-  bottom: -3em;
-  width: 50%;
+  bottom: -20%;
+  width: 40%;
 }
+
+@media screen and (max-width: 600px){
+  .background{
+    height: 10vh;
+  }
+  .logoImage{
+   bottom: -25%;
+  }
+}
+
 .activitySelectionPanel {
   margin: 15% 10%;
   display: flex;
@@ -76,5 +86,6 @@ h1 {
 a {
   text-decoration: none;
   color: black;
+  font-size: larger;
 }
 </style>
