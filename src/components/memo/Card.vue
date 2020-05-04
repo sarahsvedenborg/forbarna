@@ -44,15 +44,17 @@ export default {
 
 <style scoped>
 .card {
-  border: 2px solid red;
+  border: 5px solid red;
   width: 100px;
   height: 100px;
   color: black;
-  border-radius: 5px;
+  font-weight: 500;
+  padding: 5px;
+  border-radius: 15px;
   background-color: red;
   margin: 5px;
   cursor: pointer;
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
 }
@@ -64,6 +66,7 @@ export default {
   background-color: red;
 }
 .found {
-  visibility: hidden;
+  opacity: 0.5;
+  border-color: grey;
 }
 </style>
