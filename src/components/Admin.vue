@@ -1,7 +1,8 @@
 <template>
   <div>
     <h2>Lag nytt sett med kort til memory-spillet</h2>
-    <h3>Steg 1: Informasjon om settet</h3>
+      <Tab :title="'test tittel'" :isOpen="true">
+        <template v-slot:tab1>
     <form class="newDeckForm" v-if="editingBasicInfo">
       <div class="inputElement">
         <label for="deckName">Navn på nytt sett</label>
@@ -37,8 +38,9 @@
       <strong>{{ type == 'identical' ? 'identiske' : 'forskjellige'}}</strong> par med
       <strong>{{ cardsInPair }}</strong> kort i hvert "par"
     </div>
-    <div v-if="!editingBasicInfo">
-      <h3>Steg 2: Fyll inn kortverdiene i settet</h3>
+    </template>
+    <template v-slot:tab2>
+    <div v-if="true">
       <div class="cardValuesTable">
         <table>
           <tr v-for="i in numPairs" :key="i">
@@ -51,13 +53,20 @@
       </div>
        <button class="confirmButton" @click="saveCards" :disabled="!necessaryInformation"></button>
     </div>
+    </template>
+      </Tab>
   </div>
 </template>
 
 <script>
 import { addSet } from "./memo/sets.js";
 import { SetTypeEnum } from "../common/enums.js";
+import Tab from "./shared/UI/Tab.vue"
+
 export default {
+  components: {
+    Tab
+  },
   data() {
     return {
       name: "",
