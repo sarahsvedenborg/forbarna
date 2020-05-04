@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>Finn parene!</h2>
-    <div v-if="cards == null">
+    <div class="menu" v-if="cards == null">
       <p>Hva slags par vil du finne?</p>
       <button v-for="name in setNames" :key="name" @click="selectSet(name)">{{ name }}</button>
     </div>
@@ -19,6 +19,7 @@
 import Card from "./Card";
 import { sets } from "./sets.js";
 import { getSetNames } from "./sets.js";
+import { SetTypeEnum } from "../../common/enums.js";
 
 class CardClass {
   constructor(value, comparator, key) {
@@ -87,35 +88,39 @@ export default {
           break;
         }
       }
-      this.cardsInPair = currentSet.cardsInPair
+      this.cardsInPair = currentSet.cardsInPair;
       let buildCards = [];
-      let pairCounter = 0;
       switch (currentSet.type) {
-        case "different":
-          //refactor traversal
-          for (let i = 0; i < currentSet.values.length; i++) {
-              if (i % this.cardsInPair == 0) pairCounter++;
-            buildCards.push(
-              new CardClass(
-                currentSet.values[i],
-                pairCounter,
-                pairCounter + ":" + i 
-              )
-            );
+        case SetTypeEnum.DIFFERENT:
+          for (
+            let pairIndex = 0;
+            pairIndex < currentSet.values.length;
+            pairIndex++
+          ) {
+            for (
+              let cardIndex = 0;
+              cardIndex < currentSet.values[pairIndex].length;
+              cardIndex++
+            ) {
+              buildCards.push(
+                new CardClass(
+                  currentSet.values[pairIndex][cardIndex],
+                  pairIndex,
+                  pairIndex + ":" + cardIndex
+                )
+              );
+            }
           }
-          shuffle(buildCards);
-          this.cards = buildCards;
           break;
-        case "identical":
+        case SetTypeEnum.IDENTICAL:
           for (let i = 0; i < currentSet.values.length; i++) {
-            buildCards.push(new CardClass(currentSet.values[i], i, i + "a"));
-            if (i % 2 != 0) pairCounter++;
-            buildCards.push(new CardClass(currentSet.values[i], i, i + "b"));
+            buildCards.push(new CardClass(currentSet.values[i][0], i, i + "a")); //Skal [0] være hardkodet eller er det best med en nøstet for-løkke?
+            buildCards.push(new CardClass(currentSet.values[i][0], i, i + "b"));
           }
-          shuffle(buildCards);
-          this.cards = buildCards;
           break;
       }
+      shuffle(buildCards);
+      this.cards = buildCards;
     },
     pairCheck(card) {
       if (this.faceUpCards.length == this.cardsInPair) {
@@ -123,12 +128,12 @@ export default {
       }
       this.faceUpCards.push(card);
       if (this.faceUpCards.length == this.cardsInPair) {
-          for(let i = 0; i < this.faceUpCards.length - 1; i++ ){
-              if (!this.faceUpCards[i].isEqualTo(card)) {
-                  return
-              }
+        for (let i = 0; i < this.faceUpCards.length - 1; i++) {
+          if (!this.faceUpCards[i].isEqualTo(card)) {
+            return;
           }
-          this.pairFound();
+        }
+        this.pairFound();
       }
     },
     pairFound() {
@@ -151,9 +156,8 @@ export default {
         setTimeout(() => {
           if (confirm("Gratulerer! Du har vunnet! Spille igjen?")) {
             this.reset();
-          }
-          else {
-              this.$router.push("/")
+          } else {
+            this.$router.push("/");
           }
         }, 300);
       }
@@ -189,6 +193,10 @@ export default {
 </script>
 
 <style scoped>
+.menu {
+  font-size: larger;
+}
+
 .boardWrapper {
   display: flex;
   flex-direction: row;
@@ -196,12 +204,15 @@ export default {
   justify-content: center;
 }
 
-button {
+.menu button {
+  font-size: small;
   margin: 5px;
   border-radius: 17px;
   padding: 10px 5px;
   width: 100px;
   text-transform: uppercase;
   border: 1px solid black;
+  background-color: white;
+  cursor: pointer;
 }
 </style>

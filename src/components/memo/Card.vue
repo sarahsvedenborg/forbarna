@@ -51,6 +51,10 @@ export default {
   border-radius: 5px;
   background-color: red;
   margin: 5px;
+  cursor: pointer;
+  display:flex;
+  justify-content: center;
+  align-items: center;
 }
 .faceUp {
   background-color: white;
