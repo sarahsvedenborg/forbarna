@@ -92,7 +92,6 @@ export default {
       let buildCards = [];
       switch (currentSet.type) {
         case SetTypeEnum.DIFFERENT:
-          //refactor traversal
           for (
             let pairIndex = 0;
             pairIndex < currentSet.values.length;

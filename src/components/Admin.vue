@@ -40,7 +40,6 @@
     <div v-if="!editingBasicInfo">
       <h3>Steg 2: Fyll inn kortverdiene i settet</h3>
       <div class="cardValuesTable">
-        <!--    <h3>Fyll inn kortverdiene i settet {{ name }}</h3> -->
         <table>
           <tr v-for="i in numPairs" :key="i">
             <td class="rowHeading">Par {{ i }}</td>
@@ -52,17 +51,6 @@
       </div>
        <button class="confirmButton" @click="saveCards" :disabled="!necessaryInformation"></button>
     </div>
-<!--     <div>
-      ---for testing---
-      <p>Settets navn: {{ name }}</p>
-      <p>Par i settet er: {{ type }}</p>
-      <p>Hvert "par" i settet besår av: {{ cardsInPair }} kort</p>
-      <table>
-        <tr v-for="(row, i) in cards" :key="i">
-          <td v-for="(cell, j) in cards[i]" :key="j">{{ cards[i][j] }}</td>
-        </tr>
-      </table>
-    </div> -->
   </div>
 </template>
 
@@ -75,14 +63,14 @@ export default {
       name: "",
       type: "",
       cardsInPair: 2,
-      numPairs: 3,
+      numPairs: 10, //Dette er bare et vilkårlig tall. Alle par må ikke fylles ut, men det går ikke an å lage flere enn disse nå. Hva burde default være?
       typeEnums: SetTypeEnum,
       editingBasicInfo: true
     };
   },
   computed: {
     necessaryInformation() {
-      return this.name != "" && this.type != "" && this.cardsInPair != 0;
+      return this.name != "" && this.type != ""
     },
     cards() {
       return new Array(this.numPairs)
@@ -101,7 +89,6 @@ export default {
   },
   methods: {
     saveCards(e) {
-      this.stripEmptyCards();
       e.preventDefault;
       addSet({
         type: this.type,
@@ -188,8 +175,6 @@ export default {
   padding: 1em;
   border-radius: 10px;
   margin: 30px auto;
-  /*    animation-name: fadeIn;
-  animation-duration: 2s; */
 }
 
 .basicInfoSummary span {
