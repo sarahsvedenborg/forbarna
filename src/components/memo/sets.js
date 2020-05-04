@@ -5,7 +5,7 @@ export const sets = [
         type: SetTypeEnum.DIFFERENT,
         name: 'Dyr',
         cardsInPair: 2,
-        values: [['Monkey', 'Apekatt'], ['Horse', 'Hest'], ['Rat' ,'Rotte']] //TODO - bytte til å være tuples
+        values: [['Monkey', 'Apekatt'], ['Horse', 'Hest'], ['Rat' ,'Rotte']] 
     },
     {
         type: SetTypeEnum.IDENTICAL,

@@ -41,7 +41,7 @@
       <h3>Steg 2: Fyll inn kortverdiene i settet</h3>
       <div class="cardValuesTable">
         <table>
-          <tr v-for="i in numPairs" :key="i">
+          <tr v-for="i in maxPairs" :key="i">
             <td class="rowHeading">Par {{ i }}</td>
             <td v-for="j in Number(cardsInPair)" :key="j+'a'">
               <input :placeholder="'Verdi på kort ' + j" v-model="cards[i-1][j-1]" type="text" />
@@ -63,7 +63,7 @@ export default {
       name: "",
       type: "",
       cardsInPair: 2,
-      numPairs: 10, //Dette er bare et vilkårlig tall. Alle par må ikke fylles ut, men det går ikke an å lage flere enn disse nå. Hva burde default være?
+      maxPairs: 10,
       typeEnums: SetTypeEnum,
       editingBasicInfo: true
     };
@@ -73,7 +73,7 @@ export default {
       return this.name != "" && this.type != ""
     },
     cards() {
-      return new Array(this.numPairs)
+      return new Array(this.maxPairs)
         .fill(0)
         .map(() => new Array(this.cardsInPair).fill([]));
     }
@@ -108,6 +108,7 @@ export default {
         ) {
           if (typeof this.cards[pairIndex][cardIndex] !== "string") {
             pairIsValid = false;
+            break
           }
         }
         if (pairIsValid) {

@@ -114,7 +114,7 @@ export default {
           break;
         case SetTypeEnum.IDENTICAL:
           for (let i = 0; i < currentSet.values.length; i++) {
-            buildCards.push(new CardClass(currentSet.values[i][0], i, i + "a")); //Skal [0] være hardkodet eller er det best med en nøstet for-løkke?
+            buildCards.push(new CardClass(currentSet.values[i][0], i, i + "a"));
             buildCards.push(new CardClass(currentSet.values[i][0], i, i + "b"));
           }
           break;
