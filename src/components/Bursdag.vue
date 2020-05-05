@@ -8,10 +8,11 @@
       </div>
       <!-- <button @click="shuffleTest">Shuffle</button> -->
     </div>
-    <div v-else>
-        <h1>Gratulerer med dagen!</h1>
-        <img src="/img/golden_crown.jpg"/>
-        <h3>Bursdagskos fra Svedenborgene</h3></div>
+    <div class="message" v-else>
+      <h1>Gratulerer med dagen!</h1>
+      <img src="/img/golden_crown.jpg" />
+      <h3>Bursdagskos fra Svedenborgene</h3>
+    </div>
   </div>
 </template>
 
@@ -196,6 +197,8 @@ export default {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+  margin: 0 auto;
+  width: 800px;
 }
 
 .menu button {
@@ -208,5 +211,37 @@ export default {
   border: 1px solid black;
   background-color: white;
   cursor: pointer;
+}
+
+h1 {
+  font-size: 50px;
+}
+
+h3 {
+    padding: 20px;
+  font-size: 30px;
+}
+
+img {
+    width: 30%;
+}
+
+@media screen and (max-width: 450px) {
+  img {
+    width: 200px;
+  }
+  h1 {
+    font-size: 40px;
+  }
+
+  h3 {
+    font-size: 25px;
+  }
+  .message {
+    margin-top: 4em;
+}
+.boardWrapper {
+    width: 100%;
+}
 }
 </style>
