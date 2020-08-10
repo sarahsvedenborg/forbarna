@@ -10,7 +10,7 @@
           <span class="deleteIcon" @click="triggerDelete">X</span>
         </li>
       </ul>
-      <Button :action="() => creatingNewSet = true">Lag nytt</Button>
+      <IconButton :action="() => creatingNewSet = true" icon="/img/PlusWhite.svg"/>
     </div>
     <CreateSetForm v-else :setCreated="() => {creatingNewSet = false}" />
   </div>
@@ -19,12 +19,12 @@
 <script>
 import CreateSetForm from "./CreateSetForm.vue";
 import { getSetNames } from "../memo/sets.js";
-import Button from "../shared/UI/Button";
+import IconButton from "../shared/UI/IconButton";
 
 export default {
   components: {
     CreateSetForm,
-    Button
+    IconButton
   },
   data() {
     return {
@@ -43,6 +43,7 @@ export default {
 </script>
 
 <style scoped>
+
 h2 {
   border-bottom: 1px solid black;
 }

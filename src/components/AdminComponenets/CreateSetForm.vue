@@ -11,8 +11,8 @@
 
 <!--     <Tabs :title="'test tittel'" :openTabProp="openTab">
       <template v-slot:tab1> -->
-        <div class="stepWrapper">
-        <form class="newDeckForm" v-if="editingBasicInfo">
+        <div class="stepWrapper" v-if="editingBasicInfo">
+        <form class="newDeckForm">
          <!--  <div class="inputElement">
             <label for="deckName">Navn på sett</label>
             <br />
@@ -36,14 +36,14 @@
               :disabled="type == typeEnums.IDENTICAL"
             />
           </div>
-           <div class="proceedButton" @click="editingBasicInfo = False" v-if="necessaryInformation">
+           <div class="proceedButton" @click="editingBasicInfo = false" :style="setupInformation ? 'visibility: visible' : 'visibility: hidden'">
             <img src="/img/ArrowDown.svg" />
           </div>
         </form>
           </div>
 <!--       </template>
       <template v-slot:tab2> -->
-        <div class="stepWrapper" v-if="!editingBasicInfo">
+        <div class="stepWrapper" v-else>
           <div class="cardValuesTable">
             <table>
               <tr v-for="i in numPairs" :key="i">
@@ -54,7 +54,6 @@
               </tr>
             </table>
           </div>
-          <button class="confirmButton" @click="saveCards" :disabled="!necessaryInformation"></button>
         </div>
 <!--       </template>
     </Tabs> -->
@@ -87,6 +86,9 @@ export default {
     };
   },
   computed: {
+    setupInformation() {
+      return this.type != ""
+    },
     necessaryInformation() {
       return this.name != "" && this.type != "";
     },
@@ -225,14 +227,23 @@ input {
   font-size: 15px;
   padding: 5px 10px;
   margin: 10px;
-  border-radius: 10px;
+  border-radius: 2em;
   border: 1px solid gray;
 }
 
+
+input:focus{
+  outline: none;
+  border-radius: 2em;
+  border: 1px solid lightskyblue;
+  box-shadow: inset 0px 0px 6px 1px lightskyblue;
+}
+
+
 .confirmButton {
   background-color: #29b6f6;
-  border-radius: 15px;
-  padding: 0.75em;
+  border-radius: 2em;
+    padding: 5px 10px;
   color: white;
   border: 0px;
   font-family: Avenir, Helvetica, Arial, sans-serif;
