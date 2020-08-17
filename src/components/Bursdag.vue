@@ -1,25 +1,24 @@
 <template>
   <div>
-    <h2>Finn parene!</h2>
-    <div class="menu" v-if="cards == null">
-      <p>Hva slags par vil du finne?</p>
-      <button v-for="name in setNames" :key="name" @click="selectSet(name)">{{ name }}</button>
-    </div>
-    <div v-else>
+    <h2>Mortens bursdagsmemo</h2>
+    <div v-if="!won">
       <p>Par funnet: {{ pairsFoundCounter }}</p>
       <div class="boardWrapper">
         <Card v-for="(card, i) in cards" :key="i" :card="card" :pairCheck="pairCheck"></Card>
       </div>
       <!-- <button @click="shuffleTest">Shuffle</button> -->
     </div>
+    <div class="message" v-else>
+      <h1>Gratulerer med dagen!</h1>
+      <img src="/img/golden_crown.jpg" />
+      <h3>Bursdagskos fra Svedenborgene</h3>
+    </div>
   </div>
 </template>
 
 <script>
-import Card from "./Card";
-import { sets } from "./sets.js";
-import { getSetNames } from "./sets.js";
-import { SetTypeEnum } from "../../common/enums.js";
+import Card from "../components/memo/Card";
+import { SetTypeEnum } from "../common/enums.js";
 
 class CardClass {
   constructor(value, comparator, key) {
@@ -62,17 +61,34 @@ const shuffle = array => {
   return array;
 };
 
+const cardSet = {
+  type: SetTypeEnum.DIFFERENT,
+  name: "Bursdag",
+  cardsInPair: 2,
+  values: [
+    ["Pappa leder med", "begeistring"],
+    ["Mortegutt bygger", "hytter"],
+    ["Farfar fisker", "ørret"],
+    ["Morten er gift med", "Tina"],
+    ["Bestefar slurper i seg", "vaniljesaus"],
+    ["Fattern har bursdag", "i dag"],
+    ["Far har to", "barn"],
+    ["Padre de Familias spiller", "Dominion"],
+    ["Svigerfar liker ikke", "pulverkaffe"]
+  ]
+};
+
 export default {
   name: "Board",
   components: { Card },
   data() {
     return {
-      setNames: getSetNames(),
       selectedSet: null,
-      cards: null,
-      cardsInPair: null,
+      cards: this.initializeCards(),
+      cardsInPair: 2,
       pairsFoundCounter: 0,
-      faceUpCards: []
+      faceUpCards: [],
+      won: false
     };
   },
   methods: {
@@ -80,47 +96,30 @@ export default {
       this.selectedSet = setName;
       this.initializeCards(setName);
     },
-    initializeCards(setName) {
-      let currentSet = null;
-      for (let set in sets) {
-        if (sets[set].name == setName) {
-          currentSet = sets[set];
-          break;
+    initializeCards() {
+      let currentSet = cardSet;
+      let buildCards = [];
+      for (
+        let pairIndex = 0;
+        pairIndex < currentSet.values.length;
+        pairIndex++
+      ) {
+        for (
+          let cardIndex = 0;
+          cardIndex < currentSet.values[pairIndex].length;
+          cardIndex++
+        ) {
+          buildCards.push(
+            new CardClass(
+              currentSet.values[pairIndex][cardIndex],
+              pairIndex,
+              pairIndex + ":" + cardIndex
+            )
+          );
         }
       }
-      this.cardsInPair = currentSet.cardsInPair;
-      let buildCards = [];
-      switch (currentSet.type) {
-        case SetTypeEnum.DIFFERENT:
-          for (
-            let pairIndex = 0;
-            pairIndex < currentSet.values.length;
-            pairIndex++
-          ) {
-            for (
-              let cardIndex = 0;
-              cardIndex < currentSet.values[pairIndex].length;
-              cardIndex++
-            ) {
-              buildCards.push(
-                new CardClass(
-                  currentSet.values[pairIndex][cardIndex],
-                  pairIndex,
-                  pairIndex + ":" + cardIndex
-                )
-              );
-            }
-          }
-          break;
-        case SetTypeEnum.IDENTICAL:
-          for (let i = 0; i < currentSet.values.length; i++) {
-            buildCards.push(new CardClass(currentSet.values[i][0], i, i + "a"));
-            buildCards.push(new CardClass(currentSet.values[i][0], i, i + "b"));
-          }
-          break;
-      }
       shuffle(buildCards);
-      this.cards = buildCards;
+      return buildCards;
     },
     pairCheck(card) {
       if (this.faceUpCards.length == this.cardsInPair) {
@@ -154,12 +153,8 @@ export default {
     checkWin() {
       if (this.pairsFoundCounter * this.cardsInPair == this.cards.length) {
         setTimeout(() => {
-          if (confirm("Gratulerer! Du har vunnet! Spille igjen?")) {
-            this.reset();
-          } else {
-            this.$router.push("/");
-          }
-        }, 300);
+          this.won = true;
+        }, 500);
       }
     },
     reset() {
@@ -202,6 +197,8 @@ export default {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+  margin: 0 auto;
+  width: 800px;
 }
 
 .menu button {
@@ -214,5 +211,37 @@ export default {
   border: 1px solid black;
   background-color: white;
   cursor: pointer;
+}
+
+h1 {
+  font-size: 50px;
+}
+
+h3 {
+    padding: 20px;
+  font-size: 30px;
+}
+
+img {
+    width: 30%;
+}
+
+@media screen and (max-width: 450px) {
+  img {
+    width: 200px;
+  }
+  h1 {
+    font-size: 40px;
+  }
+
+  h3 {
+    font-size: 25px;
+  }
+  .message {
+    margin-top: 4em;
+}
+.boardWrapper {
+    width: 100%;
+}
 }
 </style>
