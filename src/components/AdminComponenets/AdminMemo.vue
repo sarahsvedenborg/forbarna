@@ -1,17 +1,21 @@
 <template>
   <div class="adminMemo">
-     <div class="exsistingCards" v-if="!creatingNewSet">
+    <div class="exsistingCards" v-if="!creatingNewSet">
       <ul>
         <h2>Eksisterende sett</h2>
         <li>
           <button class="confirmButton" @click="() => creatingNewSet = true">
-        <font-awesome-icon :icon="['fas','plus']" size="sm"/>
-        Nytt sett
-      </button>
+            <font-awesome-icon :icon="['fas','plus']" size="sm" />Nytt sett
+          </button>
         </li>
         <li v-for="(setName, i) in sets" :key="i">
           {{ setName }}
-          <font-awesome-icon :icon="['fas','trash']" @click="triggerDelete" class="deleteIcon" :style="{ color: '#414141' }"/>
+          <font-awesome-icon
+            :icon="['fas','trash']"
+            @click="triggerDelete"
+            class="deleteIcon"
+            :style="{ color: '#414141' }"
+          />
         </li>
       </ul>
     </div>
@@ -25,7 +29,7 @@ import { getSetNames } from "../memo/sets.js";
 
 export default {
   components: {
-    CreateSetForm,
+    CreateSetForm
   },
   data() {
     return {
@@ -44,7 +48,6 @@ export default {
 </script>
 
 <style scoped>
-
 .exsistingCards {
   display: flex;
   flex-direction: row;

@@ -83,7 +83,7 @@ export default {
       return this.type != "";
     },
     necessaryInformation() {
-      return this.name != "" && this.type != "";
+      return this.name != "" && this.setupInformation;
     }
   },
   watch: {

@@ -1,7 +1,7 @@
 <template>
   <tr class="inputRow">
     <td class="rowHeading">Nytt par</td>
-    <td v-for="j in Number(cardsInPair)" :key="j+'a'" :ref="'input'">
+    <td v-for="j in Number(cardsInPair)" :key="j+'a'" ref="input">
       <input :placeholder="'Verdi på kort ' + j" v-model="cardPair[j-1]" type="text" />
     </td>
     <td>

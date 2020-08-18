@@ -29,10 +29,6 @@ export default {
           image: "/img/clockThumbnail.png",
           appName: "Clock"
         },
-        {
-          image: "",
-          appName: "Something else"
-        }
       ],
       selected: ""
     };
