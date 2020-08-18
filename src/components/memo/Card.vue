@@ -58,6 +58,18 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
+@media screen and (max-width: 450px) {
+  .card {
+    width: 70px;
+    height: 70px;
+  }
+
+  .card p {
+    font-size: smaller;
+  }
+}
+
 .faceUp {
   background-color: white;
 }
