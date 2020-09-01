@@ -1,91 +1,70 @@
 <template>
   <div>
-    <div class="background">
+    <div class="header">
       <h1>Velkommen til</h1>
-      <img class="logoImage" src="/img/ForBarnaLogo.png" />
+      <img src="/img/forBarnaLogo.png" />
     </div>
     <div class="activitySelectionPanel">
-      <router-link to="/lær/klokka">
-      Lær klokka
-        <div class="activityTile">
-          <img src="/img/clockThumbnail.png">
-        </div>
-      </router-link>
-      <router-link to="/memory">
-      Finn parene
-        <div class="activityTile">
-<img src="/img/MemoryThumbnail.png">
-        </div>
+      <router-link v-for="app in apps" :key="app.name" :to="app.path">
+        <Tile :name="app.name" :src="app.img" />
       </router-link>
     </div>
   </div>
 </template>
 
 <script>
+import Tile from "./shared/Tile";
+
 export default {
-  name: "Home"
+  name: "Home",
+  components: { Tile },
+  data() {
+    return {
+      apps: [
+        {
+          name: "Lær klokka",
+          img: "/img/clockThumbnail.png",
+          path: "/lær/klokka"
+        },
+        {
+          name: "Finn parene",
+          img: "/img/MemoryThumbnail.png",
+          path: "/memory"
+        }
+      ]
+    };
+  }
 };
 </script>
 
 <style scoped>
-.background {
-  width: 100%;
-  background-color: #29b6f6;
-  height: 40vh;
+.header {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
+  z-index: 0;
 }
 
-h1 {
-  color: white;
+.header h1 {
+  color: var(--primary-color-light);
 }
-.logoImage {
-  position: absolute;
-  bottom: -20%;
+.header img {
   width: 40%;
 }
 
-@media screen and (max-width: 600px){
-  .background{
-    height: 10vh;
-  }
-  .logoImage{
-   bottom: -25%;
-  }
-}
-
 .activitySelectionPanel {
-  margin: 15% 10%;
+  margin: 10%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
 }
-.activityTile {
-  width: 8em;
-  height: 8em;
-  border-radius: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-decoration: none;
-  color: black;
-}
-
-.activityTile p {
-  width: 3em;
-  color: black;
-}
-
-.activityTile img {
-  height: inherit;
-}
-
+/* This styles the label inside a router-link */
 a {
   text-decoration: none;
-  color: black;
+  color: var(--primary-color-dark);
   font-size: larger;
 }
 </style>
