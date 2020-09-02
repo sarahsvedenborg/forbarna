@@ -1,10 +1,7 @@
 <template>
   <div>
-    <h2>Finn parene!</h2>
-    <div class="menu" v-if="cards == null">
-      <p>Hva slags par vil du finne?</p>
-      <button v-for="name in setNames" :key="name" @click="selectSet(name)">{{ name }}</button>
-    </div>
+    <h1>Finn parene!</h1>
+    <MemoMenu v-if="cards == null" :setNames="setNames" :selectSet="selectSet"/>
     <div v-else>
       <p>Par funnet: {{ pairsFoundCounter }}</p>
       <div class="boardWrapper">
@@ -17,6 +14,7 @@
 
 <script>
 import Card from "./Card";
+import MemoMenu from "./MemoMenu";
 import { sets } from "./sets.js";
 import { getSetNames } from "./sets.js";
 import { SetTypeEnum } from "../../common/enums.js";
@@ -64,7 +62,7 @@ const shuffle = array => {
 
 export default {
   name: "Board",
-  components: { Card },
+  components: { Card, MemoMenu },
   data() {
     return {
       setNames: getSetNames(),
@@ -193,8 +191,8 @@ export default {
 </script>
 
 <style scoped>
-.menu {
-  font-size: larger;
+h1{
+  color: var(--primary-color-light)
 }
 
 .boardWrapper {
@@ -204,15 +202,4 @@ export default {
   justify-content: center;
 }
 
-.menu button {
-  font-size: small;
-  margin: 5px;
-  border-radius: 17px;
-  padding: 10px 5px;
-  width: 100px;
-  text-transform: uppercase;
-  border: 1px solid black;
-  background-color: white;
-  cursor: pointer;
-}
 </style>
