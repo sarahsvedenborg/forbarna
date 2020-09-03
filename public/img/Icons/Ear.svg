@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="74px" height="74px" viewBox="0 0 74 74" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>Ear</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Ear" stroke="#000000" stroke-width="5">
+            <path d="M14,38.2407407 C18.6666667,9.57407407 29,-1.09259259 45,6.24074074 C69,17.2407407 57,38.2407407 48,47.2407407 C45.3594198,49.8813209 41,66.2407407 31,69.2407407 C24.3333333,71.2407407 19.3333333,66.5740741 16,55.2407407" id="Line" stroke-linecap="round"></path>
+            <path d="M21.1412797,47.0491889 C21.1412797,50.1557906 23.8275712,52.6741889 27.1412797,52.6741889 L27.1412797,52.6741889 C30.4549882,52.6741889 33.1412797,50.1557906 33.1412797,47.0491889 C33.1412797,43.9425871 30.4549882,41.4241889 27.1412797,41.4241889" id="Oval" transform="translate(27.141280, 47.049189) rotate(-35.000000) translate(-27.141280, -47.049189) "></path>
+            <path d="M33,16 C39.6666667,16 44,18.6666667 46,24 C48,29.3333333 47,34.3333333 43,39" id="Line-2" stroke-linecap="round"></path>
+        </g>
+    </g>
+</svg>

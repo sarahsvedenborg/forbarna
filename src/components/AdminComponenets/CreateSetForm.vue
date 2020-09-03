@@ -56,6 +56,7 @@
 <script>
 import { addSet } from "../memo/sets.js";
 import { SetTypeEnum } from "../../common/enums.js";
+import { SetCategoryEnum } from "../../common/enums.js";
 import CardPairInput from "./CardPairInput";
 
 export default {
@@ -101,6 +102,7 @@ export default {
       addSet({
         type: this.type,
         name: this.name,
+        category: SetCategoryEnum.ANDRE,
         cardsInPair: this.type == SetTypeEnum.IDENTICAL ? 2 : this.cardsInPair,
         values: this.stripEmptyCards()
       });

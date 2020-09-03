@@ -1,14 +1,16 @@
 <template>
   <div>
     <h1>Test deg selv!</h1>
-    <p>Finn klokka <span>{{ clockString(timeToFind) }}</span><img src="/img/VolumeOn.svg" style="width: 2em; height: 2em; cursor: pointer" @click="playHint"></p>
-    <p v-if="correctGuesses > 0">Du har klart {{correctGuesses}} klokkeslett!</p>
+    <div class="wrapper">
+    <h2>Finn klokka <span>{{ clockString(timeToFind) }}</span><img src="/img/icons/Ear.svg" style="width: 2em; height: 2em; cursor: pointer; marginBottom: -10px" @click="playHint"></h2>
+    <p class="counter">Du har klart <strong>{{correctGuesses}}</strong> klokkeslett!</p>
     <Clock
         :play-sounds="false"
         :start-time="new Date(1, 1, 1, 0, 0)"
         @clock-changed="checkTime"
     />
-    <router-link to="/lær/klokka">Øv mer.</router-link>
+    <router-link to="/lær/klokka"><button class="button">Øv mer</button></router-link>
+    </div>
   </div>
 </template>
 
@@ -85,8 +87,49 @@
 </script>
 
 <style scoped>
+p {
+  font-weight: bold;
+}
+strong {
+  color: var(--color-bloodorange)
+}
   span {
     font-weight: bold;
     color: red;
   }
+  h1 {
+  color: var(--primary-color-light);
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  background-color: var(--primary-color-light);
+  width: 80%;
+  margin: 0 auto;
+  box-shadow: 0px 1px 7px 0px #888;
+  margin-bottom: 30px;
+  padding: 10px 20px 20px 20px;
+  position: relative;
+}
+
+.button {
+  background-color: var(--color-fuksia);
+  color: var(--primary-color-light);
+  padding: 10px 30px;
+  border-radius: 20px;
+  font-weight: bold;
+  border: 0px;
+  font-size: large;
+  cursor: pointer;
+}
+
+.counter {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px;
+  margin: 0px;
+}
 </style>

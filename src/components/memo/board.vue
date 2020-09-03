@@ -1,13 +1,15 @@
 <template>
   <div>
     <h1>Finn parene!</h1>
-    <MemoMenu v-if="cards == null" :setNames="setNames" :selectSet="selectSet"/>
+    <MemoMenu v-if="cards == null" :setsMetadata="setsMetadata" :selectSet="selectSet" />
     <div v-else>
-      <p>Par funnet: {{ pairsFoundCounter }}</p>
       <div class="boardWrapper">
         <Card v-for="(card, i) in cards" :key="i" :card="card" :pairCheck="pairCheck"></Card>
+        <div class="wrapperFooter">
+          <p>Tid: 00:00</p>
+          <p>Par funnet: {{ pairsFoundCounter }}</p>
+        </div>
       </div>
-      <!-- <button @click="shuffleTest">Shuffle</button> -->
     </div>
   </div>
 </template>
@@ -16,7 +18,7 @@
 import Card from "./Card";
 import MemoMenu from "./MemoMenu";
 import { sets } from "./sets.js";
-import { getSetNames } from "./sets.js";
+import { getSetsMetadata } from "./sets.js";
 import { SetTypeEnum } from "../../common/enums.js";
 
 class CardClass {
@@ -33,13 +35,6 @@ class CardClass {
 }
 
 const shuffle = array => {
-  /*let shuffledArray = []
-    let randomIndex = Math.floor(Math.random()*array.length)
-
-    shuffledArray.push(array[randomIndex])
-    array.splice(randomIndex, 1)
-    console.log("array", array)*/
-
   //From stackoverflow
   var currentIndex = array.length,
     temporaryValue,
@@ -65,7 +60,7 @@ export default {
   components: { Card, MemoMenu },
   data() {
     return {
-      setNames: getSetNames(),
+      setsMetadata: getSetsMetadata(),
       selectedSet: null,
       cards: null,
       cardsInPair: null,
@@ -185,14 +180,14 @@ export default {
         this.faceUpCards[i].isFaceUp = false;
       }
       this.faceUpCards = [];
-    }
+    },
   }
 };
 </script>
 
 <style scoped>
-h1{
-  color: var(--primary-color-light)
+h1 {
+  color: var(--primary-color-light);
 }
 
 .boardWrapper {
@@ -200,6 +195,27 @@ h1{
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+  background-color: var(--primary-color-light);
+  width: 80%;
+  margin: 0 auto;
+  box-shadow: 0px 1px 7px 0px #888;
+  margin-bottom: 30px;
+  padding: 40px 20px 50px 20px;
+  position: relative;
 }
 
+.wrapperFooter {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.wrapperFooter p {
+  font-weight: bold;
+  margin: 0px 20px 10px 20px;
+  color: var(--primary-color-dark);
+}
 </style>

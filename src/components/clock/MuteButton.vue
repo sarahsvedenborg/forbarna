@@ -44,13 +44,13 @@
   }
 
   .unmuted {
-    background-image: url("/img/VolumeOn.svg");
+    background-image: url("/img/icons/VolumeOnPurple.svg");
     background-repeat: no-repeat;
     background-size: cover;
   }
 
   .muted {
-    background-image: url("/img/VolumeOff.svg");
+    background-image: url("/img/icons/VolumeOffPurple.svg");
     background-repeat: no-repeat;
     background-size: cover;
   }

@@ -4,16 +4,17 @@
       <div v-for="subject in subjects" :key="subject" class="column">
           <h3>{{subject}}</h3>
           <ul>
-              <li v-for="name in setNames" :key="name" @click="selectSet(name)">{{ name }}</li>
+              <li v-for="set in setsMetadata" :key="set.name" @click="selectSet(set.name)" :class="set.category != subject ? 'remove' : ''">{{ set.name }}</li>
           </ul>
           </div>
     </div>
   </div>
 </template>
 <script>
+import {SetCategoryEnum} from '../../common/enums.js'
 export default {
   props: {
-    setNames: {
+    setsMetadata: {
       type: Array
     },
     selectSet: {
@@ -22,22 +23,28 @@ export default {
   },
   data() {
     return {
-      subjects: ["Engelsk", "Matte", "Andre"]
+      subjects: [SetCategoryEnum.ENGELSK, SetCategoryEnum.MATTE, SetCategoryEnum.ANDRE]
     };
   }
 };
 </script>
 <style scoped>
+.remove {
+  display: none;
+}
 .menu {
   font-size: larger;
+}
+.menu ul {
+  padding: 0px;
 }
 .menu li {
     list-style: none;
   font-size: small;
-  margin: 10px;
+  margin: 10px auto;
   border-radius: 30px;
   padding: 15px 5px;
-  width: 100px;
+  width: 150px;
   text-transform: uppercase;
   background-color: white;
   cursor: pointer;
@@ -47,7 +54,7 @@ export default {
 .columnWrapper {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 }
 .column {

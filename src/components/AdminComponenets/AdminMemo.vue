@@ -8,11 +8,11 @@
             <font-awesome-icon :icon="['fas','plus']" size="sm" />Nytt sett
           </button>
         </li>
-        <li v-for="(setName, i) in sets" :key="i">
-          {{ setName }}
+        <li v-for="(set, i) in sets" :key="i">
+          {{ set.name }}
           <font-awesome-icon
             :icon="['fas','trash']"
-            @click="triggerDelete"
+            @click="() => triggerDelete(set.name)"
             class="deleteIcon"
             :style="{ color: '#414141' }"
           />
@@ -25,24 +25,30 @@
 
 <script>
 import CreateSetForm from "./CreateSetForm.vue";
-import { getSetNames } from "../memo/sets.js";
+import { getSetsMetadata } from "../memo/sets.js";
+import { deleteSet } from "../memo/sets.js";
+/* import * as firebase from "firebase/app"; */
 
 export default {
   components: {
     CreateSetForm
   },
+  created(){
+    console.log("adminMemo created")
+/* console.log("result", firebase.database().ref('setNames').set({
+    x: getSetsMetadata()
+  })); */
+  },
   data() {
     return {
       creatingNewSet: false,
-      sets: getSetNames()
+      sets: getSetsMetadata()
     };
   },
   methods: {
-    triggerDelete() {
-      alert(
-        "Er du sikker på at du vil slette dette settet? Handlingen kan ikke angres."
-      );
-    }
+    triggerDelete(setName) {
+      deleteSet(setName)
+    },
   }
 };
 </script>
