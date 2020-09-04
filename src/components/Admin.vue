@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="adminWrapper">
-      <AdminNavBar :itemClicked="(selectedApp) => {selectedTab = selectedApp}"/>
+      <AdminNavBar :itemClicked="(selectedApp) => {selectedTab = selectedApp}" />
       <div class="appAdmin">
         <AdminMemo v-if="selectedTab == 'CreateSet'" />
         <div v-else class="defaultAdminPanel">Velg en app å administrere</div>
@@ -23,7 +23,7 @@ export default {
     return {
       selectedTab: ""
     };
-  },
+  }
 };
 </script>
 
@@ -44,6 +44,7 @@ export default {
 .defaultAdminPanel {
   font-size: xx-large;
   font-weight: 700;
-  color: rgba(200, 200, 200, 0.9);
+  color: rgba(0, 0, 0, 0.3);
+  margin: 0 auto;
 }
 </style>

@@ -1,8 +1,8 @@
 <template>
   <div class="adminMemo">
-    <div class="exsistingCards" v-if="!creatingNewSet">
-      <ul>
-        <h2>Eksisterende sett</h2>
+    <h2>{{creatingNewSet ? 'Nytt sett med kort' : 'Eksisterende sett'}}</h2>
+    <div class="panel">
+      <ul v-if="!creatingNewSet">
         <li>
           <button class="confirmButton" @click="() => creatingNewSet = true">
             <font-awesome-icon :icon="['fas','plus']" size="sm" />Nytt sett
@@ -18,8 +18,9 @@
           />
         </li>
       </ul>
+
+      <CreateSetForm v-else :setCreated="() => {creatingNewSet = false}" />
     </div>
-    <CreateSetForm v-else :setCreated="() => {creatingNewSet = false}" />
   </div>
 </template>
 
@@ -33,9 +34,9 @@ export default {
   components: {
     CreateSetForm
   },
-  created(){
-    console.log("adminMemo created")
-/* console.log("result", firebase.database().ref('setNames').set({
+  created() {
+    console.log("adminMemo created");
+    /* console.log("result", firebase.database().ref('setNames').set({
     x: getSetsMetadata()
   })); */
   },
@@ -47,21 +48,45 @@ export default {
   },
   methods: {
     triggerDelete(setName) {
-      deleteSet(setName)
-    },
+      deleteSet(setName);
+    }
   }
 };
 </script>
 
 <style scoped>
-.exsistingCards {
+.adminMemo {
+  width: 100%;
+}
+h2 {
+  color: var(--primary-color-light);
+}
+.panel {
+  background-color: var(--primary-color-light);
+  width: 80%;
+  margin: 0 auto;
+  box-shadow: 0px 1px 7px 0px #888;
+  margin-bottom: 30px;
+  padding: 20px;
   display: flex;
-  flex-direction: row;
+  justify-content: center;
+  height: 65vh;
+}
+.exsistingCards {
+  background-color: var(--primary-color-light);
+  width: 80%;
+  margin: 0 auto;
 }
 
 ul {
   list-style: none;
   padding: 0px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: inherit;
+  height: inherit;
 }
 
 li {
@@ -71,12 +96,10 @@ li {
   width: 200px;
   padding: 3px;
   margin: 5px;
+  font-weight: bold;
 }
 
 li:nth-child(1) {
-  border: 0px;
-}
-li:nth-child(2) {
   border: 0px;
 }
 

@@ -55,7 +55,7 @@ export default {
 }
 
 .activitySelectionPanel {
-  margin: 10%;
+  margin: 5% 10%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

@@ -2,8 +2,8 @@
      <div class="menu" v-if="menuOpen">
             <img src="/img/icons/close.svg" @click="close"/>
             <ul>
-                <li> <router-link to="/om-oss">Om oss</router-link></li>
-                <li> <router-link to="/kontakt">Kontakt oss</router-link></li>
+                <li @click="close"> <router-link to="/om-oss">Om oss</router-link></li>
+                <li @click="close"> <router-link to="/kontakt">Kontakt oss</router-link></li>
             </ul>
         </div>
 </template>

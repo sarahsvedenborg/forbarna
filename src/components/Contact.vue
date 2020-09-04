@@ -6,7 +6,6 @@
     <TextInput label="Epost" :inputChanged="(newInput) => email = newInput" />
     <TextArea label="Beskjed" :inputChanged="(newInput) => message = newInput" />
     <br />
-     <!-- TODO: Create separate UI button component for this button-->
     <Button buttonType="primary" :action="submit">Send</Button>
     <!-- TODO: 
     1. Make into own confirmation component. 
@@ -17,7 +16,7 @@
     <div :class="emailSent ? 'confirmation' : 'invisible'">
         <h2>Epost sent!</h2>
         <p>Takk for eposten. </p>
-        <p> Den vil bli besvart så rask som mulig.</p>
+        <p> Den vil bli besvart så raskt som mulig.</p>
     </div>
   </div>
 </template>
@@ -27,6 +26,7 @@ import ColoredHeading from "./shared/ColoredHeading";
 import TextInput from "./shared/UI/TextInput";
 import TextArea from "./shared/UI/TextArea";
 import Button from "./shared/UI/Button";
+
 export default {
   components: { ColoredHeading, TextInput, TextArea, Button },
   data() {

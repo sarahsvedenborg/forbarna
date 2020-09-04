@@ -1,17 +1,29 @@
 <template>
   <div class="menu">
     <div class="columnWrapper">
-      <div v-for="subject in subjects" :key="subject" class="column">
-          <h3>{{subject}}</h3>
-          <ul>
-              <li v-for="set in setsMetadata" :key="set.name" @click="selectSet(set.name)" :class="set.category != subject ? 'remove' : ''">{{ set.name }}</li>
-          </ul>
-          </div>
+      <div v-for="category in Object.keys(setsByCategory)" :key="category" class="column">
+        <h3>{{category}}</h3>
+        <ul>
+          <li
+            v-for="set in setsByCategory[category]"
+            :key="set.name"
+            @click="selectSet(set.name)"
+          >{{ set.name }}</li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
 <script>
-import {SetCategoryEnum} from '../../common/enums.js'
+import { SetCategoryEnum } from "../../common/enums.js";
+
+const createSetsByCategory = (sets) => {
+  let setsByCategory = { Engelsk: [], Matte: [], Andre: [] };
+  for (let i = 0; i < sets.length; i++) {
+    setsByCategory[sets[i].category].push(sets[i]);
+  }
+  return setsByCategory;
+};
 export default {
   props: {
     setsMetadata: {
@@ -23,7 +35,12 @@ export default {
   },
   data() {
     return {
-      subjects: [SetCategoryEnum.ENGELSK, SetCategoryEnum.MATTE, SetCategoryEnum.ANDRE]
+      subjects: [
+        SetCategoryEnum.ENGELSK,
+        SetCategoryEnum.MATTE,
+        SetCategoryEnum.ANDRE
+      ],
+      setsByCategory: createSetsByCategory(this.setsMetadata)
     };
   }
 };
@@ -39,7 +56,7 @@ export default {
   padding: 0px;
 }
 .menu li {
-    list-style: none;
+  list-style: none;
   font-size: small;
   margin: 10px auto;
   border-radius: 30px;
@@ -49,7 +66,7 @@ export default {
   background-color: white;
   cursor: pointer;
   font-weight: bold;
-  color: var(--primary-color-dark)
+  color: var(--primary-color-dark);
 }
 .columnWrapper {
   display: flex;
@@ -63,25 +80,25 @@ export default {
   box-shadow: 0px 1px 7px 0px #888;
   margin: 20px;
 }
-h3{
-    color: var(--primary-color-dark)
+h3 {
+  color: var(--primary-color-dark);
 }
-li:nth-of-type(6n+1){
-    background-color: var(--color-orange)
+li:nth-of-type(6n + 1) {
+  background-color: var(--color-lime);
 }
-li:nth-of-type(6n+2){
-    background-color: var(--color-red)
+li:nth-of-type(6n + 2) {
+  background-color: var(--color-orange);
 }
-li:nth-of-type(6n+3){
-    background-color: var(--color-purple)
+li:nth-of-type(6n + 3) {
+  background-color: var(--color-blue);
 }
-li:nth-of-type(6n+4){
-    background-color: var(--color-green)
+li:nth-of-type(6n + 4) {
+  background-color: var(--color-pink);
 }
-li:nth-of-type(6n+5){
-    background-color: var(--color-yellow)
+li:nth-of-type(6n + 5) {
+  background-color: var(--color-yellow);
 }
-li:nth-of-type(6n+6){
-    background-color: var(--color-blue)
+li:nth-of-type(6n + 6) {
+  background-color: var(--color-purple);
 }
 </style>

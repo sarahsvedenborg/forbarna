@@ -3,13 +3,15 @@
     <h1>Finn parene!</h1>
     <MemoMenu v-if="cards == null" :setsMetadata="setsMetadata" :selectSet="selectSet" />
     <div v-else>
-      <div class="boardWrapper">
+      <div class="panel">
+      <div v-if="!won">
+      <div class="boardWrapper">   
         <Card v-for="(card, i) in cards" :key="i" :card="card" :pairCheck="pairCheck"></Card>
-        <div class="wrapperFooter">
-          <p>Tid: 00:00</p>
-          <p>Par funnet: {{ pairsFoundCounter }}</p>
-        </div>
+          <p class="footer">Par funnet: {{ pairsFoundCounter }}</p>
       </div>
+    </div>
+    <VictoryMessage v-else message="Du fant alle parene!"/>
+    </div>
     </div>
   </div>
 </template>
@@ -17,6 +19,7 @@
 <script>
 import Card from "./Card";
 import MemoMenu from "./MemoMenu";
+import VictoryMessage from "../shared/VictoryMessage";
 import { sets } from "./sets.js";
 import { getSetsMetadata } from "./sets.js";
 import { SetTypeEnum } from "../../common/enums.js";
@@ -57,7 +60,7 @@ const shuffle = array => {
 
 export default {
   name: "Board",
-  components: { Card, MemoMenu },
+  components: { Card, MemoMenu, VictoryMessage },
   data() {
     return {
       setsMetadata: getSetsMetadata(),
@@ -65,7 +68,8 @@ export default {
       cards: null,
       cardsInPair: null,
       pairsFoundCounter: 0,
-      faceUpCards: []
+      faceUpCards: [],
+      won: false
     };
   },
   methods: {
@@ -146,13 +150,7 @@ export default {
     },
     checkWin() {
       if (this.pairsFoundCounter * this.cardsInPair == this.cards.length) {
-        setTimeout(() => {
-          if (confirm("Gratulerer! Du har vunnet! Spille igjen?")) {
-            this.reset();
-          } else {
-            this.$router.push("/");
-          }
-        }, 300);
+        this.won = true;
       }
     },
     reset() {
@@ -190,31 +188,28 @@ h1 {
   color: var(--primary-color-light);
 }
 
-.boardWrapper {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
+.panel{
   background-color: var(--primary-color-light);
   width: 80%;
   margin: 0 auto;
   box-shadow: 0px 1px 7px 0px #888;
   margin-bottom: 30px;
   padding: 40px 20px 50px 20px;
+}
+
+.boardWrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
   position: relative;
 }
 
-.wrapperFooter {
+.footer {
   position: absolute;
-  bottom: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.wrapperFooter p {
-  font-weight: bold;
+  bottom: -49px;
+  right: -22px;
+   font-weight: bold;
   margin: 0px 20px 10px 20px;
   color: var(--primary-color-dark);
 }

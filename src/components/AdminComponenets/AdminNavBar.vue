@@ -28,7 +28,7 @@ export default {
         {
           image: "/img/clockThumbnail.png",
           appName: "Clock"
-        },
+        }
       ],
       selected: ""
     };
@@ -46,6 +46,7 @@ export default {
 .navContainer {
   border: 2px solid grey;
   border-radius: 10px;
+  background-color: var(--primary-color-light);
 }
 
 .navElement {

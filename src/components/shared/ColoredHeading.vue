@@ -1,6 +1,5 @@
 <template>
 <div>
-    <!-- <h1 v-html="coloredLetters"></h1> -->
      <h1><span v-for="(character, i) in headingString" :key="i" :class="character == ' ' ? '' : colorClasses[i%colorClasses.length]">{{character}}</span></h1>
 </div>
 </template>
@@ -26,14 +25,9 @@ export default {
                 const character = this.headingString[i]
                 heading += `<span class="${character == ' ' ? '' : colorClasses[i % colorClasses.length]}">${character}</span>`
             }
-
-            console.log("heading", heading)
-
             return heading
         }
-    },
-
-    
+    }, 
 }
 </script>
 
