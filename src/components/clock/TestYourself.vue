@@ -9,13 +9,14 @@
         :start-time="new Date(1, 1, 1, 0, 0)"
         @clock-changed="checkTime"
     />
-    <router-link to="/lær/klokka"><button class="button">Øv mer</button></router-link>
+    <router-link to="/lær/klokka"><Button buttonType="primary">Øv mer</Button></router-link>
     </div>
   </div>
 </template>
 
 <script>
   import Clock from "./Clock";
+  import Button from "../shared/UI/Button";
   import {clockSounds} from "./ClockSounds";
 
   const minuteStr = [
@@ -49,7 +50,7 @@
 
   export default {
     name: "TestYourself",
-    components: {Clock},
+    components: {Clock, Button},
     data() {
       return {
         timeToFind: this.randomTime(),
@@ -112,17 +113,6 @@ strong {
   margin-bottom: 30px;
   padding: 10px 20px 20px 20px;
   position: relative;
-}
-
-.button {
-  background-color: var(--color-fuksia);
-  color: var(--primary-color-light);
-  padding: 10px 30px;
-  border-radius: 20px;
-  font-weight: bold;
-  border: 0px;
-  font-size: large;
-  cursor: pointer;
 }
 
 .counter {

@@ -7,7 +7,7 @@
     <TextArea label="Beskjed" :inputChanged="(newInput) => message = newInput" />
     <br />
      <!-- TODO: Create separate UI button component for this button-->
-    <button class="button" @click.prevent="submit">Send</button>
+    <Button buttonType="primary" :action="submit">Send</Button>
     <!-- TODO: 
     1. Make into own confirmation component. 
     2. Confirm when email is successfully sent
@@ -26,8 +26,9 @@
 import ColoredHeading from "./shared/ColoredHeading";
 import TextInput from "./shared/UI/TextInput";
 import TextArea from "./shared/UI/TextArea";
+import Button from "./shared/UI/Button";
 export default {
-  components: { ColoredHeading, TextInput, TextArea },
+  components: { ColoredHeading, TextInput, TextArea, Button },
   data() {
     return {
       name: "",
@@ -61,16 +62,7 @@ p {
   font-weight: bold;
   font-size: larger;
 }
-.button {
-  background-color: var(--color-fuksia);
-  color: var(--primary-color-light);
-  padding: 10px 30px;
-  border-radius: 20px;
-  font-weight: bold;
-  border: 0px;
-  font-size: large;
-  cursor: pointer;
-}
+
 .confirmation {
     border: 2px solid green;
     background-color: lightgreen;

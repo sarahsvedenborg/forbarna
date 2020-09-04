@@ -1,30 +1,35 @@
 <template>
-    <button @click="action()">
-        <slot />
-    </button>
+  <button @click="action ? action : null" :class="buttonType">
+    <slot />
+  </button>
 </template>
 
 <script>
 export default {
-    props: {
-        action: {
-            type: Function
-        }
+  props: {
+    action: {
+      type: Function,
+      required: false
+    },
+    buttonType: {
+      type: String
+    },
   }
-    
-}
+};
 </script>
 
 <style scoped>
 button {
+  padding: 10px 30px;
   border-radius: 20px;
-  background-color:#29b6f6;
-  border: none;
-  color: white;
   font-weight: bold;
-  height: 3em;
-    width: 100px;
-    font-size: 1.2em;
-    cursor: pointer;
+  border: 0px;
+  cursor: pointer;
+}
+
+.primary {
+  background-color: var(--color-fuksia);
+  color: var(--primary-color-light);
+  font-size: large;
 }
 </style>

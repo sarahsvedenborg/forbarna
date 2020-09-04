@@ -7,7 +7,7 @@
         </div>
       <p>Dra på viserne for å høre hva klokka er.</p>
       <Clock :start-time="new Date()" :play-sounds="!muted" />
-      <router-link to="/testdegselv/klokka"><button class="button">Test deg selv</button></router-link>
+      <router-link to="/testdegselv/klokka"><Button buttonType="primary">Test deg selv</Button></router-link>
     </div>
   </div>
 </template>
@@ -15,9 +15,10 @@
 <script>
 import Clock from "./Clock";
 import MuteButton from "./MuteButton";
+import Button from "../shared/UI/Button";
 export default {
   name: "LearnTheClock",
-  components: { MuteButton, Clock },
+  components: { MuteButton, Clock , Button},
   data() {
     return {
       muted: false
@@ -47,17 +48,6 @@ h1 {
   margin-bottom: 30px;
   padding: 40px 20px 50px 20px;
   position: relative;
-}
-
-.button {
-  background-color: var(--color-fuksia);
-  color: var(--primary-color-light);
-  padding: 10px 30px;
-  border-radius: 20px;
-  font-weight: bold;
-  border: 0px;
-  font-size: large;
-  cursor: pointer;
 }
 
 .muteIcon {
