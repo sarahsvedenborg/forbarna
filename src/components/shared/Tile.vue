@@ -28,6 +28,7 @@ export default {
     align-items: center;
     justify-content: center;
     box-shadow: 0px 1px 7px 0px #888;
+    margin-bottom: 1em;
 }
 
 img {

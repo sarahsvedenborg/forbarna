@@ -35,6 +35,11 @@ export default {
           name: "Fang parene",
           img: "/img/CatchThumbnail.svg",
           path: "/catch"
+        },
+        {
+          name: "Bokstavkaos",
+          img: "/img/ChaosThumbnail.svg",
+          path: "/chaos"
         }
       ]
     };
