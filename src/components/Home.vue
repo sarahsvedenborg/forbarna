@@ -30,6 +30,11 @@ export default {
           name: "Finn parene",
           img: "/img/MemoryThumbnail.png",
           path: "/memory"
+        },
+         {
+          name: "Fang parene",
+          img: "/img/CatchThumbnail.svg",
+          path: "/catch"
         }
       ]
     };
