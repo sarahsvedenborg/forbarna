@@ -13,10 +13,9 @@
                 <feMergeNode in="SourceGraphic"></feMergeNode>
             </feMerge>
         </filter>
-        <linearGradient x1="16.0783179%" y1="14.8919753%" x2="87.2673129%" y2="82.5484664%" id="linearGradient-2">
-            <stop stop-color="#558ACA" offset="0%"></stop>
-            <stop stop-color="#3066A7" offset="56.5086933%"></stop>
-            <stop stop-color="#0B4D9B" offset="100%"></stop>
+        <linearGradient x1="12.8339603%" y1="17.3731674%" x2="89.4627701%" y2="78.9339796%" id="linearGradient-2">
+            <stop stop-color="#FAD961" offset="0%"></stop>
+            <stop stop-color="#F76B1C" offset="100%"></stop>
         </linearGradient>
         <circle id="path-3" cx="162" cy="162" r="135"></circle>
         <filter x="-2.8%" y="-2.8%" width="105.6%" height="105.6%" filterUnits="objectBoundingBox" id="filter-4">
@@ -35,7 +34,7 @@
                         <g id="Oval-2">
                             <use fill="#F7FAFB" fill-rule="evenodd" xlink:href="#path-3"></use>
                             <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-3"></use>
-                            <use stroke="#7EAFE9" stroke-width="3" xlink:href="#path-3"></use>
+                            <use stroke="#FAC957" stroke-width="3" xlink:href="#path-3"></use>
                         </g>
                     </g>
                 </g>

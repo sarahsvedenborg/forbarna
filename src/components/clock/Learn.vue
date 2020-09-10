@@ -5,7 +5,7 @@
       <div class="muteIcon">
         <MuteButton :muted="muted" @toggle="onMuteUnmute" :style="{width: '50px', height: '50px'}" />
         </div>
-      <p>Dra på viserne for å høre hva klokka er.</p>
+      <h2>Dra på viserne for å høre hva klokka er.</h2>
       <Clock :start-time="new Date()" :play-sounds="!muted" />
       <router-link to="/testdegselv/klokka"><Button buttonType="primary">Test deg selv</Button></router-link>
     </div>
@@ -46,7 +46,7 @@ h1 {
   margin: 0 auto;
   box-shadow: 0px 1px 7px 0px #888;
   margin-bottom: 30px;
-  padding: 40px 20px 50px 20px;
+  padding: 10px 20px 20px 20px;
   position: relative;
 }
 
@@ -56,5 +56,4 @@ h1 {
   left: 0;
   margin-left: 10px;
 }
-
 </style>

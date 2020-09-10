@@ -22,9 +22,9 @@ export default {
     return {
       apps: [
         {
-          name: "Lær klokka",
-          img: "/img/clockThumbnail.png",
-          path: "/lær/klokka"
+          name: "Klokka",
+          img: "/img/clockThumbnail.svg",
+          path: "/testdegselv/klokka"
         },
         {
           name: "Finn parene",

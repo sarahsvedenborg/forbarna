@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Bokstavkaos</h1>
-<!--     <div v-else>
+    <!--     <div v-else>
       <div class="panel" ref="boardRef">
         <div v-if="!won">
           <div class="boardWrapper">
@@ -18,30 +18,76 @@
         <VictoryMessage v-else message="Du fanget alle parene!" />
         <p class="footer" v-if="!won">Par funnet: {{ pairsFoundCounter }}</p>
       </div>
-    </div> -->
-    <div class="panel">
-      <p class="category">Kategori: <span>Engelske farger</span></p>
-      <p class="result">Du har klart <span>{{result}}</span> ord</p>
-<ChaosTask :word="word"/>
-<ChaosAnswer :word="word" :guessedCorrectly="() => result++"/>
+    </div>-->
+    <ChaosMenu v-if="!selectedWords" :categories="groupsByCategory" :selectSet="(name) => setWords(name)"/>
+    <div class="panel" v-else>
+      <p class="category">
+        Kategori:
+        <span>{{selectedGroupName}}</span> (på engelsk)
+      </p>
+      <p class="result">
+        Du har klart
+        <span>{{result}}</span> ord
+      </p>
+      <ChaosTask :word="selectedWords[currentWordIndex]" v-if="!won"/>
+      <ChaosAnswer :word="selectedWords[currentWordIndex]" :guessedCorrectly="() => result++" v-if="!won"/>
     </div>
+    <VictoryMessage v-if="won" message="Du klarte alle ordene i denne gruppen!"/>
   </div>
 </template>
 
 <script>
 import ChaosTask from "./ChaosTask";
 import ChaosAnswer from "./ChaosAnswer";
+import ChaosMenu from "./ChaosMenu";
+import VictoryMessage from "../shared/VictoryMessage";
+import { getWords, getCategories } from "./words.js";
+
+const createGroupsByCategory = () => {
+  let groupsByCategory = {};
+  const categoryNames = getCategories();
+  for (let i = 0; i < categoryNames.length; i++) {
+    let name = categoryNames[i];
+    groupsByCategory[name] = [];
+  }
+  let wordGroups = getWords();
+ 
+  for (let i = 0; i < wordGroups.length; i++) {
+    groupsByCategory[wordGroups[i].category].push(wordGroups[i]);
+  }
+  return groupsByCategory
+};
 
 export default {
   name: "Chaos",
-  components: { ChaosTask, ChaosAnswer },
+  components: { ChaosTask, ChaosAnswer, ChaosMenu, VictoryMessage },
   data() {
     return {
-      word: 'Purple',
-      result: 0
+      result: 0,
+      selectedWords: null,
+      groupsByCategory: createGroupsByCategory(),
+      currentWordIndex: 0,
+      won: false,
+      selectedCategory: '',
+      selectedGroupName: ''
     };
   },
   methods: {
+    setWords(name){
+      this.selectedGroupName = name
+      const groups = getWords()
+      for (let i = 0; i < groups.length; i++) {
+        if(groups[i].name == name) {
+          this.selectedWords = groups[i].values
+        }
+      }
+    }
+  },
+  watch:{
+    result: function(){
+      if(this.currentWordIndex == this.selectedWords.length) this.won = true
+      else this.currentWordIndex++
+    }
   }
 };
 </script>
@@ -62,25 +108,26 @@ h1 {
   min-height: 50vh;
 }
 
-.category{
+.category {
   position: absolute;
   top: 0;
   right: 15px;
   font-weight: bold;
 }
 
-.category span{
+.category span {
   color: var(--color-bloodorange);
+  text-transform: uppercase;
 }
 
-.result{
+.result {
   position: absolute;
   bottom: 0;
   right: 15px;
   font-weight: bold;
 }
 
-.result span{
+.result span {
   color: var(--color-bloodorange);
 }
 
