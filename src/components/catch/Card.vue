@@ -52,7 +52,6 @@ export default {
   justify-content: center;
   align-items: center;
   box-shadow: none;
-  z-index: 10; /* TODO: Does not work as intended*/
 }
 
 @media screen and (max-width: 450px) {
@@ -75,6 +74,5 @@ export default {
   background-color: #eee;
   border-color: #B5B5B5;
   box-shadow: none;
-  z-index: -1; /* TODO: Does not work as intended. If remove: also remove position: relative*/
 }
 </style>

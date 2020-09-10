@@ -1,5 +1,5 @@
 <template>
-  <div :style="position" ref="driftingCardRef">
+  <div :style="position" ref="driftingCardRef" :class="isFound ? 'found' : 'notFound'">
     <slot />
   </div>
 </template>
@@ -94,4 +94,11 @@ export default {
 </script>
 
 <style scoped>
+.found{
+  z-index: 0;
+}
+
+.notFound{
+  z-index: 1;
+}
 </style>
