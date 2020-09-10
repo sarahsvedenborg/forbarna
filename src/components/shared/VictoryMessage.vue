@@ -29,6 +29,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 50vh;
 }
 
 .message h2{

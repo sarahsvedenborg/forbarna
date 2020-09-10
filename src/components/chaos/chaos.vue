@@ -19,7 +19,11 @@
         <p class="footer" v-if="!won">Par funnet: {{ pairsFoundCounter }}</p>
       </div>
     </div>-->
-    <ChaosMenu v-if="!selectedWords" :categories="groupsByCategory" :selectSet="(name) => setWords(name)"/>
+    <ChaosMenu
+      v-if="!selectedWords"
+      :categories="groupsByCategory"
+      :selectSet="(name) => setWords(name)"
+    />
     <div class="panel" v-else>
       <p class="category">
         Kategori:
@@ -27,12 +31,16 @@
       </p>
       <p class="result">
         Du har klart
-        <span>{{result}}</span> ord
+        <span ref="counter">{{result}}</span> ord
       </p>
-      <ChaosTask :word="selectedWords[currentWordIndex]" v-if="!won"/>
-      <ChaosAnswer :word="selectedWords[currentWordIndex]" :guessedCorrectly="() => result++" v-if="!won"/>
+      <ChaosTask :word="selectedWords[currentWordIndex]" v-if="displayTask" />
+      <ChaosAnswer
+        :word="selectedWords[currentWordIndex]"
+        :guessedCorrectly="() => result++"
+        v-if="displayTask"
+      />
     </div>
-    <VictoryMessage v-if="won" message="Du klarte alle ordene i denne gruppen!"/>
+    <VictoryMessage v-if="won" message="Du klarte alle ordene i denne gruppen!" />
   </div>
 </template>
 
@@ -51,11 +59,11 @@ const createGroupsByCategory = () => {
     groupsByCategory[name] = [];
   }
   let wordGroups = getWords();
- 
+
   for (let i = 0; i < wordGroups.length; i++) {
     groupsByCategory[wordGroups[i].category].push(wordGroups[i]);
   }
-  return groupsByCategory
+  return groupsByCategory;
 };
 
 export default {
@@ -68,25 +76,39 @@ export default {
       groupsByCategory: createGroupsByCategory(),
       currentWordIndex: 0,
       won: false,
-      selectedCategory: '',
-      selectedGroupName: ''
+      selectedCategory: "",
+      selectedGroupName: "",
+      displayTask: true
     };
   },
   methods: {
-    setWords(name){
-      this.selectedGroupName = name
-      const groups = getWords()
+    setWords(name) {
+      this.selectedGroupName = name;
+      const groups = getWords();
       for (let i = 0; i < groups.length; i++) {
-        if(groups[i].name == name) {
-          this.selectedWords = groups[i].values
+        if (groups[i].name == name) {
+          this.selectedWords = groups[i].values;
         }
       }
+    },
+    animateCounter() {
+      this.$refs.counter.style.fontSize = "3em";
+      setTimeout(() => {
+        this.$refs.counter.style.fontSize = "medium";
+      }, 1000);
     }
   },
-  watch:{
-    result: function(){
-      if(this.currentWordIndex == this.selectedWords.length) this.won = true
-      else this.currentWordIndex++
+  watch: {
+    result: function() {
+      if (this.currentWordIndex == this.selectedWords.length) this.won = true;
+      else {
+        this.displayTask = false;
+        this.animateCounter()
+        setTimeout(() => {
+          this.displayTask = true;
+        }, 1000);
+        this.currentWordIndex++;
+      }
     }
   }
 };
@@ -105,7 +127,7 @@ h1 {
   box-shadow: 0px 1px 7px 0px #888;
   margin-bottom: 30px;
   padding: 40px 20px 50px 20px;
-  min-height: 50vh;
+  min-height: 60vh;
 }
 
 .category {
@@ -116,6 +138,7 @@ h1 {
 }
 
 .category span {
+  display: inline-block;
   color: var(--color-bloodorange);
   text-transform: uppercase;
 }
@@ -129,6 +152,7 @@ h1 {
 
 .result span {
   color: var(--color-bloodorange);
+  transition: font-size 0.5s;
 }
 
 .boardWrapper {
@@ -138,13 +162,12 @@ h1 {
   justify-content: center;
   position: relative;
 }
-
-.footer {
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
-  font-weight: bold;
-  margin: 0px 20px 10px 20px;
-  color: var(--primary-color-dark);
+@keyframes emphasize {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(2);
+  }
 }
 </style>

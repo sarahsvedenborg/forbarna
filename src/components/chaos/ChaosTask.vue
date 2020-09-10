@@ -1,6 +1,12 @@
 <template>
-  <div class="chaosTask"  @drop.prevent="drop" @dragover.prevent ref="TaksContainer">
-  <ChaosTaskLetter v-for="(letterIndex) in word.length" :letter="word[letterIndex-1]" :id="`${word + 'task' + (letterIndex-1)}`" :index="letterIndex" :key="letterIndex"/>
+  <div class="chaosTask"  @drop.prevent="drop" @dragover.prevent ref="TaskContainer">
+  <ChaosTaskLetter 
+  v-for="(letterIndex) in word.length" 
+  :letter="word[letterIndex-1]" 
+  :id="`${word + 'task' + (letterIndex-1)}`" 
+  :index="letterIndex" 
+  :key="`${word + 'task' + (letterIndex-1)}`"
+  :ref="`${word + 'task' + (letterIndex-1)}`"/>
 </div>
 </template>
 
@@ -18,6 +24,9 @@ export default {
     return {
       positions: []
     };
+  },
+  updated(){
+    console.log("Element updated, word: ", this.$refs['TaskContainer'])
   },
   methods: {
     drop(e){

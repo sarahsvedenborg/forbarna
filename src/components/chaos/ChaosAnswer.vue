@@ -2,13 +2,13 @@
   <div style="text-transform: uppercase" class="answer">
     <div
       v-for="(letter, i) in word.length"
-      :ref="'letter'+i"
-      :key="i"
-      :id="i"
+      :key="`${word + i}`"
+      :id="`${word + i}`"
+      :data-index="i"
       class="answerSlot"
       @dragover.prevent
       @drop.prevent="drop"
-    ><span></span>
+    >
     </div>
   </div>
 </template>
@@ -33,7 +33,7 @@ export default {
       const letter = document.getElementById(
         e.dataTransfer.getData("letterId")
       );
-      this.currentGuess[e.target.id] = letter.innerHTML;
+      this.currentGuess[e.target.dataset.index] = letter.innerHTML;
 
       letter.style = {
         //    "color": "red",

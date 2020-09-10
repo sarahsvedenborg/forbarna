@@ -5,7 +5,7 @@
       <div class="text">
         <h2>Hva er forBarna.no?</h2>
         <p>
-          Vi er to foreldre og IT konsulenter som ønsker å forsterke våre egne barns
+          Vi er to foreldre og IT-konsulenter som ønsker å forsterke våre egne barns
           læringsopplevelser med digitale verktøy. Vi bruker noen kvelder i ny og ne
           på å lage små spill for barna om tema som opptar dem i øyeblikket.
         </p>
@@ -22,24 +22,24 @@
         <h2>Hvem er vi?</h2>
         <p>Vi er Sarah og Stian, gift i 2012 og har 4 barn sammen.</p>
         <p>
-          Sarah er UX utvikler og jobber med både design og frontend utvikling. Hun har jobbet
+          Sarah er UX utvikler og jobber med både design og frontendutvikling. Hun har jobbet
           ett år som lærer og er ett år unna å være utdannet lærer. Fagene hun brenner for er engelsk,
           matematikk og IT.
         </p>
         <p>
-          Stian jobber som backend utvikler og sikkerhetsspesialist i bank sektoren.
-          Han har flere år med erfaring fra å undervise programmering på universitetet og er
+          Stian jobber som backend utvikler og sikkerhetsspesialist i banksektoren.
+          Han har flere års erfaring med å undervise programmering på universitetet og er
           leken og godt likt av barn i alle aldre.
         </p>
         <h2>Hvem er forBarna.no for?</h2>
         <p>
-          Spillene er i utgangspunktet utviklet med våre egne barn i fokus basert på hva de er
+          Spillene er i utgangspunktet utviklet med våre egne barn i fokus, basert på hva de er
           interessert i og på hvilket læringsstadie de befinner seg, men vil med stor sannsynlighet
           også kunne appellere til andre.
         </p>
         <p>
           Spillene skal være lavterskel og enkle slik at alle kan bruke dem, og vi synes det er
-          kjempegøy om flere enn våre egne barn drar bytte av innholdet på denne siden.
+          kjempegøy om flere enn våre egne barn drar nytte av innholdet på denne siden.
         </p>
         <p>
           Send oss gjerne en mail om du har ideér til siden eller det er noe du vil kommentere.
