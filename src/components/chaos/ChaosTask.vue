@@ -1,5 +1,5 @@
 <template>
-  <div class="chaosTask"  @drop.prevent="drop" @dragover.prevent ref="TaskContainer">
+  <div class="chaosTask"  @drop.prevent="drop" @dragover.prevent ref="taskContainer">
   <ChaosTaskLetter 
   v-for="(letterIndex) in word.length" 
   :letter="word[letterIndex-1]" 
@@ -25,15 +25,13 @@ export default {
       positions: []
     };
   },
-  updated(){
-    console.log("Element updated, word: ", this.$refs['TaskContainer'])
-  },
   methods: {
     drop(e){
-      //console.log("parent", e.dataTransfer.getData("parent"))
-      console.log("parent", e.target.parentElement)
-      //let parent = e.dataTransfer.getData("parent")
-      //this.$refs.taskContainer.appendChild(e.dataTransfer.getData())
+      const letter = document.getElementById(
+        e.dataTransfer.getData("letterId")
+      );
+      letter.parentElement.removeChild(letter)
+      this.$refs.taskContainer.appendChild(letter)
     }
   }
 };

@@ -1,30 +1,13 @@
 <template>
   <div>
     <h1>Bokstavkaos</h1>
-    <!--     <div v-else>
-      <div class="panel" ref="boardRef">
-        <div v-if="!won">
-          <div class="boardWrapper">
-            <DriftingCard
-              v-for="(card, i) in cards"
-              :key="i"
-              :parentRef="$refs"
-              :isFound="card.isFound"
-            >
-              <Card :card="card" :pairCheck="pairCheck"></Card>
-            </DriftingCard>
-          </div>
-        </div>
-        <VictoryMessage v-else message="Du fanget alle parene!" />
-        <p class="footer" v-if="!won">Par funnet: {{ pairsFoundCounter }}</p>
-      </div>
-    </div>-->
     <ChaosMenu
       v-if="!selectedWords"
       :categories="groupsByCategory"
       :selectSet="(name) => setWords(name)"
     />
     <div class="panel" v-else>
+      <div v-if="!won">
       <p class="category">
         Kategori:
         <span>{{selectedGroupName}}</span> (på engelsk)
@@ -39,8 +22,9 @@
         :guessedCorrectly="() => result++"
         v-if="displayTask"
       />
+      </div>
+      <VictoryMessage v-else message="Du klarte alle ordene i denne gruppen!" />
     </div>
-    <VictoryMessage v-if="won" message="Du klarte alle ordene i denne gruppen!" />
   </div>
 </template>
 
@@ -50,6 +34,7 @@ import ChaosAnswer from "./ChaosAnswer";
 import ChaosMenu from "./ChaosMenu";
 import VictoryMessage from "../shared/VictoryMessage";
 import { getWords, getCategories } from "./words.js";
+import { shuffle } from "../../utils.js";
 
 const createGroupsByCategory = () => {
   let groupsByCategory = {};
@@ -87,7 +72,8 @@ export default {
       const groups = getWords();
       for (let i = 0; i < groups.length; i++) {
         if (groups[i].name == name) {
-          this.selectedWords = groups[i].values;
+          let shuffledWords = shuffle(groups[i].values);
+          this.selectedWords = shuffledWords.slice(0,8);
         }
       }
     },
@@ -100,7 +86,7 @@ export default {
   },
   watch: {
     result: function() {
-      if (this.currentWordIndex == this.selectedWords.length) this.won = true;
+      if (this.currentWordIndex == this.selectedWords.length-1) this.won = true;
       else {
         this.displayTask = false;
         this.animateCounter()

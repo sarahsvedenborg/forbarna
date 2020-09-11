@@ -8,6 +8,7 @@
     @dragstart="dragStart"
     @dragover.stop
     @dragend="dragend"
+    v-if="letter != ' '"
   >{{letter}}</div>
 </template>
 
@@ -31,11 +32,6 @@ export default {
       type: Number
     }
   },
-/*   beforeUpdate(){
-      this.position = randomPos()
-      console.log("element", this.placement)
-      this.$refs[this.id].style = this.placement
-  }, */
   data() {
     return {
       position: randomPos()
@@ -53,19 +49,14 @@ export default {
   methods: {
     dragStart(e) {
       e.dataTransfer.setData("letterId", this.id);
-      e.dataTransfer.setData("letterIndex", this.index);
-      e.dataTransfer.setData("parent", e.target.parentElement)
       setTimeout(() => {
         e.target.style.display = "none";
       }, 0);
     },
     dragend(e) {
-      //TODO: look at this
-      //console.log("e", e);
       e.target.style.left = e.layerX + "px";
-      //console.log("y:", e.target.style.top);
       e.target.style.top = e.layerY + "px";
-      e.target.style.display = "block";
+      e.target.style.display = "inline";
     }
   }
 };

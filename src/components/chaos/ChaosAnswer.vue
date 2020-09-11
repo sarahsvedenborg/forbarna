@@ -1,15 +1,15 @@
 <template>
-  <div style="text-transform: uppercase" class="answer">
+  <div style="text-transform: uppercase" class="answer" ref="answerContainer">
     <div
       v-for="(letter, i) in word.length"
       :key="`${word + i}`"
       :id="`${word + i}`"
       :data-index="i"
-      class="answerSlot"
+      :data-isWhite="word[letter-1] == ' '"
+      :class="{answerSlot: true, space: word[letter-1] == ' '}"
       @dragover.prevent
       @drop.prevent="drop"
-    >
-    </div>
+    ></div>
   </div>
 </template>
 
@@ -23,47 +23,45 @@ export default {
       type: Function
     }
   },
-  data() {
-    return {
-      currentGuess: new Array(this.word.length)
-    };
-  },
   methods: {
+    initializeGuess() {
+      let guess = new Array(this.word.length);
+      for (let i = 0; i < this.word.length; i++) {
+        if (this.word[i] == " ") {
+          guess[i] = " ";
+        }
+      }
+      return guess;
+    },
     drop(e) {
       const letter = document.getElementById(
         e.dataTransfer.getData("letterId")
       );
-      this.currentGuess[e.target.dataset.index] = letter.innerHTML;
-
+      letter.setAttribute("data-placed", "true");
       letter.style = {
         //    "color": "red",
         //   "padding-bottom": "10px",
         //display: "block"
       };
-      /*   letter.style.position = 'relative'
-            letter.style.top = '0'
-            letter.style.left = '0'
-            letter.style.paddingBottom = '10px'
-            letter.style.display = 'block' */
-      
-     
-     e.target.appendChild(letter);
+      e.target.appendChild(letter);
 
       if (this.isFull()) this.checkWin();
     },
     isFull() {
-      for (let i = 0; i < this.currentGuess.length; i++) {
-        if (typeof this.currentGuess[i] != "string") return false;
+      for (let i = 0; i < this.$refs.answerContainer.children.length; i++) {
+        const child = this.$refs.answerContainer.children[i];
+        if(child.dataset.iswhite == "true") continue
+        if (child.children.length == 0) return false;
       }
       return true;
     },
     checkWin() {
-      let guessedString = this.currentGuess.reduce((tot, num) => {
-        return tot.concat(num);
-      });
-      if (guessedString.toLowerCase() == this.word.toLowerCase()) {
-        this.guessedCorrectly();
+      let guess = "";
+      for (let i = 0; i < this.$refs.answerContainer.children.length; i++) {
+        if (this.$refs.answerContainer.children[i].dataset.iswhite == "true") continue;
+        guess += this.$refs.answerContainer.children[i].children[0].innerHTML;
       }
+      if (guess.toLowerCase() == this.word.toLowerCase().replace(/\s+/g, '')) this.guessedCorrectly();
     }
   }
 };
@@ -82,5 +80,8 @@ export default {
   width: 50px;
   margin: 0px 10px;
   padding-bottom: 5px;
+}
+.space {
+  visibility: hidden;
 }
 </style>

@@ -23,6 +23,7 @@ import VictoryMessage from "../shared/VictoryMessage";
 import { sets } from "./sets.js";
 import { getSetsMetadata } from "./sets.js";
 import { SetTypeEnum } from "../../common/enums.js";
+import { shuffle} from "../../utils.js";
 
 class CardClass {
   constructor(value, comparator, key) {
@@ -36,27 +37,6 @@ class CardClass {
     return this.comparator == secondCard.comparator;
   };
 }
-
-const shuffle = array => {
-  //From stackoverflow
-  var currentIndex = array.length,
-    temporaryValue,
-    randomIndex;
-
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-
-  return array;
-};
 
 export default {
   name: "Board",

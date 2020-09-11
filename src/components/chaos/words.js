@@ -12,7 +12,7 @@ let words = [
         {
             name: 'Skole',
             category: 'Engelsk',
-            values: ['lesson', 'pupil', 'class', 'lining up']
+            values: ['lining up', 'lesson', 'pupil', 'class']
         },
         {
             name: 'Spørreord',
