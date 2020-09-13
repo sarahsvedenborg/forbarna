@@ -11,10 +11,7 @@
           @click="playHint"
         />
       </h2>
-      <p class="counter">
-        Du har klart
-        <strong>{{correctGuesses}}</strong> klokkeslett!
-      </p>
+       <AnimatedCounter :result="correctGuesses" :counterType="'klokkeslett'" placement="bottomRight"/>
       <Clock :play-sounds="false" :start-time="new Date(1, 1, 1, 0, 0)" @clock-changed="checkTime" />
       <router-link to="/lær/klokka">
         <Button buttonType="primary">Øv på klokka</Button>
@@ -28,6 +25,7 @@
 import Clock from "./Clock";
 import Button from "../shared/UI/Button";
 import FlashConfirm from "../shared/FlashConfirm";
+import AnimatedCounter from "../shared/AnimatedCounter";
 import { clockSounds } from "./ClockSounds";
 
 const minuteStr = [
@@ -61,7 +59,7 @@ const hourStr = [
 
 export default {
   name: "TestYourself",
-  components: { Clock, Button, FlashConfirm },
+  components: { Clock, Button, FlashConfirm, AnimatedCounter },
   data() {
     return {
       timeToFind: this.randomTime(),

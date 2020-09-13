@@ -12,10 +12,7 @@
           Kategori:
           <span>{{selectedGroupName}}</span> (på engelsk)
         </p>
-        <p class="result">
-          Du har klart
-          <span ref="counter">{{result}}</span> ord
-        </p>
+        <AnimatedCounter :result="result" :counterType="'ord'" placement="bottomRight"/>
         <ChaosTask
           :word="word"
           :wordAsString="selectedWords[currentWordIndex]"
@@ -40,6 +37,7 @@
 import ChaosTask from "./ChaosTask";
 import ChaosAnswer from "./ChaosAnswer";
 import ChaosMenu from "./ChaosMenu";
+import AnimatedCounter from "../shared/AnimatedCounter";
 import VictoryMessage from "../shared/VictoryMessage";
 import { getWords, getCategories } from "./words.js";
 import { shuffle } from "../../utils.js";
@@ -75,7 +73,7 @@ class LetterClass {
 
 export default {
   name: "Chaos",
-  components: { ChaosTask, ChaosAnswer, ChaosMenu, VictoryMessage },
+  components: { ChaosTask, ChaosAnswer, ChaosMenu, AnimatedCounter, VictoryMessage },
   data() {
     return {
       result: 0,
@@ -119,12 +117,6 @@ export default {
         }
       }
     },
-    animateCounter() {
-      this.$refs.counter.style.fontSize = "3em";
-      setTimeout(() => {
-        this.$refs.counter.style.fontSize = "medium";
-      }, 1000);
-    },
     letterGuessed(letter) {
       let newGuess = new Array(...this.currentGuess);
       letter.visible = false;
@@ -155,7 +147,6 @@ export default {
         this.won = true;
       else {
         this.displayTask = false;
-        this.animateCounter();
         setTimeout(() => {
           this.displayTask = true;
         }, 1000);
@@ -200,31 +191,11 @@ h1 {
   text-transform: uppercase;
 }
 
-.result {
-  position: absolute;
-  bottom: 0;
-  right: 15px;
-  font-weight: bold;
-}
-
-.result span {
-  color: var(--color-bloodorange);
-  transition: font-size 0.5s;
-}
-
 .boardWrapper {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
   position: relative;
-}
-@keyframes emphasize {
-  from {
-    transform: scale(0);
-  }
-  to {
-    transform: scale(2);
-  }
 }
 </style>
