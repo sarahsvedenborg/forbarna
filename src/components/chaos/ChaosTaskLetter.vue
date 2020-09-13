@@ -1,6 +1,7 @@
 <template>
   <div
-    class="letter"
+    @click="() => letterGuessed(letter)"
+    :class="{letter: true, invisible: !letter.visible}"
     :style="placement"
     :ref="id"
     :id="id"
@@ -8,8 +9,8 @@
     @dragstart="dragStart"
     @dragover.stop
     @dragend="dragend"
-    v-if="letter != ' '"
-  >{{letter}}</div>
+    v-if="letter.value != ' '"
+  >{{letter.value}}</div>
 </template>
 
 <script>
@@ -23,18 +24,18 @@ const randomPos = () => {
 export default {
   props: {
     letter: {
-      type: String
+      type: Object,
     },
     id: {
-      type: String
+      type: String,
     },
-    index: {
-      type: Number
-    }
+    letterGuessed: {
+      type: Function,
+    },
   },
   data() {
     return {
-      position: randomPos()
+      position: randomPos(),
     };
   },
   computed: {
@@ -42,9 +43,9 @@ export default {
       return {
         position: "absolute",
         left: `${this.position.x}px`,
-        top: `${this.position.y}px`
+        top: `${this.position.y}px`,
       };
-    }
+    },
   },
   methods: {
     dragStart(e) {
@@ -58,7 +59,7 @@ export default {
       e.target.style.top = e.layerY + "px";
       e.target.style.display = "inline";
     }
-  }
+  },
 };
 </script>
 
@@ -69,5 +70,8 @@ export default {
   font-size: xx-large;
   color: var(--primary-color-dark);
   cursor: pointer;
+}
+.invisible {
+  visibility: hidden;
 }
 </style>

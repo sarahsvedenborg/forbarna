@@ -3,10 +3,11 @@
   <ChaosTaskLetter 
   v-for="(letterIndex) in word.length" 
   :letter="word[letterIndex-1]" 
-  :id="`${word + 'task' + (letterIndex-1)}`" 
+  :id="`${wordAsString + 'task' + (letterIndex-1)}`" 
   :index="letterIndex" 
-  :key="`${word + 'task' + (letterIndex-1)}`"
-  :ref="`${word + 'task' + (letterIndex-1)}`"/>
+  :key="`${wordAsString + 'task' + (letterIndex-1)}`"
+  :ref="`${wordAsString + 'task' + (letterIndex-1)}`"
+  :letterGuessed="letterGuessed"/>
 </div>
 </template>
 
@@ -16,8 +17,14 @@ import ChaosTaskLetter from './ChaosTaskLetter'
 export default {
   components:{ChaosTaskLetter},
   props: {
-    word: {
+    wordAsString: {
       type: String
+    },
+    word: {
+      type: Array
+    },
+    letterGuessed: {
+      type: Function
     }
   },
   data() {

@@ -8,20 +8,28 @@
     />
     <div class="panel" v-else>
       <div v-if="!won">
-      <p class="category">
-        Kategori:
-        <span>{{selectedGroupName}}</span> (på engelsk)
-      </p>
-      <p class="result">
-        Du har klart
-        <span ref="counter">{{result}}</span> ord
-      </p>
-      <ChaosTask :word="selectedWords[currentWordIndex]" v-if="displayTask" />
-      <ChaosAnswer
-        :word="selectedWords[currentWordIndex]"
-        :guessedCorrectly="() => result++"
-        v-if="displayTask"
-      />
+        <p class="category">
+          Kategori:
+          <span>{{selectedGroupName}}</span> (på engelsk)
+        </p>
+        <p class="result">
+          Du har klart
+          <span ref="counter">{{result}}</span> ord
+        </p>
+        <ChaosTask
+          :word="word"
+          :wordAsString="selectedWords[currentWordIndex]"
+          v-if="displayTask"
+          :letterGuessed="letterGuessed"
+        />
+        <ChaosAnswer
+          :wordAsString="selectedWords[currentWordIndex]"
+          :word="word"
+          :currentGuess="currentGuess"
+          :guessedCorrectly="() => result++"
+          :guessedLetterRemoved="guessedLetterRemoved"
+          v-if="displayTask"
+        />
       </div>
       <VictoryMessage v-else message="Du klarte alle ordene i denne gruppen!" />
     </div>
@@ -51,6 +59,18 @@ const createGroupsByCategory = () => {
   return groupsByCategory;
 };
 
+class LetterClass {
+  constructor(value, visible, indexInWord, indexInGuess) {
+    this.value = value;
+    this.visible = visible;
+    this.indexInWord = indexInWord;
+    this.indexInGuess = indexInGuess;
+  }
+  isEqualTo = (secondCard) => {
+    return this.comparator == secondCard.comparator;
+  };
+}
+
 export default {
   name: "Chaos",
   components: { ChaosTask, ChaosAnswer, ChaosMenu, VictoryMessage },
@@ -63,17 +83,37 @@ export default {
       won: false,
       selectedCategory: "",
       selectedGroupName: "",
-      displayTask: true
+      displayTask: true,
+      word: [],
+      currentGuess: [],
     };
   },
   methods: {
+    initializeWord() {
+      const word = this.selectedWords[this.currentWordIndex];
+      let newWord = [];
+      for (let i = 0; i < word.length; i++) {
+        newWord.push(new LetterClass(word[i], true, i, null));
+      }
+      this.word = newWord;
+    },
+    initializeGuess() {
+      const currentWord = this.selectedWords[this.currentWordIndex];
+      let guess = new Array(currentWord.length);
+      for (let i = 0; i < currentWord.length; i++) {
+        if (currentWord[i] == " ") {
+          guess[i] = new LetterClass(" ", true, i, i);
+        }
+      }
+      this.currentGuess = guess;
+    },
     setWords(name) {
       this.selectedGroupName = name;
       const groups = getWords();
       for (let i = 0; i < groups.length; i++) {
         if (groups[i].name == name) {
           let shuffledWords = shuffle(groups[i].values);
-          this.selectedWords = shuffledWords.slice(0,8);
+          this.selectedWords = shuffledWords.slice(0, 8);
         }
       }
     },
@@ -82,21 +122,50 @@ export default {
       setTimeout(() => {
         this.$refs.counter.style.fontSize = "medium";
       }, 1000);
-    }
+    },
+    letterGuessed(letter) {
+      let newGuess = new Array(...this.currentGuess);
+      letter.visible = false;
+      for (let i = 0; i < newGuess.length; i++) {
+        if (newGuess[i] == null) {
+          newGuess[i] = letter;
+          letter.indexInGuess = i
+          break;
+        }
+      }
+      this.currentGuess = newGuess;
+    },
+    guessedLetterRemoved(letter) {
+      let newGuess = [...this.currentGuess];
+      newGuess[letter.indexInGuess] = null;
+      letter.indexInGuess = null
+      letter.visible = true
+      this.currentGuess = newGuess;
+    },
+    resetGuess() {
+      this.initializeGuess();
+      this.initializeWord();
+    },
   },
   watch: {
-    result: function() {
-      if (this.currentWordIndex == this.selectedWords.length-1) this.won = true;
+    result: function () {
+      if (this.currentWordIndex == this.selectedWords.length - 1)
+        this.won = true;
       else {
         this.displayTask = false;
-        this.animateCounter()
+        this.animateCounter();
         setTimeout(() => {
           this.displayTask = true;
         }, 1000);
         this.currentWordIndex++;
+        this.resetGuess();
       }
-    }
-  }
+    },
+    selectedWords: function () {
+      this.initializeGuess();
+      this.initializeWord();
+    },
+  },
 };
 </script>
 
