@@ -3,10 +3,7 @@
   <ChaosTaskLetter 
   v-for="(letterIndex) in word.length" 
   :letter="word[letterIndex-1]" 
-  :id="`${wordAsString + 'task' + (letterIndex-1)}`" 
-  :index="letterIndex" 
   :key="`${wordAsString + 'task' + (letterIndex-1)}`"
-  :ref="`${wordAsString + 'task' + (letterIndex-1)}`"
   :letterGuessed="letterGuessed"/>
 </div>
 </template>
@@ -31,15 +28,6 @@ export default {
     return {
       positions: []
     };
-  },
-  methods: {
-    drop(e){
-      const letter = document.getElementById(
-        e.dataTransfer.getData("letterId")
-      );
-      letter.parentElement.removeChild(letter)
-      this.$refs.taskContainer.appendChild(letter)
-    }
   }
 };
 </script>

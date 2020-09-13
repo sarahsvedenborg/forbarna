@@ -3,12 +3,6 @@
     @click="() => letterGuessed(letter)"
     :class="{letter: true, invisible: !letter.visible}"
     :style="placement"
-    :ref="id"
-    :id="id"
-    draggable
-    @dragstart="dragStart"
-    @dragover.stop
-    @dragend="dragend"
     v-if="letter.value != ' '"
   >{{letter.value}}</div>
 </template>
@@ -25,9 +19,6 @@ export default {
   props: {
     letter: {
       type: Object,
-    },
-    id: {
-      type: String,
     },
     letterGuessed: {
       type: Function,
@@ -46,20 +37,7 @@ export default {
         top: `${this.position.y}px`,
       };
     },
-  },
-  methods: {
-    dragStart(e) {
-      e.dataTransfer.setData("letterId", this.id);
-      setTimeout(() => {
-        e.target.style.display = "none";
-      }, 0);
-    },
-    dragend(e) {
-      e.target.style.left = e.layerX + "px";
-      e.target.style.top = e.layerY + "px";
-      e.target.style.display = "inline";
-    }
-  },
+  }
 };
 </script>
 

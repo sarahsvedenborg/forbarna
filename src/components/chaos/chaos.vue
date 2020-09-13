@@ -44,6 +44,8 @@ import VictoryMessage from "../shared/VictoryMessage";
 import { getWords, getCategories } from "./words.js";
 import { shuffle } from "../../utils.js";
 
+const numOfWordsInSet = 8
+
 const createGroupsByCategory = () => {
   let groupsByCategory = {};
   const categoryNames = getCategories();
@@ -113,7 +115,7 @@ export default {
       for (let i = 0; i < groups.length; i++) {
         if (groups[i].name == name) {
           let shuffledWords = shuffle(groups[i].values);
-          this.selectedWords = shuffledWords.slice(0, 8);
+          this.selectedWords = shuffledWords.slice(0, numOfWordsInSet);
         }
       }
     },
