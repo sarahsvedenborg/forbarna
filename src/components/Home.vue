@@ -69,7 +69,7 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: center;
 }
 /* This styles the label inside a router-link */
 a {
