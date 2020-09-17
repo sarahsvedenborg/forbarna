@@ -24,6 +24,12 @@ export const sets = [
         name: 'Farger på 3 språk',
         cardsInPair: 3,
         values: [["red", "rød", "rouge"], ["white", "hvit", "blanc"] , ["grønn", "green", "vert"]]
+    },
+    {
+        type: SetTypeEnum.DIFFERENT,
+        name: 'Følelser',
+        cardsInPair: 2,
+        values: [['Glad', 'Happy'], ['Lei seg', 'Sad'], ['Sint' ,'Angry'], ['Trøtt', 'Tired'], ['Sulten', 'Hungry'], ['Overrasket' ,'Surprised'], ['Redd' ,'Frightened']] 
     }
 ]
 
