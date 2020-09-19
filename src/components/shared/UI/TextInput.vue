@@ -41,6 +41,7 @@ export default {
 
 <style scoped>
 div {
+  height: 4em;
   position: relative;
 }
 .active {
