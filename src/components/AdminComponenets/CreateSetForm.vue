@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <h2>Nytt sett med kort</h2>
+  <div class="createNewSetWrapper">
     <div class="newDeckTopBar">
       <div class="inputDeckName">
         <label for="deckName">Navn på sett</label>
@@ -8,8 +7,7 @@
       </div>
       <button class="confirmButton" @click="saveCards" :disabled="!necessaryInformation">Lagre kort</button>
     </div>
-    <div class="stepWrapper" v-if="editingBasicInfo">
-      <form class="newDeckForm">
+      <form class="newDeckForm" v-if="editingBasicInfo">
         <div class="inputElement">
           <label>Er kortene i et par like eller forskjellige?</label>
           <br />
@@ -36,9 +34,8 @@
           <font-awesome-icon :icon="['fas','arrow-right']" :style="{color: '#29b6f6'}" />
         </div>
       </form>
-    </div>
-    <div class="stepWrapper" v-else>
-      <div class="cardValuesTable">
+
+      <div class="cardValuesTable" v-else>
         <table>
           <CardPairInput :cardsInPair="Number.parseInt(cardsInPair)" :addCardPair="addCardPair" />
           <tr v-for="i in cards.length" :key="i">
@@ -49,13 +46,14 @@
           </tr>
         </table>
       </div>
-    </div>
+ 
   </div>
 </template>
 
 <script>
 import { addSet } from "../memo/sets.js";
 import { SetTypeEnum } from "../../common/enums.js";
+import { SetCategoryEnum } from "../../common/enums.js";
 import CardPairInput from "./CardPairInput";
 
 export default {
@@ -101,6 +99,7 @@ export default {
       addSet({
         type: this.type,
         name: this.name,
+        category: SetCategoryEnum.ANDRE,
         cardsInPair: this.type == SetTypeEnum.IDENTICAL ? 2 : this.cardsInPair,
         values: this.stripEmptyCards()
       });
@@ -135,10 +134,15 @@ export default {
 </script>
 
 <style scoped>
+.createNewSetWrapper{
+  width: 90%;
+}
 .newDeckTopBar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+  border-bottom: 2px solid var(--color-blue);
 }
 .newDeckForm {
   display: flex;
@@ -150,16 +154,6 @@ export default {
 
 .inputElement {
   margin: 1em;
-}
-
-.stepWrapper {
-  box-shadow: 0px 5px 10px 1px #ccc;
-  float: left;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0em 3em;
-  min-height: 70vh;
 }
 
 .proceedButton {

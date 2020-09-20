@@ -1,27 +1,34 @@
 <template>
   <div>
-    <h1>Finn parene!</h1>
+    <h1>Fang parene!</h1>
     <Menu v-if="cards == null" :categories="setsByCategory" :selectSet="selectSet" />
     <div v-else>
-      <div class="panel">
-      <div v-if="!won">
-      <div class="boardWrapper">   
-        <Card v-for="(card, i) in cards" :key="i" :card="card" :pairCheck="pairCheck" :alwaysOpen=false></Card>
-          <p class="footer">Par funnet: {{ pairsFoundCounter }}</p>
+      <div class="panel" ref="boardRef">
+        <div v-if="!won">
+          <div class="boardWrapper">
+            <DriftingCard
+              v-for="(card, i) in cards"
+              :key="i"
+              :parentRef="$refs"
+              :isFound="card.isFound"
+            >
+              <Card :card="card" :pairCheck="pairCheck" :alwaysOpen=true></Card>
+            </DriftingCard>
+          </div>
+        </div>
+        <VictoryMessage v-else message="Du fanget alle parene!" />
+        <p class="footer" v-if="!won">Par funnet: {{ pairsFoundCounter }}</p>
       </div>
-    </div>
-    <VictoryMessage v-else message="Du fant alle parene!"/>
-    </div>
     </div>
   </div>
 </template>
 
 <script>
-import Card from "./Card";
+import Card from "../memo/Card";
 import Menu from "../chaos/ChaosMenu";
+import DriftingCard from "./DriftingCard";
 import VictoryMessage from "../shared/VictoryMessage";
-import { sets } from "./sets.js";
-import { getSetsMetadata } from "./sets.js";
+import { sets, getSetsMetadata } from "../memo/sets.js";
 import { SetTypeEnum } from "../../common/enums.js";
 import { shuffle, createSetsByCategory} from "../../utils.js";
 
@@ -40,7 +47,7 @@ class CardClass {
 
 export default {
   name: "Board",
-  components: { Card, Menu, VictoryMessage },
+  components: { Card, Menu, VictoryMessage, DriftingCard },
   data() {
     return {
       setsMetadata: getSetsMetadata(),
@@ -50,9 +57,10 @@ export default {
       pairsFoundCounter: 0,
       faceUpCards: [],
       won: false,
+      boundingRect: null
     };
   },
-  computed:{
+  computed: {
     setsByCategory(){
       return createSetsByCategory(this.setsMetadata)
     }
@@ -142,28 +150,12 @@ export default {
       this.cards = null;
       this.pairsFoundCounter = 0;
     },
-    shuffleTest() {
-      /*let arrayCopy = this.cards;
-      for(let i = 0; i < arrayCopy.length; i++){
-        let randomIndex = Math.floor(Math.random()*(arrayCopy.length-i) + i)
-        arrayCopy.unshift(arrayCopy.splice([randomIndex], 1)) 
-        console.log("randomIndex", randomIndex)
-    }*/
-      /* let currentIndex = 0;
-      while (currentIndex < arrayCopy.length) {
-        let randomIndex = Math.floor(
-          Math.random() * (arrayCopy.length - i) + i
-        );
-        arrayCopy.unshift(arrayCopy.splice([randomIndex], 1));
-        currentIndex++;
-      }*/
-    },
     closeVisibleCards() {
       for (let i = 0; i < this.faceUpCards.length; i++) {
         this.faceUpCards[i].isFaceUp = false;
       }
       this.faceUpCards = [];
-    },
+    }
   }
 };
 </script>
@@ -173,13 +165,15 @@ h1 {
   color: var(--primary-color-light);
 }
 
-.panel{
+.panel {
+  position: relative;
   background-color: var(--primary-color-light);
   width: 80%;
   margin: 0 auto;
   box-shadow: 0px 1px 7px 0px #888;
   margin-bottom: 30px;
   padding: 40px 20px 50px 20px;
+  min-height: 50vh;
 }
 
 .boardWrapper {
@@ -192,9 +186,9 @@ h1 {
 
 .footer {
   position: absolute;
-  bottom: -49px;
-  right: -22px;
-   font-weight: bold;
+  bottom: 0px;
+  right: 0px;
+  font-weight: bold;
   margin: 0px 20px 10px 20px;
   color: var(--primary-color-dark);
 }

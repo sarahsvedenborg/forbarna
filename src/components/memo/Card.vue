@@ -1,5 +1,13 @@
 <template>
-  <div class="card" :class="{faceUp: card.isFaceUp, found: card.isFound}" @click="flip">
+  <div
+    v-if="alwaysOpen"
+    class="card"
+    :class="{selected: card.isFaceUp, foundOverlap: card.isFound}"
+    @click="flip"
+  >
+    <p>{{ value }}</p>
+  </div>
+  <div v-else class="card" :class="{faceDown: !card.isFaceUp, found: card.isFound}" @click="flip">
     <p v-if="card.isFaceUp">{{ value }}</p>
   </div>
 </template>
@@ -9,36 +17,29 @@ export default {
   name: "card",
   props: {
     card: {
-      type: Object
+      type: Object,
     },
     pairCheck: {
-      type: Function
-    }
+      type: Function,
+    },
+    alwaysOpen: {
+      type: Boolean,
+    },
   },
   data() {
     return {
       flipped: this.card.isFaceUp,
-      value: this.card.value
+      value: this.card.value,
     };
   },
   methods: {
-    faceUp() {
-      return {
-        "background-color": "red"
-      };
-    },
-    faceDown() {
-      return {
-        "background-color": "white"
-      };
-    },
     flip() {
       if (!this.card.isFaceUp) {
         this.card.isFaceUp = true;
         this.pairCheck(this.card);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -51,7 +52,7 @@ export default {
   font-weight: 500;
   padding: 5px;
   border-radius: 15px;
-  background-color: red;
+  background-color: white;
   margin: 5px;
   cursor: pointer;
   display: flex;
@@ -70,6 +71,13 @@ export default {
   }
 }
 
+.selected {
+  border: 5px solid var(--color-green);
+  background-color: var(--color-green);
+  box-shadow: 0 4px 8px 0 rgba(50, 205, 50, 0.2),
+    0 6px 20px 0 rgba(50, 205, 50, 0.19);
+}
+
 .faceUp {
   background-color: white;
 }
@@ -78,7 +86,14 @@ export default {
   background-color: red;
 }
 .found {
+  background-color: white;
   opacity: 0.5;
   border-color: grey;
+}
+
+.foundOverlap {
+  background-color: #eee;
+  border-color: #b5b5b5;
+  box-shadow: none;
 }
 </style>
