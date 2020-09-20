@@ -117,9 +117,6 @@ span {
   font-weight: bold;
   color: red;
 }
-h1 {
-  color: var(--primary-color-light);
-}
 .wrapper {
   display: flex;
   flex-direction: column;

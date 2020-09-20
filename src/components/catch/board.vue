@@ -161,10 +161,6 @@ export default {
 </script>
 
 <style scoped>
-h1 {
-  color: var(--primary-color-light);
-}
-
 .panel {
   position: relative;
   background-color: var(--primary-color-light);
@@ -173,7 +169,7 @@ h1 {
   box-shadow: 0px 1px 7px 0px #888;
   margin-bottom: 30px;
   padding: 40px 20px 50px 20px;
-  min-height: 50vh;
+  height: 60vh;
 }
 
 .boardWrapper {

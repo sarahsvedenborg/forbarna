@@ -169,10 +169,6 @@ export default {
 </script>
 
 <style scoped>
-h1 {
-  color: var(--primary-color-light);
-}
-
 .panel{
   background-color: var(--primary-color-light);
   width: 80%;
