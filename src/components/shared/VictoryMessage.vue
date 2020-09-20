@@ -2,7 +2,6 @@
   <div class="message">
     <h2>Gratulerer!</h2>
     <h3>{{message}}</h3>
-    <slot />
     <img src="/img/golden_crown.jpg" width="300px" />
     <router-link to="/">
       <Button buttonType="primary">Nytt spill</Button>

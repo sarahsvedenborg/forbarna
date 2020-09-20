@@ -2,22 +2,31 @@
   <div>
     <ColoredHeading headingString="Kontakt oss" />
     <p>Gi oss gjerne tilbakemelding på hva som kan forbedres!</p>
+    <form name="contact"
+    method="post"
+    data-netlify="true"
+    data-netlify-honeypot="bot-field"
+    @submit.prevent="submit">
+    <input type="hidden" name="form-name" value="contact" />
     <TextInput label="Navn" :inputChanged="(newInput) => name = newInput" />
     <TextInput label="Epost" :inputChanged="(newInput) => email = newInput" />
     <TextArea label="Beskjed" :inputChanged="(newInput) => message = newInput" />
     <br />
-    <Button buttonType="primary" :action="submit">Send</Button>
+    <Button buttonType="primary" >Send*</Button>
+    </form>
+    <p class="hint">*Ved å trykke <strong>Send</strong> samtykker du til at epost-adressen din lagres i våre systemer.</p>
     <!-- TODO: 
     1. Make into own confirmation component. 
     2. Confirm when email is successfully sent
     3. Spinner while waiting for response
     4. Be able to actually send email
     -->
-    <div :class="emailSent ? 'confirmation' : 'invisible'">
-        <h2>Epost sent!</h2>
-        <p>Takk for eposten. </p>
-        <p> Den vil bli besvart så raskt som mulig.</p>
+    <Modal v-if="emailSent" :close="() => emailSent = false">
+      <div class="modalContent">
+        <h2>Beskjeden er sendt!</h2>
+        <p>Henvendelsen vil bli besvart på mail så raskt som mulig.</p>
     </div>
+    </Modal>
   </div>
 </template>
 
@@ -26,9 +35,10 @@ import ColoredHeading from "./shared/ColoredHeading";
 import TextInput from "./shared/UI/TextInput";
 import TextArea from "./shared/UI/TextArea";
 import Button from "./shared/UI/Button";
+import Modal from "./shared/Modal";
 
 export default {
-  components: { ColoredHeading, TextInput, TextArea, Button },
+  components: { ColoredHeading, TextInput, TextArea, Button, Modal },
   data() {
     return {
       name: "",
@@ -39,15 +49,12 @@ export default {
   },
   methods: {
     submit() {
-      console.log("message", this.message);
+      /*
+      axios post
+      if success show success route or message
+      if error display error message and return to form or homepage
+      */
       this.emailSent = true
-      this.closeConfirmation()
-    },
-    closeConfirmation(){
-        const context = this
-        setTimeout(() => {
-            context.emailSent = false
-        }, 5000)
     }
   }
 };
@@ -76,5 +83,14 @@ p {
 .invisible{
     opacity: 0;
     transition: opacity 2s;
+}
+.hint{
+  color: var(--primary-color-dark);
+  font-weight: normal;
+  font-size: smaller;
+}
+
+.modalContent p{
+  color: var(--primary-color-dark)
 }
 </style>

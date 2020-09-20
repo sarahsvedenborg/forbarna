@@ -1,12 +1,12 @@
 <template>
   <div>
     <h1>Finn parene!</h1>
-    <MemoMenu v-if="cards == null" :setsMetadata="setsMetadata" :selectSet="selectSet" />
+    <Menu v-if="cards == null" :categories="setsByCategory" :selectSet="selectSet" />
     <div v-else>
       <div class="panel">
       <div v-if="!won">
       <div class="boardWrapper">   
-        <Card v-for="(card, i) in cards" :key="i" :card="card" :pairCheck="pairCheck"></Card>
+        <Card v-for="(card, i) in cards" :key="i" :card="card" :pairCheck="pairCheck" :alwaysOpen=false></Card>
           <p class="footer">Par funnet: {{ pairsFoundCounter }}</p>
       </div>
     </div>
@@ -18,12 +18,12 @@
 
 <script>
 import Card from "./Card";
-import MemoMenu from "./MemoMenu";
+import Menu from "../chaos/ChaosMenu";
 import VictoryMessage from "../shared/VictoryMessage";
 import { sets } from "./sets.js";
 import { getSetsMetadata } from "./sets.js";
 import { SetTypeEnum } from "../../common/enums.js";
-import { shuffle} from "../../utils.js";
+import { shuffle, createSetsByCategory} from "../../utils.js";
 
 class CardClass {
   constructor(value, comparator, key) {
@@ -40,7 +40,7 @@ class CardClass {
 
 export default {
   name: "Board",
-  components: { Card, MemoMenu, VictoryMessage },
+  components: { Card, Menu, VictoryMessage },
   data() {
     return {
       setsMetadata: getSetsMetadata(),
@@ -49,8 +49,13 @@ export default {
       cardsInPair: null,
       pairsFoundCounter: 0,
       faceUpCards: [],
-      won: false
+      won: false,
     };
+  },
+  computed:{
+    setsByCategory(){
+      return createSetsByCategory(this.setsMetadata)
+    }
   },
   methods: {
     selectSet(setName) {

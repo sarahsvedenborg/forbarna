@@ -1,34 +1,39 @@
 <template>
-  <div class="chaosTask"  @drop.prevent="drop" @dragover.prevent ref="taskContainer">
-  <ChaosTaskLetter 
-  v-for="(letterIndex) in word.length" 
-  :letter="word[letterIndex-1]" 
-  :key="`${wordAsString + 'task' + (letterIndex-1)}`"
-  :letterGuessed="letterGuessed"/>
-</div>
+  <div class="chaosTask" @drop.prevent="drop" @dragover.prevent ref="taskContainer">
+    <ChaosTaskLetter
+      v-for="(letterIndex) in word.length"
+      :letter="word[letterIndex-1]"
+      :key="`${wordAsString + 'task' + (letterIndex-1)}`"
+      :letterGuessed="letterGuessed"
+      :width="width"
+      :height="height"
+    />
+  </div>
 </template>
 
 <script>
-import ChaosTaskLetter from './ChaosTaskLetter'
+import ChaosTaskLetter from "./ChaosTaskLetter";
 
-export default {
-  components:{ChaosTaskLetter},
+export default { 
+  components: { ChaosTaskLetter },
   props: {
     wordAsString: {
-      type: String
+      type: String,
     },
     word: {
-      type: Array
+      type: Array,
     },
     letterGuessed: {
-      type: Function
+      type: Function,
     }
   },
   data() {
     return {
-      positions: []
+      positions: [],
+      width: window.innerWidth,
+      height: window.innerHeight
     };
-  }
+  },
 };
 </script>
 

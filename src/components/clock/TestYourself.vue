@@ -12,7 +12,7 @@
         />
       </h2>
        <AnimatedCounter :result="correctGuesses" :counterType="'klokkeslett'" placement="bottomRight"/>
-      <Clock :play-sounds="false" :start-time="new Date(1, 1, 1, 0, 0)" @clock-changed="checkTime" />
+      <Clock :play-sounds="false" :start-time="new Date(1, 1, 1, 0, 0)" @clock-changed="checkTime"/>
       <router-link to="/lær/klokka">
         <Button buttonType="primary">Øv på klokka</Button>
       </router-link>

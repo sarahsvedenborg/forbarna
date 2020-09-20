@@ -1,5 +1,5 @@
 <template>
-  <button @click="action ? action : null" :class="buttonType">
+  <button @click="action ? action() : null" :class="buttonType">
     <slot />
   </button>
 </template>
@@ -29,6 +29,12 @@ button {
 
 .primary {
   background-color: var(--color-fuksia);
+  color: var(--primary-color-light);
+  font-size: large;
+}
+
+.confirm {
+  background-color: var(--color-green);
   color: var(--primary-color-light);
   font-size: large;
 }

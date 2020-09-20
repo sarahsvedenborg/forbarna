@@ -18,3 +18,14 @@ export const shuffle = array => {
   
     return array;
   };
+
+  export const createSetsByCategory = (sets) => {
+    let setsByCategory = {};
+     for (let i = 0; i < sets.length; i++) {
+       if(!setsByCategory[sets[i].category]){
+          setsByCategory[sets[i].category] = []
+       }
+       setsByCategory[sets[i].category].push(sets[i]);
+    }
+    return setsByCategory;
+  };

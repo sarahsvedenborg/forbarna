@@ -8,11 +8,9 @@
 </template>
 
 <script>
-const panelWidth = 700;
-const panelHeight = 200;
-const randomPos = () => {
-  const randX = Math.floor(panelWidth * Math.random());
-  const randY = Math.floor(panelHeight * Math.random());
+const randomPos = (width, height) => {
+  const randX = Math.floor(width/1.5 * Math.random());
+  const randY = Math.floor(height/3 * Math.random());
   return { x: randX, y: randY };
 };
 export default {
@@ -23,10 +21,16 @@ export default {
     letterGuessed: {
       type: Function,
     },
+    width: {
+      type: Number
+    },
+     height: {
+      type: Number
+    }
   },
   data() {
     return {
-      position: randomPos(),
+      position: randomPos(this.width, this.height),
     };
   },
   computed: {

@@ -10,7 +10,7 @@
       <div v-if="!won">
         <p class="category">
           Kategori:
-          <span>{{selectedGroupName}}</span> (på engelsk)
+          <span>{{selectedGroupName}}</span>
         </p>
         <AnimatedCounter :result="result" :counterType="'ord'" placement="bottomRight"/>
         <ChaosTask

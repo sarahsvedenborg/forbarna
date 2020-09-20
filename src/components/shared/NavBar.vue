@@ -1,6 +1,6 @@
 <template>
     <div class="navBar">
-        <router-link to="/"><img src="/img/ForBarnaShort.png" v-if="this.$router.currentRoute.path != '/'"></router-link>
+        <router-link to="/"><img src="/img/ForBarnaShort.png"></router-link>
         <img src="/img/icons/menu.svg" @click="menuOpen = true"/>
        <Menu :close="() => menuOpen = false" :menuOpen="menuOpen"/>
     </div>

@@ -3,7 +3,7 @@
     <div class="columnWrapper">
       <div v-for="category in Object.keys(categories)" :key="category" class="column">
         <h3>{{category}}</h3>
-          <ul>
+        <ul>
           <li
             v-for="group in categories[category]"
             :key="group.name"
@@ -15,16 +15,15 @@
   </div>
 </template>
 <script>
-
 export default {
   props: {
     categories: {
-      type: Object
+      type: Object,
     },
     selectSet: {
-      type: Function
-    }
-  }
+      type: Function,
+    },
+  },
 };
 </script>
 <style scoped>

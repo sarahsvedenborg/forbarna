@@ -57,12 +57,4 @@ export default {
   color: var(--color-bloodorange);
   transition: font-size 0.5s;
 }
-@keyframes emphasize {
-  from {
-    transform: scale(0);
-  }
-  to {
-    transform: scale(2);
-  }
-}
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Fang parene!</h1>
-    <MemoMenu v-if="cards == null" :setsMetadata="setsMetadata" :selectSet="selectSet" />
+    <Menu v-if="cards == null" :categories="setsByCategory" :selectSet="selectSet" />
     <div v-else>
       <div class="panel" ref="boardRef">
         <div v-if="!won">
@@ -12,7 +12,7 @@
               :parentRef="$refs"
               :isFound="card.isFound"
             >
-              <Card :card="card" :pairCheck="pairCheck"></Card>
+              <Card :card="card" :pairCheck="pairCheck" :alwaysOpen=true></Card>
             </DriftingCard>
           </div>
         </div>
@@ -24,12 +24,13 @@
 </template>
 
 <script>
-import Card from "./Card";
-import MemoMenu from "../memo/MemoMenu";
+import Card from "../memo/Card";
+import Menu from "../chaos/ChaosMenu";
 import DriftingCard from "./DriftingCard";
 import VictoryMessage from "../shared/VictoryMessage";
 import { sets, getSetsMetadata } from "../memo/sets.js";
 import { SetTypeEnum } from "../../common/enums.js";
+import { shuffle, createSetsByCategory} from "../../utils.js";
 
 class CardClass {
   constructor(value, comparator, key) {
@@ -44,36 +45,9 @@ class CardClass {
   };
 }
 
-const shuffle = array => {
-  //From stackoverflow
-  var currentIndex = array.length,
-    temporaryValue,
-    randomIndex;
-
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-
-  return array;
-};
-
 export default {
   name: "Board",
-  components: { Card, MemoMenu, VictoryMessage, DriftingCard },
-  mounted() {
-    //console.log("boardRef", this.$refs.boardRef.clientHeight)
-/*     setTimeout(() => {
-      this.boundingRect = this.$refs.boardRef.getBoundingClientRect();
-    }, 10000); */
-  },
+  components: { Card, Menu, VictoryMessage, DriftingCard },
   data() {
     return {
       setsMetadata: getSetsMetadata(),
@@ -85,6 +59,11 @@ export default {
       won: false,
       boundingRect: null
     };
+  },
+  computed: {
+    setsByCategory(){
+      return createSetsByCategory(this.setsMetadata)
+    }
   },
   methods: {
     selectSet(setName) {
@@ -170,22 +149,6 @@ export default {
     reset() {
       this.cards = null;
       this.pairsFoundCounter = 0;
-    },
-    shuffleTest() {
-      /*let arrayCopy = this.cards;
-      for(let i = 0; i < arrayCopy.length; i++){
-        let randomIndex = Math.floor(Math.random()*(arrayCopy.length-i) + i)
-        arrayCopy.unshift(arrayCopy.splice([randomIndex], 1)) 
-        console.log("randomIndex", randomIndex)
-    }*/
-      /* let currentIndex = 0;
-      while (currentIndex < arrayCopy.length) {
-        let randomIndex = Math.floor(
-          Math.random() * (arrayCopy.length - i) + i
-        );
-        arrayCopy.unshift(arrayCopy.splice([randomIndex], 1));
-        currentIndex++;
-      }*/
     },
     closeVisibleCards() {
       for (let i = 0; i < this.faceUpCards.length; i++) {

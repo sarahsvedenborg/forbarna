@@ -1,19 +1,27 @@
 <template>
   <div :class="{flashConfirmation: true, 'correct': correct, 'incorrect': !correct}">
     <span v-if="correct">👍 Flott!</span>
-    <span v-else>👎 Prøv igjen!</span>
+    <span v-else>👎 Prøv igjen!</span> 
   </div>
 </template>
 <script>
 export default {
   props: {
     text: {
-      type: String
+      type: String,
     },
     correct: {
-      type: Boolean
-    }
-  }
+      type: Boolean,
+    },
+    parentRef: {
+      type: Object,
+    },
+  },
+  watch: {
+    correct() {
+      console.log("correct", this.correct);
+    },
+  },
 };
 </script>
 <style scoped>
@@ -54,7 +62,7 @@ export default {
     opacity: 1;
   }
   to {
-    transform: translate(0px, 1000px);
+    transform: translate(0px, 500px);
     opacity: 0;
   }
 }
