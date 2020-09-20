@@ -59,6 +59,7 @@ export default {
 
 .header h1 {
   color: var(--primary-color-light);
+  margin-top: 0px;
 }
 .header img {
   width: 40%;

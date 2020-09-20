@@ -33,9 +33,6 @@ export default {
 </script>
 
 <style scoped>
-h1 {
-  color: var(--primary-color-light);
-}
 .wrapper {
   display: flex;
   flex-direction: column;

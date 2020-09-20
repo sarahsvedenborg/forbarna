@@ -74,7 +74,7 @@ export default {
   },
   data() {
     return {
-      clockSize: 450,
+      clockSize: 400,
       time: {
         m: this.startTime.getMinutes() % 60,
         h: this.startTime.getHours() % 12
