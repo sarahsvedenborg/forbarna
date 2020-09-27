@@ -4,6 +4,7 @@
     <br />
      <textarea
       :id="label"
+      :name="name"
       :class="inputActive ? 'active' : 'passive'"
       @focus="inputActive = true"
       @blur="inputActive = false"
@@ -16,6 +17,10 @@
 <script>
 export default {
   props: {
+    name: {
+        type: String,
+        required: true
+    },
     label: {
       type: String
     },

@@ -7,6 +7,7 @@
     <input
       type="text"
       :id="label"
+      :name="name"
       @focus="inputActive = true"
       @blur="inputActive = false"
       v-model="input"
@@ -18,6 +19,10 @@
 <script>
 export default {
   props: {
+    name: {
+        type: String,
+        required: true
+    },
     label: {
       type: String
     },

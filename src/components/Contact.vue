@@ -9,9 +9,9 @@
     @submit.prevent="submit"
     ref="contactForm">
     <input type="hidden" name="form-name" value="contact" />
-    <TextInput label="Navn" :inputChanged="(newInput) => name = newInput" />
-    <TextInput label="Epost" :inputChanged="(newInput) => email = newInput" />
-    <TextArea label="Beskjed" :inputChanged="(newInput) => message = newInput" />
+    <TextInput name="name" label="Navn" :inputChanged="(newInput) => name = newInput" />
+    <TextInput name="email" label="Epost" :inputChanged="(newInput) => email = newInput" />
+    <TextArea name="message" label="Beskjed" :inputChanged="(newInput) => message = newInput" />
     <br />
     <Button buttonType="primary" :action="() => $refs.contactForm.submit()">Send*</Button>
     </form>
