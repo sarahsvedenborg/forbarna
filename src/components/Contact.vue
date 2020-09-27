@@ -6,13 +6,14 @@
     method="post"
     data-netlify="true"
     data-netlify-honeypot="bot-field"
-    @submit.prevent="submit">
+    @submit.prevent="submit"
+    ref="contactForm">
     <input type="hidden" name="form-name" value="contact" />
-    <TextInput label="Navn" :inputChanged="(newInput) => name = newInput" />
-    <TextInput label="Epost" :inputChanged="(newInput) => email = newInput" />
-    <TextArea label="Beskjed" :inputChanged="(newInput) => message = newInput" />
+    <TextInput name="name" label="Navn" :inputChanged="(newInput) => name = newInput" />
+    <TextInput name="email" label="Epost" :inputChanged="(newInput) => email = newInput" />
+    <TextArea name="message" label="Beskjed" :inputChanged="(newInput) => message = newInput" />
     <br />
-    <Button buttonType="primary" >Send*</Button>
+    <Button buttonType="primary" :action="() => $refs.contactForm.submit()">Send*</Button>
     </form>
     <p class="hint">*Ved å trykke <strong>Send</strong> samtykker du til at epost-adressen din lagres i våre systemer.</p>
     <!-- TODO: 
