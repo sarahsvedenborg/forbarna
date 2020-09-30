@@ -4,6 +4,7 @@
             <ul>
                 <li @click="close"> <router-link to="/om-oss">Om oss</router-link></li>
                <!--  <li @click="close"> <router-link to="/kontakt">Kontakt oss</router-link></li> -->
+               <li @click="close"><router-link to="/memoImage" class="linnea">Til Linnea</router-link></li>
             </ul>
         </div>
 </template>
@@ -57,5 +58,10 @@ export default {
     padding: 10px;
     cursor: pointer;
     height: 2em;
+}
+.linnea {
+    color: white;
+    font-weight: bold;
+    font-size: small;
 }
 </style>
