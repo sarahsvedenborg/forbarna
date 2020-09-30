@@ -49,6 +49,18 @@ export default {
   font-weight: bold;
   color: var(--primary-color-dark);
 }
+@media screen and (max-width: 700px) {
+  .menu {
+    font-size: medium;
+  }
+
+  .menu li{
+    margin: 10px auto;
+    width: 80px;
+    padding: 8px 10px;
+    font-size: x-small;
+  }
+}
 .columnWrapper {
   display: flex;
   flex-direction: row;
