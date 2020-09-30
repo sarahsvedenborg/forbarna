@@ -9,6 +9,7 @@ import Setup from "./components/ShoppingList/Setup.vue"
 import Bursdag from "./components/Bursdag.vue"
 import About from "./components/About.vue"
 import Contact from "./components/Contact.vue"
+import MemoImage from "./components/memoImages/board.vue"
 
 export const routes = [
   {path: "", component: Home},
@@ -21,7 +22,8 @@ export const routes = [
   {path: "/shoppingList", component: Setup},
   {path: "/morten65", component: Bursdag},
   {path: "/om-oss", component: About},
-  {path: "/kontakt", component: Contact}
+  {path: "/kontakt", component: Contact},
+  {path: "/memoImage", component: MemoImage}
 ];
 
 

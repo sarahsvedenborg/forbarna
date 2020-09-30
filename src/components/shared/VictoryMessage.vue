@@ -36,11 +36,36 @@ color: var(--primary-color-dark);
 }
 
 .message img{
+  width: 300px;
   transform: scale(0.5);
   animation-name: grow;
   animation-duration: 2s;
   animation-fill-mode: forwards;
   margin-bottom: 30px;
+}
+
+@media screen and (max-width: 700px) {
+.message{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 60vh;
+}
+
+.message h2, .message h3{
+color: var(--primary-color-dark);
+font-size: medium;
+margin: 10px;
+}
+
+.message img{
+  width: 100px;
+  transform: scale(0.5);
+  animation-name: grow;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  margin-bottom: 30px;
+}
 }
 
 @keyframes grow {
