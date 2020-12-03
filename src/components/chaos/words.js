@@ -30,6 +30,11 @@ let words = [
             category: SetCategoryEnum.ENGELSK,
             values: ['Happy', 'Sad', 'Angry', 'Tired', 'Hungry', 'Surprised', 'Frightened']
         },
+        {
+            name: 'Juleord',
+            category: SetCategoryEnum.ENGELSK,
+            values: ['Snow crystal', 'Father Christmas', 'Snowman', 'Gift', 'Bells', 'Santa Claus']
+        },
     ]
 
 export const getCategories = () => {

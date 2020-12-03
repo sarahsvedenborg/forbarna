@@ -57,6 +57,13 @@ export let sets = [
         cardsInPair: 2,
         category: SetCategoryEnum.ANDRE,
         values: [["a", "A"], ["b", "B"], ["c", "C"]]
+    },
+    {
+        type: SetTypeEnum.DIFFERENT,
+        name: 'Juleord',
+        cardsInPair: 2,
+        category: SetCategoryEnum.ENGELSK,
+        values: [["Snømann", "Snowman"], ["Gave", "Gift"], ["Bjeller", "Bells"],["Julenisse FC", "Father Christmas"], ["Julenisse SC", "Santa Claus"], ["Snøkrystall", "Snow crystal"]]
     }
 ]
 
