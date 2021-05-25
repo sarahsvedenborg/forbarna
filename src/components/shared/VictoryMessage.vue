@@ -2,7 +2,9 @@
   <div class="message">
     <h2>Gratulerer!</h2>
     <h3>{{message}}</h3>
-    <img src="/img/golden_crown.jpg" width="300px" />
+    <div>
+      <img src="/img/golden_crown.jpg" width="300px" />
+    </div>
     <router-link to="/">
       <Button buttonType="primary">Nytt spill</Button>
     </router-link>

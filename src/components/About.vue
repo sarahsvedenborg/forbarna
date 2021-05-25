@@ -27,7 +27,7 @@
           matematikk og IT.
         </p>
         <p>
-          Stian jobber som backend utvikler og sikkerhetsspesialist i banksektoren.
+          Stian er backend-utvikler og jobber som sikkerhetsspesialist i banksektoren.
           Han har flere års erfaring med å undervise programmering på universitetet og er
           leken og godt likt av barn i alle aldre.
         </p>

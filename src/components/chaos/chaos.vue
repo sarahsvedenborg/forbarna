@@ -8,19 +8,23 @@
     />
     <div class="panel" v-else>
       <div v-if="!won">
-        <p class="category">
+       <!--   <p class="category">
           Kategori:
           <span>{{selectedGroupName}}</span>
+        </p> -->
+        <p class="category">
+          Ord:
+          <span>{{hint}}</span>
         </p>
         <AnimatedCounter :result="result" :counterType="'ord'" placement="bottomRight"/>
         <ChaosTask
           :word="word"
-          :wordAsString="selectedWords[currentWordIndex]"
+          :wordAsString="selectedWords[currentWordIndex].en"
           v-if="displayTask"
           :letterGuessed="letterGuessed"
         />
         <ChaosAnswer
-          :wordAsString="selectedWords[currentWordIndex]"
+          :wordAsString="selectedWords[currentWordIndex].en"
           :word="word"
           :currentGuess="currentGuess"
           :guessedCorrectly="() => result++"
@@ -85,12 +89,14 @@ export default {
       selectedGroupName: "",
       displayTask: true,
       word: [],
+      hint: "",
       currentGuess: [],
     };
   },
   methods: {
     initializeWord() {
-      const word = this.selectedWords[this.currentWordIndex];
+      this.hint = this.selectedWords[this.currentWordIndex].no
+      const word = this.selectedWords[this.currentWordIndex].en;
       let newWord = [];
       for (let i = 0; i < word.length; i++) {
         newWord.push(new LetterClass(word[i], true, i, null));
@@ -98,7 +104,7 @@ export default {
       this.word = newWord;
     },
     initializeGuess() {
-      const currentWord = this.selectedWords[this.currentWordIndex];
+      const currentWord = this.selectedWords[this.currentWordIndex].en;
       let guess = new Array(currentWord.length);
       for (let i = 0; i < currentWord.length; i++) {
         if (currentWord[i] == " ") {
